@@ -426,30 +426,29 @@ function openGalleryModal(src, type) {
 }
 
 function initGalleryLightbox() {
-  const lightboxModal = document.getElementById('lightboxModal');
-  const lbImg = document.getElementById('lightboxImg');
-  const lbCaption = document.getElementById('lightboxCaption');
   const prevBtn = document.getElementById('lightboxPrev');
   const nextBtn = document.getElementById('lightboxNext');
-
   let currentIdx = 0;
 
-  function showLightboxIndex(idx) {
-    currentIdx = (idx + galleryItems.length) % galleryItems.length;
-    const item = galleryItems[currentIdx];
-    if (lbImg) lbImg.src = item.src;
-    if (lbCaption) lbCaption.textContent = item.caption;
-  }
-
+  /* Attach click to every gallery thumb using the galleryItems array */
   document.querySelectorAll('.gal-thumb').forEach((thumb, idx) => {
     thumb.addEventListener('click', () => {
-      showLightboxIndex(idx);
-      openModal('lightboxModal');
+      currentIdx = idx;
+      const item = galleryItems[idx];
+      if (item) openGalleryModal(item.src, item.type);
     });
   });
 
-  if (prevBtn) prevBtn.addEventListener('click', () => showLightboxIndex(currentIdx - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => showLightboxIndex(currentIdx + 1));
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    currentIdx = (currentIdx - 1 + galleryItems.length) % galleryItems.length;
+    const item = galleryItems[currentIdx];
+    if (item) openGalleryModal(item.src, item.type);
+  });
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    currentIdx = (currentIdx + 1) % galleryItems.length;
+    const item = galleryItems[currentIdx];
+    if (item) openGalleryModal(item.src, item.type);
+  });
 }
 
 /* ==========================================================================
