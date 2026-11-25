@@ -908,9 +908,26 @@ body {
 .gal-thumb {
   position: relative;
   overflow: hidden;
-  border-radius: 3px;
+  border-radius: 6px;
   cursor: pointer;
-  height: 52px;
+  height: 90px;
+}
+
+/* Video thumbnail play overlay */
+.gal-video-thumb .play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 1.6rem;
+  pointer-events: none;
+  border-radius: 6px;
+}
+.gal-video-thumb:hover .play-overlay {
+  background: rgba(15,77,42,0.55);
 }
 
 .gal-thumb img {

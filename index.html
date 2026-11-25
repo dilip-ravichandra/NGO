@@ -386,17 +386,18 @@
           </div>
           <div class="gallery-card-body">
             <div class="gallery-grid-2x2">
-              <div class="gal-thumb" title="Click to view large: Tree Plantation">
-                <img src="assets/gallery_1.jpg" alt="Sapling planting">
+              <div class="gal-thumb" title="Click to view" onclick="openGalleryModal('assets/gallery/gallery1.jpg','photo')">
+                <img src="assets/gallery/gallery1.jpg" alt="Foundation Activity 1" onerror="this.src='assets/about_natural_sprout.jpg'">
               </div>
-              <div class="gal-thumb" title="Click to view large: Goshala Sanctuary">
-                <img src="assets/gallery_2.jpg" alt="White cows grazing">
+              <div class="gal-thumb" title="Click to view" onclick="openGalleryModal('assets/gallery/gallery2.jpg','photo')">
+                <img src="assets/gallery/gallery2.jpg" alt="Foundation Activity 2" onerror="this.src='assets/desi_cow_hd.jpg'">
               </div>
-              <div class="gal-thumb" title="Click to view large: Rural Health Camp">
-                <img src="assets/gallery_3.jpg" alt="Medical doctors in camp">
+              <div class="gal-thumb" title="Click to view" onclick="openGalleryModal('assets/gallery/gallery3.jpg','photo')">
+                <img src="assets/gallery/gallery3.jpg" alt="Foundation Activity 3" onerror="this.src='assets/hero_pristine_bg.jpg'">
               </div>
-              <div class="gal-thumb" title="Click to view large: Community Convention">
-                <img src="assets/gallery_4.jpg" alt="Community hall gathering">
+              <div class="gal-thumb gal-video-thumb" title="Click to play video" onclick="openGalleryModal('assets/gallery/gallery_video1.mp4','video')">
+                <video src="assets/gallery/gallery_video1.mp4" muted preload="metadata" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></video>
+                <div class="play-overlay">▶</div>
               </div>
             </div>
           </div>

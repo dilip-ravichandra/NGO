@@ -392,11 +392,38 @@ function openProgramDetails(type) {
    GALLERY LIGHTBOX (PDF Module 4.6)
    ========================================================================== */
 const galleryItems = [
-  { src: 'assets/gallery_1.jpg', caption: 'Tree Plantation Drive with Youth Volunteers in Village School', category: 'tree' },
-  { src: 'assets/gallery_2.jpg', caption: 'Indigenous Desi Cows Grazing at Gokul Cow Sanctuary', category: 'cow' },
-  { src: 'assets/gallery_3.jpg', caption: 'Free Comprehensive Rural Health & Diagnostic Camp', category: 'health' },
-  { src: 'assets/gallery_4.jpg', caption: 'Community Skill Development & Women Empowerment Convention', category: 'community' }
+  { src: 'assets/gallery/gallery1.jpg', type: 'photo', caption: 'Green India Gokul Foundation — Activity 1' },
+  { src: 'assets/gallery/gallery2.jpg', type: 'photo', caption: 'Green India Gokul Foundation — Activity 2' },
+  { src: 'assets/gallery/gallery3.jpg', type: 'photo', caption: 'Green India Gokul Foundation — Activity 3' },
+  { src: 'assets/gallery/gallery_video1.mp4', type: 'video', caption: 'Foundation Video — 1' },
+  { src: 'assets/gallery/gallery_video2.mp4', type: 'video', caption: 'Foundation Video — 2' }
 ];
+
+/* Open gallery modal for photo or video */
+function openGalleryModal(src, type) {
+  const lightboxModal = document.getElementById('lightboxModal');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCaption = document.getElementById('lightboxCaption');
+  // remove any existing video
+  const existingVid = document.getElementById('lbVideo');
+  if (existingVid) existingVid.remove();
+
+  if (type === 'video') {
+    if (lbImg) lbImg.style.display = 'none';
+    const vid = document.createElement('video');
+    vid.id = 'lbVideo';
+    vid.src = src;
+    vid.controls = true;
+    vid.autoplay = true;
+    vid.style.cssText = 'max-width:100%;max-height:70vh;border-radius:10px;display:block;margin:0 auto;';
+    if (lbImg) lbImg.parentNode.insertBefore(vid, lbImg);
+    if (lbCaption) lbCaption.textContent = 'Foundation Video';
+  } else {
+    if (lbImg) { lbImg.src = src; lbImg.style.display = 'block'; }
+    if (lbCaption) lbCaption.textContent = '';
+  }
+  openModal('lightboxModal');
+}
 
 function initGalleryLightbox() {
   const lightboxModal = document.getElementById('lightboxModal');
