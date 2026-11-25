@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Green India Gokul Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="auth-topbar">
+    <a href="index.html" class="topbar-logo">
+      <img src="assets/foundation_logo.png" alt="Logo" onerror="this.style.display='none'" />
+      <span>Green India Gokul Foundation</span>
+    </a>
+    <a href="index.html" class="back-home">← Back to Home</a>
+  </div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <!-- Brand header -->
+      <div class="auth-brand">
+        <div class="auth-icon">🌿</div>
+        <h1>Welcome Back</h1>
+        <p>Sign in to your Gokul Foundation account</p>
+      </div>
+
+      <!-- Alert box (hidden by default) -->
+      <div class="auth-alert" id="authAlert"></div>
+
+      <form id="loginForm" class="auth-form" novalidate>
+
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+          <span class="field-error" id="emailErr"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password" />
+            <button type="button" class="toggle-pw" onclick="togglePw('loginPassword', this)">Show</button>
+          </div>
+          <span class="field-error" id="pwErr"></span>
+        </div>
+
+        <div class="form-row-space">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe" /> Remember me
+          </label>
+          <a href="#" class="forgot-link" onclick="showForgot(); return false;">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-auth" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-spinner" id="loginSpinner" style="display:none;">⏳</span>
+        </button>
+
+      </form>
+
+      <div class="auth-divider"><span>or</span></div>
+
+      <div class="auth-switch">
+        Don't have an account? <a href="signup.html">Create one free →</a>
+      </div>
+
+    </div>
+
+    <!-- Side panel -->
+    <div class="auth-panel">
+      <div class="panel-content">
+        <h2>Serve Nature.<br/>Serve Society.</h2>
+        <p>Join thousands of volunteers, donors and supporters building a greener, healthier India.</p>
+        <ul class="panel-list">
+          <li>🌳 Tree Plantation Drives</li>
+          <li>🐄 Cow Protection & Goshala</li>
+          <li>🏥 Health Awareness Camps</li>
+          <li>📚 Skill Development Programs</li>
+          <li>🤝 Rural Welfare Activities</li>
+        </ul>
+        <div class="panel-quote">"Together for a Healthy, Green and Prosperous India"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot password modal -->
+  <div class="mini-modal" id="forgotModal" style="display:none;">
+    <div class="mini-modal-box">
+      <h3>Reset Password</h3>
+      <p>Enter your email and we'll send you a reset link.</p>
+      <input type="email" id="forgotEmail" placeholder="your@email.com" />
+      <div class="mini-modal-actions">
+        <button onclick="sendReset()" class="btn-auth" style="padding:10px 20px;font-size:0.9rem;">Send Link</button>
+        <button onclick="closeForgot()" class="btn-outline">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="mini-modal-bg" id="forgotBg" style="display:none;" onclick="closeForgot()"></div>
+
+  <script>
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function showAlert(msg, type = 'error') {
+      const el = document.getElementById('authAlert');
+      el.textContent = msg;
+      el.className = 'auth-alert show ' + type;
+      setTimeout(() => el.classList.remove('show'), 5000);
+    }
+
+    function togglePw(id, btn) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      btn.textContent = inp.type === 'password' ? 'Show' : 'Hide';
+    }
+
+    function showForgot() {
+      document.getElementById('forgotModal').style.display = 'flex';
+      document.getElementById('forgotBg').style.display = 'block';
+    }
+    function closeForgot() {
+      document.getElementById('forgotModal').style.display = 'none';
+      document.getElementById('forgotBg').style.display = 'none';
+    }
+    function sendReset() {
+      const email = document.getElementById('forgotEmail').value.trim();
+      if (!email || !email.includes('@')) {
+        showAlert('Please enter a valid email address.', 'error'); return;
+      }
+      closeForgot();
+      showAlert('Reset link sent! Check your inbox.', 'success');
+    }
+
+    // ── Login form ────────────────────────────────────────────────────────────
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email    = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      let valid = true;
+
+      document.getElementById('emailErr').textContent = '';
+      document.getElementById('pwErr').textContent = '';
+
+      if (!email || !email.includes('@')) {
+        document.getElementById('emailErr').textContent = 'Please enter a valid email.';
+        valid = false;
+      }
+      if (password.length < 6) {
+        document.getElementById('pwErr').textContent = 'Password must be at least 6 characters.';
+        valid = false;
+      }
+      if (!valid) return;
+
+      // Simulate loading
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = true;
+      document.getElementById('loginSpinner').style.display = 'inline';
+      document.querySelector('#loginBtn .btn-text').textContent = 'Signing in…';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        document.getElementById('loginSpinner').style.display = 'none';
+        document.querySelector('#loginBtn .btn-text').textContent = 'Sign In';
+
+        // Check localStorage for registered user
+        const users = JSON.parse(localStorage.getItem('gigf_users') || '[]');
+        const user  = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+          localStorage.setItem('gigf_loggedIn', JSON.stringify({ name: user.name, email: user.email }));
+          showAlert('Welcome back, ' + user.name + '! Redirecting…', 'success');
+          setTimeout(() => window.location.href = 'index.html', 1500);
+        } else {
+          showAlert('Incorrect email or password. Please try again.', 'error');
+        }
+      }, 1200);
+    });
+  </script>
+</body>
+</html>

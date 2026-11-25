@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up — Green India Gokul Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="auth-topbar">
+    <a href="index.html" class="topbar-logo">
+      <img src="assets/foundation_logo.png" alt="Logo" onerror="this.style.display='none'" />
+      <span>Green India Gokul Foundation</span>
+    </a>
+    <a href="index.html" class="back-home">← Back to Home</a>
+  </div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <!-- Brand header -->
+      <div class="auth-brand">
+        <div class="auth-icon">🌱</div>
+        <h1>Join the Movement</h1>
+        <p>Create your free Green India Gokul Foundation account</p>
+      </div>
+
+      <!-- Alert box -->
+      <div class="auth-alert" id="authAlert"></div>
+
+      <form id="signupForm" class="auth-form" novalidate>
+
+        <div class="form-row-two">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text" id="firstName" placeholder="Ramesh" required />
+            </div>
+            <span class="field-error" id="firstNameErr"></span>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text" id="lastName" placeholder="Kumar" required />
+            </div>
+            <span class="field-error" id="lastNameErr"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="signupEmail">Email Address</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="signupEmail" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+          <span class="field-error" id="emailErr"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="signupPhone">Mobile Number</label>
+          <div class="input-wrap">
+            <span class="input-icon">📱</span>
+            <input type="tel" id="signupPhone" placeholder="+91 98765 43210" maxlength="15" />
+          </div>
+          <span class="field-error" id="phoneErr"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="signupRole">I want to join as</label>
+          <div class="input-wrap">
+            <span class="input-icon">🎯</span>
+            <select id="signupRole">
+              <option value="">— Select role —</option>
+              <option value="volunteer">Volunteer</option>
+              <option value="donor">Donor / Supporter</option>
+              <option value="member">General Member</option>
+              <option value="partner">Organisation Partner</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="signupPassword" placeholder="Min. 6 characters" required autocomplete="new-password" />
+            <button type="button" class="toggle-pw" onclick="togglePw('signupPassword', this)">Show</button>
+          </div>
+          <span class="field-error" id="pwErr"></span>
+          <div class="pw-strength" id="pwStrength"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="confirmPassword" placeholder="Re-enter password" required autocomplete="new-password" />
+            <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)">Show</button>
+          </div>
+          <span class="field-error" id="confirmErr"></span>
+        </div>
+
+        <label class="agree-check">
+          <input type="checkbox" id="agreeTerms" />
+          I agree to the <a href="#" onclick="return false;">Terms & Conditions</a> and <a href="#" onclick="return false;">Privacy Policy</a>
+        </label>
+        <span class="field-error" id="termsErr"></span>
+
+        <button type="submit" class="btn-auth" id="signupBtn">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-spinner" id="signupSpinner" style="display:none;">⏳</span>
+        </button>
+
+      </form>
+
+      <div class="auth-divider"><span>or</span></div>
+
+      <div class="auth-switch">
+        Already have an account? <a href="login.html">Sign In →</a>
+      </div>
+
+    </div>
+
+    <!-- Side panel -->
+    <div class="auth-panel">
+      <div class="panel-content">
+        <h2>Build a Better<br/>India Together.</h2>
+        <p>Your membership unlocks access to exclusive programs, events and updates from our foundation.</p>
+        <ul class="panel-list">
+          <li>🌍 Get updates on plantation drives</li>
+          <li>🐄 Participate in Goshala seva</li>
+          <li>🏥 Register for health camps</li>
+          <li>📚 Access skill-building workshops</li>
+          <li>❤️ Track your donation impact</li>
+        </ul>
+        <div class="panel-quote">"Serve Nature... Serve Society... Build a Better India..."</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showAlert(msg, type = 'error') {
+      const el = document.getElementById('authAlert');
+      el.textContent = msg;
+      el.className = 'auth-alert show ' + type;
+      setTimeout(() => el.classList.remove('show'), 6000);
+    }
+
+    function togglePw(id, btn) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      btn.textContent = inp.type === 'password' ? 'Show' : 'Hide';
+    }
+
+    // Password strength indicator
+    document.getElementById('signupPassword').addEventListener('input', function () {
+      const val = this.value;
+      const bar = document.getElementById('pwStrength');
+      let strength = 0;
+      if (val.length >= 6) strength++;
+      if (val.length >= 10) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+      const labels = ['', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+      const colors = ['', '#ef4444', '#f97316', '#eab308', '#22c55e', '#16a34a'];
+      bar.textContent = val ? 'Strength: ' + (labels[strength] || 'Very Strong') : '';
+      bar.style.color = colors[strength] || '#16a34a';
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      let valid = true;
+
+      // Clear errors
+      ['firstNameErr','lastNameErr','emailErr','phoneErr','pwErr','confirmErr','termsErr'].forEach(id => {
+        document.getElementById(id).textContent = '';
+      });
+
+      const first   = document.getElementById('firstName').value.trim();
+      const last    = document.getElementById('lastName').value.trim();
+      const email   = document.getElementById('signupEmail').value.trim();
+      const phone   = document.getElementById('signupPhone').value.trim();
+      const pw      = document.getElementById('signupPassword').value;
+      const cpw     = document.getElementById('confirmPassword').value;
+      const agreed  = document.getElementById('agreeTerms').checked;
+
+      if (!first) { document.getElementById('firstNameErr').textContent = 'First name is required.'; valid = false; }
+      if (!last)  { document.getElementById('lastNameErr').textContent = 'Last name is required.'; valid = false; }
+      if (!email || !email.includes('@')) { document.getElementById('emailErr').textContent = 'Enter a valid email.'; valid = false; }
+      if (pw.length < 6) { document.getElementById('pwErr').textContent = 'Password must be at least 6 characters.'; valid = false; }
+      if (pw !== cpw) { document.getElementById('confirmErr').textContent = 'Passwords do not match.'; valid = false; }
+      if (!agreed) { document.getElementById('termsErr').textContent = 'Please accept the Terms & Conditions.'; valid = false; }
+      if (!valid) return;
+
+      // Check duplicate email
+      const users = JSON.parse(localStorage.getItem('gigf_users') || '[]');
+      if (users.find(u => u.email === email)) {
+        document.getElementById('emailErr').textContent = 'This email is already registered.';
+        return;
+      }
+
+      // Simulate loading
+      const btn = document.getElementById('signupBtn');
+      btn.disabled = true;
+      document.getElementById('signupSpinner').style.display = 'inline';
+      document.querySelector('#signupBtn .btn-text').textContent = 'Creating…';
+
+      setTimeout(() => {
+        users.push({ name: first + ' ' + last, email, phone, password: pw, role: document.getElementById('signupRole').value });
+        localStorage.setItem('gigf_users', JSON.stringify(users));
+        localStorage.setItem('gigf_loggedIn', JSON.stringify({ name: first + ' ' + last, email }));
+
+        btn.disabled = false;
+        document.getElementById('signupSpinner').style.display = 'none';
+        document.querySelector('#signupBtn .btn-text').textContent = 'Create Account';
+
+        showAlert('Account created successfully! Welcome, ' + first + '! Redirecting…', 'success');
+        setTimeout(() => window.location.href = 'index.html', 1800);
+      }, 1400);
+    });
+  </script>
+</body>
+</html>

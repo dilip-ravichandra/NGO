@@ -298,6 +298,21 @@ body {
   margin-left: 6px;
 }
 
+/* Sign Up nav button */
+.signup-nav-btn {
+  background: #fff;
+  color: #0f4d2a !important;
+  border: 1.5px solid #0f4d2a;
+  border-radius: 20px;
+  padding: 5px 16px !important;
+  font-weight: 700 !important;
+  transition: background 0.2s, color 0.2s;
+}
+.signup-nav-btn:hover {
+  background: #0f4d2a !important;
+  color: #fff !important;
+}
+
 .donate-btn-header:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(21, 102, 55, 0.45);
