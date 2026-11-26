@@ -11,3 +11,4 @@ dev-server.js
 CLAUDE-SECURITY-*
 client_secret*.json
 supabase/
+docs/

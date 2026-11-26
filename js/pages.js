@@ -36,12 +36,12 @@
   function eventCard(e, compact) {
     const d = new Date(e.date), regs = regCount(e.id).length, left = Math.max(0, e.capacity - regs), pct = Math.min(100, Math.round((regs / e.capacity) * 100));
     return `<article class="card lift ev-card reveal" id="${e.slug}"><div class="ev-date"><b>${d.getDate()}</b><span>${d.toLocaleString('en', { month: 'short' })}</span><span>${d.getFullYear()}</span></div>
-      <div class="ev-body"><h4>${esc(tr(e.title))}</h4>
+      <div class="ev-body"><h4><a href="event.html?e=${esc(e.slug)}">${esc(tr(e.title))}</a></h4>
       <div class="ev-meta"><span>🕒 ${e.time}</span><span>📍 ${esc(e.location)}</span>${progById(e.program) ? `<span>${progById(e.program).icon} ${esc(tr(progById(e.program).title))}</span>` : ''}</div>
       ${compact ? '' : `<p style="font-size:.86rem;color:#4b5563">${esc(tr(e.desc))}</p>`}
       ${!compact && safePoster(e.poster) ? `<img class="ev-poster" src="${safePoster(e.poster)}" alt="Poster: ${esc(tr(e.title))}" loading="lazy" data-poster="${e.id}">` : ''}
       ${e.status === 'UPCOMING' ? `<div class="bar" title="${pct}% booked"><i style="width:${pct}%"></i></div><div style="font-size:.74rem;color:#6b7280;margin-bottom:8px">${left > 0 ? left + ' spots left' : 'Fully booked'}${e.tentative ? ' · <span class="chip warn">Tentative</span>' : ''}</div>
-      <button class="btn btn-primary btn-sm" data-reg="${e.id}" ${left ? '' : 'disabled'}>${t('btn.register')}</button>` : '<span class="chip gray">Completed</span> <a class="link-more" href="gallery.html">📸 ' + t('nav.gallery') + '</a>'}</div></article>`;
+      <button class="btn btn-primary btn-sm" data-reg="${e.id}" ${left ? '' : 'disabled'}>${t('btn.register')}</button>` : '<span class="chip gray">Completed</span> <a class="link-more" href="event.html?e=' + esc(e.slug) + '">📸 ' + t('nav.gallery') + '</a>'}</div></article>`;
   }
 
   /* ---------- event registration modal ---------- */
@@ -209,7 +209,7 @@
     const word = (w) => w[Math.max(0, ['en', 'kn', 'hi', 'ta', 'te', 'ml'].indexOf(G.lang()))];
     const isNew = (e) => e.createdAt && Date.now() - new Date(e.createdAt).getTime() < 7 * 86400000;
     const evTag = (e) => (isNew(e) ? '✨ ' + word(['NEW EVENT', 'ಹೊಸ ಕಾರ್ಯಕ್ರಮ', 'नया आयोजन', 'புதிய நிகழ்வு', 'కొత్త కార్యక్రమం', 'പുതിയ പരിപാടി']) : '📅 ' + word(['UPCOMING EVENT', 'ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮ', 'आगामी आयोजन', 'வரவிருக்கும் நிகழ்வு', 'రాబోయే కార్యక్రమం', 'വരാനിരിക്കുന്ന പരിപാടി']));
-    const evNews = (e) => `<article class="card lift news-card news-event reveal">${safePoster(e.poster) ? `<img class="news-poster" src="${safePoster(e.poster)}" alt="">` : ''}<div class="card-body"><span class="news-tag">${evTag(e)}</span><div class="date">${G.fmtDate(e.date)}${e.time ? ' · ' + esc(e.time) : ''}</div><h4>${esc(tr(e.title))}</h4><p style="font-size:.86rem;color:#4b5563;margin-bottom:10px">📍 ${esc(e.location || '')}</p><a class="link-more" href="events.html#${esc(e.slug || '')}">${t('btn.readmore')} →</a></div></article>`;
+    const evNews = (e) => `<article class="card lift news-card news-event reveal">${safePoster(e.poster) ? `<img class="news-poster" src="${safePoster(e.poster)}" alt="">` : ''}<div class="card-body"><span class="news-tag">${evTag(e)}</span><div class="date">${G.fmtDate(e.date)}${e.time ? ' · ' + esc(e.time) : ''}</div><h4>${esc(tr(e.title))}</h4><p style="font-size:.86rem;color:#4b5563;margin-bottom:10px">📍 ${esc(e.location || '')}</p><a class="link-more" href="event.html?e=${esc(e.slug || '')}">${t('btn.readmore')} →</a></div></article>`;
     html($('#ticker'), news.length || live.length ? `<div class="ticker-track">${[0, 1].map(() => live.map((e) => `<a class="tick-event" href="events.html#${esc(e.slug || '')}">${evTag(e)}: ${esc(tr(e.title))} · ${G.fmtDate(e.date)}</a>`).join('')).join('')}${news.concat(news).map((n) => `<a href="${esc(G.safeUrl(n.link || '#news'))}">${esc(tr(n.title))}</a>`).join('')}</div>` : '');
     // quick access
     html($('#quick'), [['programs.html', '🌳', 'nav.programs'], ['events.html', '📅', 'nav.events'], ['donate.html', '💚', 'btn.donate'], ['volunteer.html', '🤝', 'nav.volunteer']].map((q) => `<a href="${q[0]}" class="reveal"><span class="e">${q[1]}</span>${t(q[2])}</a>`).join(''));
@@ -266,7 +266,7 @@
         ['Join as a volunteer, take part in an event or support a programme.', 'ಸ್ವಯಂಸೇವಕರಾಗಿ ಸೇರಿ, ಕಾರ್ಯಕ್ರಮದಲ್ಲಿ ಭಾಗವಹಿಸಿ ಅಥವಾ ಯೋಜನೆಗೆ ಬೆಂಬಲ ನೀಡಿ.', 'स्वयंसेवक बनें, आयोजन में भाग लें या किसी कार्यक्रम का सहयोग करें।', 'தன்னார்வலராக இணையுங்கள், நிகழ்வில் பங்கேற்கவும் அல்லது திட்டத்தை ஆதரிக்கவும்.', 'వాలంటీర్‌గా చేరండి, ఈవెంట్‌లో పాల్గొనండి లేదా కార్యక్రమానికి మద్దతివ్వండి.', 'സന്നദ്ധ പ്രവർത്തകനായി ചേരൂ, പരിപാടിയിൽ പങ്കെടുക്കൂ, അല്ലെങ്കിൽ ഒരു പദ്ധതിയെ പിന്തുണയ്ക്കൂ.']]
     ].map((c) => `<article class="essence-card reveal">${c[0]}<h4>${word(c[1])}</h4><p>${word(c[2])}</p></article>`).join(''));
     const ts = G.DB.all('testimonials');
-    html($('#testi'), ts.length ? ts.map((x) => `<blockquote class="card reveal card-body" style="font-style:italic">“${esc(x.text)}”<footer style="margin-top:8px;font-style:normal;font-weight:700;color:var(--primary-dark)">— ${esc(x.name)}${x.role ? ', ' + esc(x.role) : ''}</footer></blockquote>`).join('') : `<div class="note green" style="grid-column:1/-1">💬 Testimonials from volunteers, donors and beneficiaries will be shown here.</div>`);
+    html($('#testi'), ts.length ? ts.map((x) => `<blockquote class="card reveal card-body" style="font-style:italic">“${esc(x.text)}”<footer style="margin-top:8px;font-style:normal;font-weight:700;color:var(--primary-dark)">— ${esc(x.name)}${x.role ? ', ' + esc(x.role) : ''}</footer></blockquote>`).join('') : '<p style="color:#6b7280">Have you taken part in our work? <a href="contact.html">Share your experience</a>.</p>');
   }
 
   /* =====================================================================
@@ -359,7 +359,7 @@
       history.replaceState(null, '', '#' + id);
       $('#shareBtn', m).onclick = () => { const u = location.href; if (navigator.share) navigator.share({ title: tr(a.title), url: u }).catch(() => { }); else navigator.clipboard.writeText(u).then(() => G.toast('Link copied', '🔗')); };
     };
-    $('#artGrid').onclick = (e) => { const c = e.target.closest('[data-a]'); if (c) read(c.dataset.a); };
+    $('#artGrid').onclick = (e) => { const c = e.target.closest('[data-a]'); if (c) location.href = 'article.html?a=' + encodeURIComponent((G.DB.get('articles', c.dataset.a) || {}).slug || c.dataset.a); };
     draw(); if (location.hash) read(location.hash.slice(1));
   }
 

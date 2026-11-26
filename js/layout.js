@@ -142,7 +142,7 @@
         <p style="font-size:.74rem;color:#6ee7b7;margin-top:10px">${s.reg80G ? '80G: ' + G.esc(s.reg80G) : ''} ${s.reg12A ? '• 12A: ' + G.esc(s.reg12A) : ''}</p></div>
       <div class="footer-col"><h4>${t('page.programs')}</h4><ul class="footer-links">${G.DB.all('programs').filter((p) => p.active).sort((a, b) => a.order - b.order).map((p) => `<li><a href="programs.html#${p.slug}">${G.esc(G.tr(p.title))}</a></li>`).join('')}</ul></div>
       <div class="footer-col"><h4>${t('foot.links')}</h4><ul class="footer-links">
-        <li><a href="events.html">${t('nav.events')}</a></li><li><a href="gallery.html">${t('nav.gallery')}</a></li><li><a href="awareness.html">${t('nav.awareness')}</a></li><li><a href="environment.html">🌍 ${t('nav.campaign')}</a></li>
+        <li><a href="events.html">${t('nav.events')}</a></li><li><a href="gallery.html">${t('nav.gallery')}</a></li><li><a href="reports.html">Annual Reports</a></li><li><a href="awareness.html">${t('nav.awareness')}</a></li><li><a href="environment.html">🌍 ${t('nav.campaign')}</a></li>
         <li><a href="volunteer.html">${t('nav.volunteer')}</a></li><li><a href="donate.html">${t('btn.donate')}</a></li><li><a href="contact.html">${t('nav.contact')}</a></li></ul></div>
       <div class="footer-col"><h4>${t('foot.contact')}</h4>
         <p style="font-size:.8rem;color:#a7f3d0;margin-bottom:8px">📍 ${o.address}</p>

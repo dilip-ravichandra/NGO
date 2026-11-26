@@ -58,7 +58,7 @@
       const st = e.target.closest('[data-stop]'); if (st && confirm('Stop this monthly donation?')) { G.DB.update('donations', st.dataset.stop, { cancelled: true }); G.audit('MONTHLY_STOPPED', 'donation', st.dataset.stop, 'stopped by donor'); G.toast('Monthly donation stopped', '🛑'); render(); return; }
       const un = e.target.closest('[data-unreg]'); if (un && confirm('Cancel this registration?')) { G.DB.remove('registrations', un.dataset.unreg); render(); return; }
       const dn = e.target.closest('[data-done]'); if (dn) { const v = G.Volunteers.mine(); v.tasks[dn.dataset.done].done = true; G.DB.update('volunteers', v.id, { tasks: v.tasks }); render(); return; }
-      if (e.target.id === 'certBtn') { const v = G.Volunteers.mine(); if (!G.openPrint(G.Volunteers.certificateHTML(v))) G.toast('Allow pop-ups', '⚠️'); return; }
+      if (e.target.id === 'certBtn') { const v = G.Volunteers.mine(); if (!G.Volunteers.downloadPDF(v)) G.toast('Allow pop-ups', '⚠️'); return; }
       const is = e.target.closest('[data-issue]');
       if (is) {
         const d = G.DB.get('donations', is.dataset.issue);

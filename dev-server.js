@@ -77,7 +77,7 @@ function handle(req, res) {
   if (rel === '/') rel = '/index.html';
   const file = path.normalize(path.join(ROOT, rel));
   const parts = path.relative(ROOT, file).split(path.sep);
-  const isPublic = parts.length === 1 ? /^[\w-]+\.html$/.test(parts[0]) : PUBLIC_DIRS.includes(parts[0]);   // allow-list, case-exact
+  const isPublic = parts.length === 1 ? /^([\w-]+\.html|sitemap\.xml|robots\.txt)$/.test(parts[0]) : PUBLIC_DIRS.includes(parts[0]);   // allow-list, case-exact
   if (!file.startsWith(ROOT + path.sep) || parts.some((p) => p.startsWith('.') || /[. ]$/.test(p)) || !isPublic) return send(res, 404, {}, 'Not found');
   fs.stat(file, (e, st) => {
     if (e || !st.isFile()) return send(res, 404, {}, 'Not found');
