@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.googleusercontent.com; media-src 'self' blob:; connect-src 'self' https://accounts.google.com/gsi/ https://hbnwugmdivvjoebevbgv.supabase.co; frame-src https://www.google.com https://accounts.google.com/gsi/; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate | Green India Gokul Foundation</title>
+  <meta name="description" content="Donate to Green India Gokul Foundation — one-time or monthly, by UPI, card or net-banking.">
+  <meta property="og:title" content="Donate | Green India Gokul Foundation">
+  <meta property="og:description" content="Donate to Green India Gokul Foundation — one-time or monthly, by UPI, card or net-banking.">
+  <meta property="og:image" content="assets/logo-emblem-512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="js/fonts.js?v=1795701001"></script>
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="css/style.css?v=1795701001">
+  <link rel="stylesheet" href="css/site.css?v=1795701001">
+  <link rel="stylesheet" href="css/motion.css?v=1795701001">
+  <link rel="stylesheet" href="css/gallery-grow.css?v=1795701001">
+  <link rel="stylesheet" href="css/pop.css?v=1795701001">
+  <link rel="stylesheet" href="css/env.css?v=1795701001">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-emblem.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/logo-emblem-64.png">
+  <link rel="apple-touch-icon" href="assets/logo-emblem-192.png">
+  <meta name="theme-color" content="#0f4d2a">
+</head>
+<body data-page="donate">
+<a href="#main" class="skip" style="position:absolute;left:-999px">Skip to content</a>
+<div id="gigf-header"></div>
+<section class="page-hero"><div class="wrap"><div class="crumbs"><a href="index.html" data-i18n="nav.home">Home</a> › <span data-i18n="page.donate"></span></div>
+  <h2 data-i18n="page.donate"></h2><p>Every contribution helps us plant, protect and empower.</p></div><div class="hero-badge-hang"><img src="assets/logo-emblem.svg" alt=""></div></section>
+<main id="main">
+<section class="section"><div class="wrap"><div class="don-layout">
+ <form id="donForm" class="card card-body" novalidate>
+  <div id="demoBanner" class="note" style="margin-bottom:14px"><b>DEMO MODE</b> — no real money is charged and receipts are marked “demo”. Live payments go through Razorpay once the Foundation’s merchant keys are configured.
+   <div style="margin-top:6px">Test outcome: <select id="dOutcome"><option value="CAPTURED">Success</option><option value="FAILED">Failure</option><option value="PENDING">Pending</option></select></div></div>
+  <div class="seg"><button type="button" class="on" data-f="ONE_TIME" data-i18n="f.once"></button><button type="button" data-f="MONTHLY">🔁 <span data-i18n="f.monthly"></span></button></div>
+  <div class="field" style="margin-bottom:12px"><label data-i18n="f.program"></label><select id="dProgram"></select></div>
+  <div class="field" id="amtField"><label data-i18n="f.amount"></label><div class="amt-grid"><button type="button" class="amt" data-a="500">₹500</button><button type="button" class="amt" data-a="1000">₹1,000</button><button type="button" class="amt" data-a="2500">₹2,500</button><button type="button" class="amt" data-a="5000">₹5,000</button></div><input id="dAmount" type="number" min="10" placeholder="Other amount (min ₹10)"><span class="err">Minimum donation is ₹10</span></div>
+  <div class="f-grid" style="margin-top:12px">
+   <div class="field"><label><span data-i18n="f.name"></span> *</label><input name="name" id="dName" autocomplete="name"><span class="err">Please enter your name</span></div>
+   <div class="field"><label><span data-i18n="f.phone"></span> *</label><input name="phone" id="dPhone" inputmode="tel" autocomplete="tel"><span class="err">Enter a valid 10-digit mobile</span></div>
+   <div class="field"><label><span data-i18n="f.email"></span> *</label><input name="email" id="dEmail" type="email" autocomplete="email"><span class="err">Enter a valid email</span></div>
+   <div class="field"><label data-i18n="f.pan"></label><input name="pan" maxlength="10" placeholder="ABCDE1234F" style="text-transform:uppercase"><span class="err">PAN format: 5 letters, 4 digits, 1 letter</span></div></div>
+  <div style="margin:14px 0 6px;font-weight:700;font-size:.82rem">Payment method</div>
+  <div class="pay-opts"><div class="pay-opt on" data-m="UPI">📱 UPI / QR</div><div class="pay-opt" data-m="Card">💳 Card</div><div class="pay-opt" data-m="Netbanking">🏦 Net banking</div></div>
+  <button class="btn btn-orange" id="dSubmit" type="submit" style="width:100%;margin-top:18px;padding:15px;font-size:1.05rem"></button>
+  <p style="font-size:.74rem;color:#6b7280;margin-top:10px;text-align:center">🔒 Card and UPI details are entered only in the Razorpay checkout — never on our servers.</p></form>
+ <aside class="sticky"><div class="card card-body"><h4 style="color:var(--primary-dark)">Your contribution</h4><p id="dSummary" style="margin:10px 0;font-size:.95rem"></p>
+  <ul style="list-style:none;display:grid;gap:8px;font-size:.84rem;color:#4b5563"><li>✓ Instant receipt with sequential number</li><li>✓ Add PAN to have it printed for 80G claims</li><li>✓ Monthly giving can be stopped anytime from your dashboard</li><li>✓ Problem with a payment? Report it in one click</li></ul></div></aside>
+ </div></div></section>
+</main>
+<div id="gigf-footer"></div>
+<script src="js/config.js?v=1795701001"></script>
+<script src="js/data.js?v=1795701001"></script>
+<script src="js/i18n.js?v=1795701001"></script>
+<script src="js/i18n-extra.js?v=1795701001"></script>
+<script src="js/layout.js?v=1795701001"></script>
+<script src="js/autotranslate.js?v=1795701001"></script>
+<script src="js/pages.js?v=1795701001"></script>
+</body>
+</html>

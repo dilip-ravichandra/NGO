@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" role="img" aria-labelledby="t">
+  <title id="t">Green India Gokul Foundation (R)</title>
+  <defs>
+    <radialGradient id="disc" cx="50%" cy="34%" r="75%">
+      <stop offset="0" stop-color="#1f9a50"/><stop offset="1" stop-color="#0a4a26"/>
+    </radialGradient>
+    <radialGradient id="leafA" cx="38%" cy="28%" r="80%">
+      <stop offset="0" stop-color="#e4fba8"/><stop offset=".45" stop-color="#86e05a"/><stop offset="1" stop-color="#2f9e44"/>
+    </radialGradient>
+    <radialGradient id="leafB" cx="40%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#9be36a"/><stop offset="1" stop-color="#1f7a35"/>
+    </radialGradient>
+    <linearGradient id="bark" x1="0" x2="1">
+      <stop offset="0" stop-color="#b07a42"/><stop offset="1" stop-color="#5b3a1a"/>
+    </linearGradient>
+    <!-- ring path starts at 6 o'clock and runs clockwise, so text centred at 50% sits across the top and never clips -->
+    <path id="ring" d="M100,179 a79,79 0 1,1 0,-158 a79,79 0 1,1 0,158"/>
+  </defs>
+
+  <!-- white outer rim + green disc -->
+  <circle cx="100" cy="100" r="99" fill="#ffffff"/>
+  <circle cx="100" cy="100" r="94" fill="url(#disc)"/>
+  <circle cx="100" cy="100" r="61" fill="none" stroke="#ffffff" stroke-opacity=".92" stroke-width="1.5"/>
+
+  <!-- ring lettering -->
+  <text font-family="'Arial Black','Arial',Helvetica,sans-serif" font-weight="700" font-size="13.6" letter-spacing="1.5" fill="#ffffff">
+    <textPath xlink:href="#ring" href="#ring" startOffset="50%" text-anchor="middle">GREEN INDIA GOKUL FOUNDATION (R)</textPath>
+  </text>
+
+  <!-- ground shadow -->
+  <ellipse cx="100" cy="147" rx="30" ry="4.5" fill="#06331a" opacity=".55"/>
+
+  <!-- trunk with flared roots -->
+  <path d="M95.5 146 C97 133 97.6 121 97.4 106 L102.6 106 C102.4 121 103 133 104.5 146 C109 147 114 148.5 120 150 L80 150 C86 148.5 91 147 95.5 146 Z" fill="url(#bark)"/>
+  <g stroke="#7a4d24" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M100 118 C94 110 89 104 83 98"/><path d="M100 118 C106 110 111 104 117 98"/><path d="M100 112 L100 92"/>
+  </g>
+
+  <!-- canopy: back layer (dark) -> mid layer -> front layer (light) for depth -->
+  <g fill="url(#leafB)">
+    <circle cx="72" cy="100" r="13"/><circle cx="128" cy="100" r="13"/><circle cx="80" cy="84" r="15"/><circle cx="120" cy="84" r="15"/>
+    <circle cx="90" cy="70" r="14"/><circle cx="110" cy="70" r="14"/><circle cx="100" cy="106" r="16"/>
+  </g>
+  <g fill="url(#leafA)" stroke="#2c8a3e" stroke-opacity=".45" stroke-width=".7">
+    <circle cx="80" cy="96" r="13"/><circle cx="120" cy="96" r="13"/><circle cx="88" cy="80" r="14"/><circle cx="112" cy="80" r="14"/>
+    <circle cx="100" cy="94" r="17"/><circle cx="100" cy="68" r="14.5"/><circle cx="76" cy="84" r="9"/><circle cx="124" cy="84" r="9"/>
+  </g>
+  <!-- light flecks -->
+  <g fill="#f6ffd6" opacity=".6"><circle cx="94" cy="62" r="3.6"/><circle cx="82" cy="76" r="2.8"/><circle cx="108" cy="84" r="2.6"/><circle cx="73" cy="92" r="2.2"/><circle cx="122" cy="74" r="2.4"/><circle cx="100" cy="100" r="2.4"/></g>
+  <g fill="#1f7a35" opacity=".5"><circle cx="90" cy="100" r="2"/><circle cx="112" cy="102" r="2"/><circle cx="100" cy="82" r="1.8"/><circle cx="82" cy="106" r="1.8"/><circle cx="118" cy="108" r="1.8"/></g>
+
+  <!-- small sapling at the bottom (as on the printed emblem) -->
+  <g transform="translate(100 168)">
+    <path d="M0 8 L0 -1" stroke="#c7f58b" stroke-width="2" stroke-linecap="round"/>
+    <path d="M0 0 C-3 -7 -9 -7 -11 -4 C-8 0 -3 1 0 0Z" fill="#a3e635"/>
+    <path d="M0 0 C3 -7 9 -7 11 -4 C8 0 3 1 0 0Z" fill="#86e05a"/>
+  </g>
+</svg>

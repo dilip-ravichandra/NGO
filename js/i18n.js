@@ -1,0 +1,112 @@
+/**
+ * Static-UI translations (EN / ಕನ್ನಡ / हिन्दी). CMS content (programs, events, news…)
+ * carries its own {en,kn,hi} fields and falls back to English — see GIGF.tr().
+ * Add a language: add a key to every entry below + a button in layout.js LANGS.
+ * Legal identifiers (PAN, 80G/12A numbers, receipt numbers) intentionally stay canonical.
+ */
+(function () {
+  const D = {
+    'nav.home': { en: 'Home', kn: 'ಮುಖಪುಟ', hi: 'होम' },
+    'nav.about': { en: 'About', kn: 'ನಮ್ಮ ಬಗ್ಗೆ', hi: 'हमारे बारे में' },
+    'nav.programs': { en: 'Programs', kn: 'ಕಾರ್ಯಕ್ರಮಗಳು', hi: 'कार्यक्रम' },
+    'nav.events': { en: 'Events', kn: 'ಕಾರ್ಯಕ್ರಮಾವಳಿ', hi: 'आयोजन' },
+    'nav.gallery': { en: 'Gallery', kn: 'ಗ್ಯಾಲರಿ', hi: 'गैलरी' },
+    'nav.awareness': { en: 'Awareness', kn: 'ಜಾಗೃತಿ', hi: 'जागरूकता' },
+    'nav.contact': { en: 'Contact', kn: 'ಸಂಪರ್ಕ', hi: 'संपर्क' },
+    'nav.volunteer': { en: 'Volunteer', kn: 'ಸ್ವಯಂಸೇವಕ', hi: 'स्वयंसेवक' },
+    'nav.login': { en: 'Login', kn: 'ಲಾಗಿನ್', hi: 'लॉगिन' },
+    'nav.signup': { en: 'Sign Up', kn: 'ಸೈನ್ ಅಪ್', hi: 'साइन अप' },
+    'nav.account': { en: 'My Account', kn: 'ನನ್ನ ಖಾತೆ', hi: 'मेरा खाता' },
+    'nav.logout': { en: 'Logout', kn: 'ಲಾಗ್ ಔಟ್', hi: 'लॉग आउट' },
+    'btn.donate': { en: 'Donate Now', kn: 'ದೇಣಿಗೆ ನೀಡಿ', hi: 'अभी दान करें' },
+    'btn.join': { en: 'Join Us', kn: 'ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ', hi: 'हमसे जुड़ें' },
+    'btn.know': { en: 'Know More', kn: 'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ', hi: 'और जानें' },
+    'btn.mission': { en: 'Our Mission', kn: 'ನಮ್ಮ ಧ್ಯೇಯ', hi: 'हमारा मिशन' },
+    'btn.register': { en: 'Register', kn: 'ನೋಂದಣಿ', hi: 'पंजीकरण' },
+    'btn.send': { en: 'Send Message', kn: 'ಸಂದೇಶ ಕಳುಹಿಸಿ', hi: 'संदेश भेजें' },
+    'btn.viewall': { en: 'View all', kn: 'ಎಲ್ಲವನ್ನೂ ನೋಡಿ', hi: 'सभी देखें' },
+    'btn.readmore': { en: 'Read more', kn: 'ಹೆಚ್ಚು ಓದಿ', hi: 'और पढ़ें' },
+    'btn.donateprog': { en: 'Donate to this program', kn: 'ಈ ಕಾರ್ಯಕ್ರಮಕ್ಕೆ ದೇಣಿಗೆ', hi: 'इस कार्यक्रम को दान करें' },
+    'btn.volprog': { en: 'Volunteer', kn: 'ಸ್ವಯಂಸೇವಕರಾಗಿ', hi: 'स्वयंसेवक बनें' },
+    'top.tag': { en: 'Serve Nature... Serve Society... Build a Better India...', kn: 'ಪ್ರಕೃತಿಯ ಸೇವೆ... ಸಮಾಜದ ಸೇವೆ... ಉತ್ತಮ ಭಾರತ ನಿರ್ಮಾಣ...', hi: 'प्रकृति की सेवा... समाज की सेवा... बेहतर भारत का निर्माण...' },
+    'home.programs': { en: 'Our Programs', kn: 'ನಮ್ಮ ಕಾರ್ಯಕ್ರಮಗಳು', hi: 'हमारे कार्यक्रम' },
+    'home.news': { en: 'Latest News & Updates', kn: 'ಇತ್ತೀಚಿನ ಸುದ್ದಿ ಮತ್ತು ಅಪ್‌ಡೇಟ್‌ಗಳು', hi: 'ताज़ा समाचार और अपडेट' },
+    'home.events': { en: 'Upcoming Events', kn: 'ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು', hi: 'आगामी आयोजन' },
+    'home.gallery': { en: 'Our Gallery', kn: 'ನಮ್ಮ ಗ್ಯಾಲರಿ', hi: 'हमारी गैलरी' },
+    'home.about': { en: 'About Our Foundation', kn: 'ನಮ್ಮ ಪ್ರತಿಷ್ಠಾನದ ಬಗ್ಗೆ', hi: 'हमारे फ़ाउंडेशन के बारे में' },
+    'home.aboutText': { en: 'Green India Gokul Foundation works for a greener, healthier and self-reliant India — through tree plantation, cow protection, yoga and health awareness, and skills and livelihoods for women and youth.', kn: 'ಗ್ರೀನ್ ಇಂಡಿಯಾ ಗೋಕುಲ ಪ್ರತಿಷ್ಠಾನವು ಹಸಿರು, ಆರೋಗ್ಯಕರ ಮತ್ತು ಸ್ವಾವಲಂಬಿ ಭಾರತಕ್ಕಾಗಿ ಕೆಲಸ ಮಾಡುತ್ತದೆ — ಗಿಡ ನೆಡುವಿಕೆ, ಗೋ ರಕ್ಷಣೆ, ಯೋಗ ಮತ್ತು ಆರೋಗ್ಯ ಜಾಗೃತಿ, ಹಾಗೂ ಮಹಿಳೆಯರು ಮತ್ತು ಯುವಕರ ಕೌಶಲ್ಯ ಮತ್ತು ಜೀವನೋಪಾಯದ ಮೂಲಕ.', hi: 'ग्रीन इंडिया गोकुल फ़ाउंडेशन हरित, स्वस्थ और आत्मनिर्भर भारत के लिए काम करता है — वृक्षारोपण, गौ संरक्षण, योग और स्वास्थ्य जागरूकता तथा महिलाओं और युवाओं के कौशल व आजीविका के माध्यम से।' },
+    'home.support': { en: 'Support Our Mission', kn: 'ನಮ್ಮ ಧ್ಯೇಯವನ್ನು ಬೆಂಬಲಿಸಿ', hi: 'हमारे मिशन का समर्थन करें' },
+    'home.supportText': { en: 'Your contribution helps create a greener and healthier society.', kn: 'ನಿಮ್ಮ ಕೊಡುಗೆ ಹಸಿರು ಮತ್ತು ಆರೋಗ್ಯಕರ ಸಮಾಜ ನಿರ್ಮಿಸಲು ನೆರವಾಗುತ್ತದೆ.', hi: 'आपका योगदान एक हरित और स्वस्थ समाज बनाने में मदद करता है।' },
+    'home.stats': { en: 'Live from our records', kn: 'ನಮ್ಮ ದಾಖಲೆಗಳಿಂದ', hi: 'हमारे रिकॉर्ड से' },
+    'page.programs': { en: 'Our Programs', kn: 'ನಮ್ಮ ಕಾರ್ಯಕ್ರಮಗಳು', hi: 'हमारे कार्यक्रम' },
+    'page.events': { en: 'Events & Registration', kn: 'ಕಾರ್ಯಕ್ರಮಗಳು ಮತ್ತು ನೋಂದಣಿ', hi: 'आयोजन और पंजीकरण' },
+    'page.gallery': { en: 'Photo & Video Gallery', kn: 'ಫೋಟೋ ಮತ್ತು ವೀಡಿಯೊ ಗ್ಯಾಲರಿ', hi: 'फ़ोटो और वीडियो गैलरी' },
+    'page.awareness': { en: 'Awareness & Blog', kn: 'ಜಾಗೃತಿ ಮತ್ತು ಬ್ಲಾಗ್', hi: 'जागरूकता और ब्लॉग' },
+    'page.contact': { en: 'Contact Us', kn: 'ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ', hi: 'हमसे संपर्क करें' },
+    'page.donate': { en: 'Donate', kn: 'ದೇಣಿಗೆ ನೀಡಿ', hi: 'दान करें' },
+    'page.volunteer': { en: 'Become a Volunteer', kn: 'ಸ್ವಯಂಸೇವಕರಾಗಿ', hi: 'स्वयंसेवक बनें' },
+    'page.dashboard': { en: 'My Dashboard', kn: 'ನನ್ನ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್', hi: 'मेरा डैशबोर्ड' },
+    'f.name': { en: 'Full name', kn: 'ಪೂರ್ಣ ಹೆಸರು', hi: 'पूरा नाम' },
+    'f.email': { en: 'Email', kn: 'ಇಮೇಲ್', hi: 'ईमेल' },
+    'f.phone': { en: 'Mobile number', kn: 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ', hi: 'मोबाइल नंबर' },
+    'f.message': { en: 'Message', kn: 'ಸಂದೇಶ', hi: 'संदेश' },
+    'f.subject': { en: 'Topic', kn: 'ವಿಷಯ', hi: 'विषय' },
+    'f.amount': { en: 'Amount (₹)', kn: 'ಮೊತ್ತ (₹)', hi: 'राशि (₹)' },
+    'f.program': { en: 'Program', kn: 'ಕಾರ್ಯಕ್ರಮ', hi: 'कार्यक्रम' },
+    'f.pan': { en: 'PAN (for 80G receipt, optional)', kn: 'PAN (80G ರಸೀದಿಗಾಗಿ, ಐಚ್ಛಿಕ)', hi: 'PAN (80G रसीद हेतु, वैकल्पिक)' },
+    'f.once': { en: 'One-time', kn: 'ಒಂದು ಬಾರಿ', hi: 'एक बार' },
+    'f.monthly': { en: 'Monthly', kn: 'ಮಾಸಿಕ', hi: 'मासिक' },
+    'f.all': { en: 'All', kn: 'ಎಲ್ಲಾ', hi: 'सभी' },
+    'f.photos': { en: 'Photos', kn: 'ಫೋಟೋಗಳು', hi: 'फ़ोटो' },
+    'f.videos': { en: 'Videos', kn: 'ವೀಡಿಯೊಗಳು', hi: 'वीडियो' },
+    'cat.tree': { en: 'Tree Plantation', kn: 'ವೃಕ್ಷಾರೋಪಣ', hi: 'वृक्षारोपण' },
+    'cat.cow': { en: 'Cow Protection', kn: 'ಗೋ ರಕ್ಷಣೆ', hi: 'गौ संरक्षण' },
+    'cat.health': { en: 'Yoga & Health', kn: 'ಯೋಗ ಮತ್ತು ಆರೋಗ್ಯ', hi: 'योग और स्वास्थ्य' },
+    'cat.skill': { en: 'Women Empowerment', kn: 'ಮಹಿಳಾ ಸಬಲೀಕರಣ', hi: 'महिला सशक्तिकरण' },
+    'cat.community': { en: 'Community Events', kn: 'ಸಮುದಾಯ ಕಾರ್ಯಕ್ರಮಗಳು', hi: 'सामुदायिक आयोजन' },
+    'art.yoga': { en: 'Yoga', kn: 'ಯೋಗ', hi: 'योग' },
+    'art.health': { en: 'Health & Nutrition', kn: 'ಆರೋಗ್ಯ ಮತ್ತು ಪೋಷಣೆ', hi: 'स्वास्थ्य और पोषण' },
+    'art.women': { en: 'Women Empowerment', kn: 'ಮಹಿಳಾ ಸಬಲೀಕರಣ', hi: 'महिला सशक्तिकरण' },
+    'art.stories': { en: 'NGO Stories', kn: 'ಸಂಸ್ಥೆಯ ಕಥೆಗಳು', hi: 'संस्था की कहानियाँ' },
+    'art.schemes': { en: 'Govt Schemes', kn: 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು', hi: 'सरकारी योजनाएँ' },
+    'art.environment': { en: 'Environment', kn: 'ಪರಿಸರ', hi: 'पर्यावरण' },
+    'nav.articles': { en: 'Articles & Blog', kn: 'ಲೇಖನಗಳು ಮತ್ತು ಬ್ಲಾಗ್', hi: 'लेख और ब्लॉग' },
+    'nav.campaign': { en: 'Save Environment', kn: 'ಪರಿಸರ ಉಳಿಸಿ', hi: 'पर्यावरण बचाएँ' },
+    'page.environment': { en: 'Save Environment', kn: 'ಪರಿಸರ ಉಳಿಸಿ', hi: 'पर्यावरण बचाएँ' },
+    'home.env.kicker': { en: 'Awareness campaign', kn: 'ಜಾಗೃತಿ ಅಭಿಯಾನ', hi: 'जागरूकता अभियान' },
+    'home.env.title': { en: 'There is only one Earth', kn: 'ಇರುವುದು ಒಂದೇ ಭೂಮಿ', hi: 'धरती सिर्फ़ एक है' },
+    'home.env.text': { en: 'No environment, no life. Plant trees, protect water, avoid plastic — and take the pledge to keep our planet green.', kn: 'ಪರಿಸರವಿಲ್ಲದೆ ಜೀವನವಿಲ್ಲ. ಗಿಡ ನೆಡಿ, ನೀರು ಉಳಿಸಿ, ಪ್ಲಾಸ್ಟಿಕ್ ತಪ್ಪಿಸಿ — ಭೂಮಿಯನ್ನು ಹಸಿರಾಗಿಡಲು ಪ್ರತಿಜ್ಞೆ ಮಾಡಿ.', hi: 'पर्यावरण नहीं, तो जीवन नहीं। पेड़ लगाएँ, पानी बचाएँ, प्लास्टिक से बचें — और धरती को हरा-भरा रखने की शपथ लें।' },
+    'home.env.cta': { en: 'Take the pledge', kn: 'ಪ್ರತಿಜ್ಞೆ ಮಾಡಿ', hi: 'शपथ लें' },
+    'home.env.more': { en: 'Read the campaign', kn: 'ಅಭಿಯಾನ ಓದಿ', hi: 'अभियान पढ़ें' },
+    'auth.req.donate.t': { en: 'Please log in to donate', kn: 'ದೇಣಿಗೆ ನೀಡಲು ಲಾಗಿನ್ ಮಾಡಿ', hi: 'दान करने के लिए लॉगिन करें' },
+    'auth.req.donate.b': { en: 'Log in or create an account first. Your donations and receipts are saved to your account, so you can download them any time.', kn: 'ದಯವಿಟ್ಟು ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ ಅಥವಾ ಖಾತೆ ತೆರೆಯಿರಿ. ನಿಮ್ಮ ದೇಣಿಗೆ ಮತ್ತು ರಸೀದಿಗಳು ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಉಳಿಯುತ್ತವೆ; ಯಾವಾಗ ಬೇಕಾದರೂ ಡೌನ್‌ಲೋಡ್ ಮಾಡಬಹುದು.', hi: 'कृपया पहले लॉगिन करें या खाता बनाएँ। आपके दान और रसीदें आपके खाते में सुरक्षित रहेंगी, जिन्हें आप कभी भी डाउनलोड कर सकते हैं।' },
+    'auth.req.volunteer.t': { en: 'Please log in to join as a volunteer', kn: 'ಸ್ವಯಂಸೇವಕರಾಗಲು ಲಾಗಿನ್ ಮಾಡಿ', hi: 'स्वयंसेवक बनने के लिए लॉगिन करें' },
+    'auth.req.volunteer.b': { en: 'Log in or create an account first. Your ID proof, badge, tasks and certificate are linked to your account.', kn: 'ದಯವಿಟ್ಟು ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ ಅಥವಾ ಖಾತೆ ತೆರೆಯಿರಿ. ನಿಮ್ಮ ಗುರುತಿನ ಪುರಾವೆ, ಬ್ಯಾಡ್ಜ್, ಕಾರ್ಯಗಳು ಮತ್ತು ಪ್ರಮಾಣಪತ್ರ ನಿಮ್ಮ ಖಾತೆಗೆ ಜೋಡಿಸಲಾಗುತ್ತದೆ.', hi: 'कृपया पहले लॉगिन करें या खाता बनाएँ। आपका पहचान प्रमाण, बैज, कार्य और प्रमाणपत्र आपके खाते से जुड़े रहेंगे।' },
+    'auth.req.event.t': { en: 'Please log in to register for this event', kn: 'ಈ ಕಾರ್ಯಕ್ರಮಕ್ಕೆ ನೋಂದಾಯಿಸಲು ಲಾಗಿನ್ ಮಾಡಿ', hi: 'इस आयोजन के लिए पंजीकरण हेतु लॉगिन करें' },
+    'auth.req.event.b': { en: 'Log in or create an account first, so we can keep your registration and send you updates.', kn: 'ದಯವಿಟ್ಟು ಮೊದಲು ಲಾಗಿನ್ ಮಾಡಿ ಅಥವಾ ಖಾತೆ ತೆರೆಯಿರಿ; ಆಗ ನಿಮ್ಮ ನೋಂದಣಿ ಉಳಿಯುತ್ತದೆ ಮತ್ತು ಮಾಹಿತಿ ಕಳುಹಿಸಬಹುದು.', hi: 'कृपया पहले लॉगिन करें या खाता बनाएँ, ताकि आपका पंजीकरण सुरक्षित रहे और हम आपको अपडेट भेज सकें।' },
+    'auth.req.signup': { en: 'Create free account', kn: 'ಉಚಿತ ಖಾತೆ ತೆರೆಯಿರಿ', hi: 'मुफ़्त खाता बनाएँ' },
+    'auth.req.note': { en: 'Takes less than a minute. You will come straight back here.', kn: 'ಒಂದು ನಿಮಿಷಕ್ಕಿಂತ ಕಡಿಮೆ ಸಮಯ. ಮುಗಿದ ಮೇಲೆ ನೀವು ಇಲ್ಲಿಗೇ ಹಿಂತಿರುಗುತ್ತೀರಿ.', hi: 'एक मिनट से भी कम समय। पूरा होते ही आप सीधे यहीं लौट आएँगे।' },
+    'auth.req.later': { en: 'Not now', kn: 'ಈಗ ಬೇಡ', hi: 'अभी नहीं' },
+    'auth.req.banner': { en: 'Please log in to continue —', kn: 'ಮುಂದುವರಿಯಲು ಲಾಗಿನ್ ಮಾಡಿ —', hi: 'आगे बढ़ने के लिए लॉगिन करें —' },
+    'foot.links': { en: 'Quick Links', kn: 'ತ್ವರಿತ ಕೊಂಡಿಗಳು', hi: 'त्वरित लिंक' },
+    'foot.contact': { en: 'Contact', kn: 'ಸಂಪರ್ಕ', hi: 'संपर्क' },
+    'foot.news': { en: 'Newsletter', kn: 'ಸುದ್ದಿಪತ್ರ', hi: 'न्यूज़लेटर' },
+    'foot.join': { en: 'Subscribe', kn: 'ಚಂದಾದಾರರಾಗಿ', hi: 'सदस्यता लें' },
+    'foot.rights': { en: 'All rights reserved.', kn: 'ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.', hi: 'सर्वाधिकार सुरक्षित।' },
+    'chat.title': { en: 'Gokul Sewa Mitra', kn: 'ಗೋಕುಲ ಸೇವಾ ಮಿತ್ರ', hi: 'गोकुल सेवा मित्र' },
+    'chat.sub': { en: 'Online 24/7', kn: '24/7 ಲಭ್ಯ', hi: '24/7 उपलब्ध' },
+    'chat.hello': { en: 'Namaste! 🙏 Ask me about donations, 80G receipts, events, volunteering or contact details.', kn: 'ನಮಸ್ತೆ! 🙏 ದೇಣಿಗೆ, 80G ರಸೀದಿ, ಕಾರ್ಯಕ್ರಮ, ಸ್ವಯಂಸೇವೆ ಅಥವಾ ಸಂಪರ್ಕ ವಿವರಗಳ ಬಗ್ಗೆ ಕೇಳಿ.', hi: 'नमस्ते! 🙏 दान, 80G रसीद, आयोजन, स्वयंसेवा या संपर्क विवरण के बारे में पूछें।' },
+    'chat.ph': { en: 'Type your question…', kn: 'ನಿಮ್ಮ ಪ್ರಶ್ನೆ ಬರೆಯಿರಿ…', hi: 'अपना प्रश्न लिखें…' },
+    'chat.admin': { en: 'Connect to Admin Support Team', kn: 'ಆಡ್ಮಿನ್ ಬೆಂಬಲ ತಂಡವನ್ನು ಸಂಪರ್ಕಿಸಿ', hi: 'एडमिन सहायता टीम से जुड़ें' }
+  };
+  const I = (window.GIGF = window.GIGF || {});
+  // EXTRA holds generated Tamil / Telugu strings (js/i18n-extra.js); anything missing falls back to English and is then auto-translated on the page
+  I.t = (k) => { const L = I.lang ? I.lang() : 'en'; return (D[k] && D[k][L]) || (I.EXTRA && I.EXTRA[L] && I.EXTRA[L][k]) || (D[k] && D[k].en) || k; };
+  I.LANGS = [{ c: 'en', l: 'EN' }, { c: 'kn', l: 'ಕನ್ನಡ' }, { c: 'hi', l: 'हिन्दी' }, { c: 'ta', l: 'தமிழ்' }, { c: 'te', l: 'తెలుగు' }, { c: 'ml', l: 'മലയാളം' }];
+  I.applyI18n = function (root) {
+    (root || document).querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = I.t(el.dataset.i18n); });
+    (root || document).querySelectorAll('[data-i18n-ph]').forEach((el) => { el.placeholder = I.t(el.dataset.i18nPh); });
+    document.documentElement.lang = I.lang();
+  };
+  I.setLang = function (c) { localStorage.setItem('gigf_lang', c); location.reload(); };
+})();

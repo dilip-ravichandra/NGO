@@ -2,115 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.googleusercontent.com; media-src 'self' blob:; connect-src 'self' https://accounts.google.com/gsi/ https://hbnwugmdivvjoebevbgv.supabase.co; frame-src https://www.google.com https://accounts.google.com/gsi/; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Green India Gokul Foundation | Nature • Cow Welfare • Health • Rural Prosperity</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/png" href="assets/logo_circle.png">
+  <title>Nature • Cow Welfare • Health • Rural Prosperity | Green India Gokul Foundation</title>
+  <meta name="description" content="Green India Gokul Foundation, Bengaluru — tree plantation, cow protection, yoga and health awareness, women empowerment and rural welfare.">
+  <meta property="og:title" content="Nature • Cow Welfare • Health • Rural Prosperity | Green India Gokul Foundation">
+  <meta property="og:description" content="Green India Gokul Foundation, Bengaluru — tree plantation, cow protection, yoga and health awareness, women empowerment and rural welfare.">
+  <meta property="og:image" content="assets/logo-emblem-512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="js/fonts.js?v=1795701001"></script>
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="css/style.css?v=1795701001">
+  <link rel="stylesheet" href="css/site.css?v=1795701001">
+  <link rel="stylesheet" href="css/motion.css?v=1795701001">
+  <link rel="stylesheet" href="css/gallery-grow.css?v=1795701001">
+  <link rel="stylesheet" href="css/pop.css?v=1795701001">
+  <link rel="stylesheet" href="css/env.css?v=1795701001">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-emblem.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/logo-emblem-64.png">
+  <link rel="apple-touch-icon" href="assets/logo-emblem-192.png">
+  <meta name="theme-color" content="#0f4d2a">
 </head>
-<body>
+<body data-page="home">
+<a href="#main" class="skip" style="position:absolute;left:-999px">Skip to content</a>
+<div id="gigf-header"></div>
 
-  <!-- =====================================================================
-       SITE CONTAINER (Natural Responsive Layout)
-       ===================================================================== -->
-  <div class="site-container" id="siteContainer">
+<main id="main">
 
-    <!-- 1. TOP INFORMATION BAR -->
-    <header class="top-bar">
-      <div class="top-bar-left">
-        <a href="mailto:info@greenindiagokulfoundation.org" class="top-bar-contact">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          info@greenindiagokulfoundation.org
-        </a>
-        <span class="top-bar-sep">|</span>
-        <a href="tel:+919876543210" class="top-bar-contact">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-          +91 98765 43210
-        </a>
-      </div>
-
-      <div class="top-bar-center">
-        Serve Nature... Serve Society... Build a Better India...
-      </div>
-
-      <div class="top-bar-right">
-        <a href="#" class="social-icon-btn fb" data-platform="Facebook" title="Facebook">f</a>
-        <a href="#" class="social-icon-btn yt" data-platform="YouTube" title="YouTube">▶</a>
-        <a href="#" class="social-icon-btn li" data-platform="LinkedIn" title="LinkedIn">in</a>
-        <a href="#" class="social-icon-btn wa" data-platform="WhatsApp" title="WhatsApp">💬</a>
-      </div>
-    </header>
-
-    <!-- 2. MAIN HEADER & NAVIGATION -->
-    <nav class="main-header">
-      <a href="index.html" class="header-brand">
-        <img src="assets/foundation_logo.png" alt="Green India Gokul Foundation Logo" class="brand-logo-img">
-        <div class="brand-text-block">
-          <h1 class="brand-name">Green India Gokul Foundation</h1>
-          <p class="brand-tagline">Nature &bull; Cow Welfare &bull; Health &bull; Skill Development &bull; Rural Prosperity</p>
-        </div>
-      </a>
-
-      <!-- Desktop Navigation Menu -->
-      <ul class="nav-menu">
-        <li class="nav-item">
-          <a href="#" class="nav-link active-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            About Us ▾
-          </a>
-          <div class="nav-dropdown">
-            <a href="#" class="dropdown-item" data-open-modal="aboutModal">🌱 Vision &amp; Mission</a>
-            <a href="#" class="dropdown-item" data-open-modal="aboutModal">📜 Foundation Story</a>
-            <a href="#" class="dropdown-item" data-open-modal="aboutModal">🐮 Goshala Seva</a>
-            <a href="#" class="dropdown-item" data-open-modal="donationModal">📑 80G Tax Exemption</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="#programsSection" class="nav-link">
-            Our Programs ▾
-          </a>
-          <div class="nav-dropdown">
-            <a href="#" class="dropdown-item" onclick="openProgramDetails('tree')">🌳 Tree Plantation</a>
-            <a href="#" class="dropdown-item" onclick="openProgramDetails('cow')">🐮 Cow Welfare &amp; Goshala</a>
-            <a href="#" class="dropdown-item" onclick="openProgramDetails('health')">🧘 Yoga &amp; Health Camps</a>
-            <a href="#" class="dropdown-item" onclick="openProgramDetails('skill')">💼 Women &amp; Youth Skills</a>
-            <a href="#" class="dropdown-item" onclick="openProgramDetails('community')">👥 Community Upliftment</a>
-            <a href="#" class="dropdown-item" onclick="openProgramDetails('sustainable')">🌿 Sustainable Living</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a href="#gallerySection" class="nav-link">Gallery</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link" data-open-modal="contactModal">Contact Us</a>
-        </li>
-        <li class="nav-item">
-          <a href="login.html" class="nav-link" style="font-weight:600;">Login</a>
-        </li>
-        <li class="nav-item">
-          <a href="signup.html" class="nav-link signup-nav-btn">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <button class="donate-btn-header" data-open-modal="donationModal">
-            Donate Now 💚
-          </button>
-        </li>
-      </ul>
-
-      <!-- Mobile Hamburger Button -->
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Mobile Menu">
-        &#9776;
-      </button>
-    </nav>
-
-    <!-- 3. HERO BANNER CAROUSEL (EXACT MATCH TO REFERENCE MOCKUP) -->
+<div class="ticker" id="ticker" aria-label="News ticker"></div>
     <section class="hero-section" id="heroCarousel">
       <!-- Carousel Arrows -->
       <button class="carousel-arrow prev" aria-label="Previous Slide">&lang;</button>
@@ -150,12 +69,12 @@
             </ul>
 
             <div class="hero-actions-row">
-              <button class="hero-btn-primary" data-open-modal="aboutModal">
+              <a class="hero-btn-primary" href="#about">
                 <span>🌿 Our Mission</span> &rarr;
-              </button>
-              <button class="hero-btn-secondary" data-open-modal="volunteerModal">
+              </a>
+              <a class="hero-btn-secondary" href="volunteer.html">
                 <span>👥 Join Us</span> &rarr;
-              </button>
+              </a>
             </div>
           </div>
 
@@ -203,12 +122,12 @@
             </ul>
 
             <div class="hero-actions-row">
-              <button class="hero-btn-primary" data-open-modal="programModal" onclick="openProgramDetails('health')">
+              <a class="hero-btn-primary" href="programs.html#yoga-health">
                 <span>🧘 Explore Yoga Centers</span> &rarr;
-              </button>
-              <button class="hero-btn-secondary" data-open-modal="volunteerModal">
+              </a>
+              <a class="hero-btn-secondary" href="programs.html#women-youth-skills">
                 <span>🤝 Support Women SHGs</span> &rarr;
-              </button>
+              </a>
             </div>
           </div>
 
@@ -222,7 +141,7 @@
             <div class="hero-hotspot hotspot-child" style="bottom:20%; right:15%;" data-label="Village Women SHG Micro-Cooperatives">
               💼 Women Employment
             </div>
-            <div class="hero-hotspot hotspot-globe" style="top:10%; right:5%;" data-label="Holistic Ayurvedic Wellness">
+            <div class="hero-hotspot hotspot-globe" style="top:32%; right:4%;" data-label="Holistic Ayurvedic Wellness">
               🌿 Natural Living
             </div>
           </div>
@@ -233,7 +152,7 @@
           <div class="hero-left-glass-box" style="background:rgba(255,255,255,0.95);">
             <span class="hero-badge-pill" style="background:#fef08a; color:#854d0e; border-color:#fde047;">🐮 Gau Sanrakshan Project</span>
             <h2 class="hero-heading">Protecting India's Sacred Indigenous Cows</h2>
-            <p class="hero-subheading">Over 2,500 rescued cows sheltered across our organic goshala sanctuaries with 24/7 care and nutritious green fodder.</p>
+            <p class="hero-subheading">Shelter, nutritious fodder and veterinary care for abandoned, sick and ageing indigenous cows.</p>
 
             <ul class="hero-bullet-list">
               <li class="hero-bullet-item">
@@ -242,21 +161,21 @@
               </li>
               <li class="hero-bullet-item">
                 <svg class="hero-bullet-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                <span>Conservation of Rare Gir, Sahiwal, and Hallikar Breeds</span>
+                <span>Conservation of Indigenous Desi Breeds</span>
               </li>
               <li class="hero-bullet-item">
                 <svg class="hero-bullet-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                <span>Panchagavya Organic Farming Training for 5,000+ Farmers</span>
+                <span>Support for Panchagavya-based Natural Farming</span>
               </li>
             </ul>
 
             <div class="hero-actions-row">
-              <button class="hero-btn-primary" data-open-modal="donationModal">
+              <a class="hero-btn-primary" href="donate.html?program=cow">
                 <span>🐮 Sponsor Cow Fodder</span> &rarr;
-              </button>
-              <button class="hero-btn-secondary" onclick="openProgramDetails('cow')">
+              </a>
+              <a class="hero-btn-secondary" href="programs.html#cow-protection">
                 <span>🌾 Goshala Seva</span> &rarr;
-              </button>
+              </a>
             </div>
           </div>
           <div style="margin-right:40px;">
@@ -265,757 +184,53 @@
         </div>
       </div>
     </section>
-
-    <!-- 4. SIX QUICK-ACCESS FEATURE PILLARS (EXACT MATCH TO REFERENCE MOCKUP) -->
-    <section class="pillars-section" id="programsSection">
-      <div class="pillars-grid">
-        <!-- 1. Tree Plantation & Environment -->
-        <div class="pillar-card" data-program="tree">
-          <div class="pillar-icon-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="#1ea855"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-1 18h2v2h-2v-2z"/></svg>
-          </div>
-          <div class="pillar-title">Tree Plantation<br>&amp; Environment</div>
-        </div>
-
-        <!-- 2. Cow Protection & Goshala (MODERN SLEEK COW SYMBOL) -->
-        <div class="pillar-card" data-program="cow">
-          <div class="pillar-icon-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8d5b2d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 6c.8 0 2.2-.8 3-1.8-.8 2.2-.8 3.8 0 5.2-.8.8-1.5.8-2.2.8" />
-              <path d="M5 6C4.2 6 2.8 5.2 2 4.2c.8 2.2.8 3.8 0 5.2.8.8 1.5.8 2.2.8" />
-              <path d="M5.5 6.5C5.5 5 7.5 3.5 12 3.5s6.5 1.5 6.5 3c0 2.8-.8 4.8-1.8 6.5 1.8 1 2.8 2.8 2.8 4.8 0 2.5-3.2 4.2-7.5 4.2s-7.5-1.7-7.5-4.2c0-2 1-3.8 2.8-4.8-1-1.7-1.8-3.7-1.8-6.5z" />
-              <circle cx="9" cy="11.5" r="1.2" fill="#8d5b2d" stroke="none" />
-              <circle cx="15" cy="11.5" r="1.2" fill="#8d5b2d" stroke="none" />
-              <path d="M10 16.5c1 .6 3 .6 4 0" />
-            </svg>
-          </div>
-          <div class="pillar-title">Cow Protection<br>&amp; Goshala</div>
-        </div>
-
-        <!-- 3. Health Awareness & Rural Welfare -->
-        <div class="pillar-card" data-program="health">
-          <div class="pillar-icon-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="#dc2626"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </div>
-          <div class="pillar-title">Health Awareness<br>&amp; Rural Welfare</div>
-        </div>
-
-        <!-- 4. Skill Development & Education -->
-        <div class="pillar-card" data-program="skill">
-          <div class="pillar-icon-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="#1e40af"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-          </div>
-          <div class="pillar-title">Skill Development<br>&amp; Education</div>
-        </div>
-
-        <!-- 5. Community Development -->
-        <div class="pillar-card" data-program="community">
-          <div class="pillar-icon-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="#0f766e"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-          </div>
-          <div class="pillar-title">Community<br>Development</div>
-        </div>
-
-        <!-- 6. Sustainable Living -->
-        <div class="pillar-card" data-program="sustainable">
-          <div class="pillar-icon-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="#15803d"><path d="M12 2c-5.33 4-8 8-8 12 0 4.42 3.58 8 8 8s8-3.58 8-8c0-4-2.67-8-8-12zm0 18c-3.31 0-6-2.69-6-6 0-2.97 2.16-6.16 6-9.5 3.84 3.34 6 6.53 6 9.5 0 3.31-2.69 6-6 6z"/></svg>
-          </div>
-          <div class="pillar-title">Sustainable<br>Living</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. FOUR-COLUMN CORE CONTENT CARDS (NATURAL HIGH-RES IMAGES) -->
-    <section class="core-cards-section">
-      <div class="core-cards-grid">
-
-        <!-- CARD 1: ABOUT OUR FOUNDATION (NATURAL HIGH-RES SPROUT IMAGE) -->
-        <div class="core-card">
-          <div class="card-header-badge">
-            About Our Foundation
-          </div>
-          <div class="about-card-body">
-            <img src="assets/about_natural_sprout.jpg" alt="Hands holding green sapling in rich soil" class="about-img-thumb">
-            <div>
-              <p class="about-card-desc">
-                Green India Gokul Foundation is dedicated to building a greener, healthier, and self-reliant nation. Guided by ecological harmony and social compassion, we champion native tree afforestation, protect indigenous Desi cow breeds at our Goshalas, conduct rural healthcare and yoga wellness camps, and empower women and youth through sustainable community livelihoods.
-              </p>
-              <button class="btn-know-more" data-open-modal="aboutModal">
-                Know More &rarr;
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 2: OUR KEY INITIATIVES -->
-        <div class="core-card initiatives-card">
-          <div class="initiatives-header">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1ea855"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A9.49 9.49 0 0 0 12 21a9.5 9.5 0 0 0 8.5-5.23L22 17.5V8h-5zm-5 11c-2.4 0-4.6-1-6.1-2.8 1.4-3.4 3.7-6.2 8.1-7.2v10z"/></svg>
-            <span>Our Key Initiatives</span>
-          </div>
-
-          <div class="initiatives-content">
-            <ul class="initiatives-list">
-              <li class="initiative-item" data-program-ref="tree">
-                <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                <span>Mass Tree Plantation Drives</span>
-              </li>
-              <li class="initiative-item" data-program-ref="cow">
-                <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                <span>Cow Protection &amp; Indigenous Breeds</span>
-              </li>
-              <li class="initiative-item" data-program-ref="health">
-                <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                <span>Health Awareness Camps</span>
-              </li>
-              <li class="initiative-item" data-program-ref="skill">
-                <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                <span>Skill Development Programs</span>
-              </li>
-              <li class="initiative-item" data-program-ref="community">
-                <svg class="check-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                <span>Rural Welfare Activities</span>
-              </li>
-            </ul>
-
-            <div class="initiatives-vertical-stamp">
-              Green India Healthy India
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 3: OUR GALLERY -->
-        <div class="core-card" id="gallerySection">
-          <div class="card-header-badge">
-            Our Gallery
-          </div>
-          <div class="gallery-card-body">
-            <div class="gallery-grid-2x2">
-              <div class="gal-thumb" title="Click to view">
-                <img src="assets/gallery/gallery1.jpg" alt="Foundation Activity 1" onerror="this.src='assets/about_natural_sprout.jpg'">
-              </div>
-              <div class="gal-thumb" title="Click to view">
-                <img src="assets/gallery/gallery2.jpg" alt="Foundation Activity 2" onerror="this.src='assets/desi_cow_hd.jpg'">
-              </div>
-              <div class="gal-thumb" title="Click to view">
-                <img src="assets/gallery/gallery3.jpg" alt="Foundation Activity 3" onerror="this.src='assets/hero_pristine_bg.jpg'">
-              </div>
-              <div class="gal-thumb gal-video-thumb" title="Click to play video">
-                <video src="assets/gallery/gallery_video1.mp4" muted preload="metadata" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></video>
-                <div class="play-overlay"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 4: SUPPORT OUR MISSION -->
-        <div class="core-card support-card">
-          <h3 class="support-title">Support Our Mission</h3>
-          <p class="support-text">
-            Your contribution helps create a greener and healthier society.
-          </p>
-
-          <button class="btn-donate-card" data-open-modal="donationModal">
-            <span style="font-size:1.1rem;">🤍</span> Donate Now
-          </button>
-
-          <p class="support-footer-note">Together we can make a difference!</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 6. BOTTOM GREEN RIBBON BANNER (MODERN STYLED RECREATION) -->
-    <div class="bottom-ribbon-banner">
-      <!-- Modern Sleek Cow Silhouette SVG on Left -->
-      <svg class="ribbon-cow-silhouette" width="60" height="32" viewBox="0 0 70 38" fill="#4ade80">
-        <path d="M62 14c-1-2-3-3-5-2l-4 1c-2-3-6-5-11-5-3 0-5 1-7 3-3-1-6-2-10-2-6 0-11 2-14 6l-3 1c-2 1-3 2-3 4v7c0 1 1 2 2 2h3v8h4v-8h12v8h4v-8h8v8h4v-8h3c1 0 2-1 2-2v-6c0-2-1-4-3-5z"/>
-        <circle cx="58" cy="12" r="1.5" fill="#092c17"/>
-      </svg>
-
-      <!-- Center Motto Text -->
-      <div class="ribbon-motto-text">
-        &mdash; Let's Build a Green, Healthy and Prosperous India Together... &mdash;
-      </div>
-
-      <!-- Modern Skyline & Lush Tree Canopy Silhouette on Right -->
-      <div class="ribbon-city-silhouette">
-        <svg width="120" height="32" viewBox="0 0 120 32" fill="#4ade80">
-          <rect x="5" y="16" width="6" height="16" rx="1"/>
-          <rect x="13" y="10" width="8" height="22" rx="1"/>
-          <rect x="23" y="18" width="5" height="14" rx="1"/>
-          <rect x="30" y="8" width="10" height="24" rx="1"/>
-          <rect x="42" y="14" width="7" height="18" rx="1"/>
-          <circle cx="58" cy="18" r="8"/>
-          <circle cx="72" cy="15" r="10"/>
-          <circle cx="88" cy="17" r="9"/>
-          <circle cx="102" cy="20" r="7"/>
-          <circle cx="113" cy="23" r="5"/>
-          <rect x="0" y="30" width="120" height="2"/>
-        </svg>
-      </div>
-    </div>
-
-    <!-- 7. COMPREHENSIVE FOOTER -->
-    <footer class="site-footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-            <img src="assets/foundation_logo.png" alt="Logo" style="width:48px; height:48px; object-fit:contain; background:#fff; border-radius:50%; padding:2px;">
-            <h4 style="margin:0; font-size:1.1rem; color:#fff;">Green India Gokul</h4>
-          </div>
-          <p style="font-size:0.8rem; line-height:1.5; color:#a7f3d0; margin-bottom:14px;">
-            Green India Gokul Foundation is committed to environmental conservation, indigenous cow welfare, rural health access, and holistic community empowerment across India.
-          </p>
-          <div style="font-size:0.75rem; color:#6ee7b7;">
-            Reg. No: SBYF/NGO/2019/8472 &bull; 80G &amp; 12A Certified
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4>Core Programs</h4>
-          <ul class="footer-links">
-            <li><a href="#" onclick="openProgramDetails('tree')">Mass Tree Plantation</a></li>
-            <li><a href="#" onclick="openProgramDetails('cow')">Gau Seva &amp; Goshala Sanctuary</a></li>
-            <li><a href="#" onclick="openProgramDetails('health')">Free Medical &amp; Yoga Camps</a></li>
-            <li><a href="#" onclick="openProgramDetails('skill')">Vocational Skill Training</a></li>
-            <li><a href="#" onclick="openProgramDetails('community')">Women SHG Development</a></li>
-            <li><a href="#" onclick="openProgramDetails('sustainable')">Zero-Waste Villages</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="#" data-open-modal="aboutModal">About Our Trust</a></li>
-            <li><a href="#" data-open-modal="donationModal">Make a Donation (80G)</a></li>
-            <li><a href="#" data-open-modal="volunteerModal">Join as a Volunteer</a></li>
-            <li><a href="#" data-open-modal="lightboxModal">Photo &amp; Video Gallery</a></li>
-            <li><a href="#" data-open-modal="contactModal">Contact &amp; Map Location</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Contact &amp; Newsletter</h4>
-          <p style="font-size:0.8rem; color:#a7f3d0; margin-bottom:8px;">
-            📍 Registered Trust Office:<br>
-            #42 Gokul Nilaya, Green Heritage Road, Bengaluru, Karnataka &ndash; 560078
-          </p>
-          <p style="font-size:0.8rem; color:#a7f3d0; margin-bottom:12px;">
-            📞 +91 98765 43210 &bull; ✉️ info@greenindiagokulfoundation.org
-          </p>
-
-          <form onsubmit="event.preventDefault(); showToast('Thank you for subscribing to our Green Newsletter!', '💌');" class="footer-newsletter-input">
-            <input type="email" placeholder="Your Email address..." required>
-            <button type="submit">Join</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div>&copy; 2026 Green India Gokul Foundation. All Rights Reserved.</div>
-        <div style="font-style:italic;">Crafted with Precision | Designed with Purpose | Delivered with Passion</div>
-      </div>
-    </footer>
-
-    <!-- MOBILE BOTTOM NAVIGATION (Visible on Mobile Screens) -->
-    <nav class="mobile-bottom-nav">
-      <div class="bottom-nav-grid">
-        <a href="#heroCarousel" class="bottom-nav-link active">
-          <span class="bottom-nav-icon">🏠</span>
-          <span>Home</span>
-        </a>
-        <a href="#programsSection" class="bottom-nav-link">
-          <span class="bottom-nav-icon">🌳</span>
-          <span>Programs</span>
-        </a>
-        <a href="#" class="bottom-nav-link" data-open-modal="donationModal">
-          <span class="bottom-nav-icon" style="color:#ea580c;">❤️</span>
-          <span style="color:#ea580c; font-weight:700;">Donate</span>
-        </a>
-        <a href="#" class="bottom-nav-link" data-open-modal="volunteerModal">
-          <span class="bottom-nav-icon">👥</span>
-          <span>Volunteer</span>
-        </a>
-        <a href="#" class="bottom-nav-link" data-open-modal="contactModal">
-          <span class="bottom-nav-icon">📞</span>
-          <span>Contact</span>
-        </a>
-      </div>
-    </nav>
-
-  </div><!-- End .page-wrapper -->
-
-  <!-- =====================================================================
-       INTERACTIVE MODALS & SYSTEM DIALOGS
-       ===================================================================== -->
-
-  <!-- 1. DONATION MODAL (PAYMENT GATEWAY SIMULATOR) -->
-  <div class="modal-backdrop" id="donationModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="modal-title">
-          <span>💚 Support Green India Gokul Foundation</span>
-        </div>
-        <button class="btn-close-modal" aria-label="Close Modal">&times;</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="donation-type-tabs">
-          <button class="tab-btn active">One-Time Contribution</button>
-          <button class="tab-btn">Monthly Recurring Seva</button>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Choose Cause / Program:</label>
-          <select class="form-control" id="donationProgram">
-            <option value="Cow Welfare & Fodder">🐮 Cow Welfare &amp; Goshala Fodder Seva</option>
-            <option value="Tree Plantation Drives">🌳 Mass Tree Plantation &amp; 3-Yr Nurture</option>
-            <option value="Rural Health & Medicine">❤️ Free Village Health Camps &amp; Medicines</option>
-            <option value="Youth Skill Centers">🎓 Rural Youth &amp; Women Skill Training</option>
-            <option value="General Corpus Fund">🌱 Where Needed Most (General Trust Fund)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Select Contribution Amount (INR):</label>
-          <div class="amount-presets">
-            <button class="preset-btn" data-amount="500">₹500</button>
-            <button class="preset-btn selected" data-amount="1000">₹1,000</button>
-            <button class="preset-btn" data-amount="2500">₹2,500</button>
-            <button class="preset-btn" data-amount="5000">₹5,000</button>
-          </div>
-          <input type="number" class="form-control" id="customDonationAmount" placeholder="Or enter custom amount in ₹" value="1000">
-        </div>
-
-        <form id="donationForm">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <div class="form-group">
-              <label class="form-label">Full Name *</label>
-              <input type="text" class="form-control" id="donorName" placeholder="e.g. Dilip Kumar" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">PAN Number (for 80G Tax Exemption)</label>
-              <input type="text" class="form-control" id="donorPan" placeholder="e.g. ABCDE1234F" maxlength="10">
-            </div>
-          </div>
-
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <div class="form-group">
-              <label class="form-label">Email Address *</label>
-              <input type="email" class="form-control" placeholder="donor@example.com" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Mobile Number (WhatsApp) *</label>
-              <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Select Payment Gateway Mode:</label>
-            <div class="payment-method-selector">
-              <div class="pay-card active" data-method="UPI">
-                📱 UPI / QR Code
-              </div>
-              <div class="pay-card" data-method="Card">
-                💳 Credit / Debit Card
-              </div>
-              <div class="pay-card" data-method="Netbanking">
-                🏦 Net Banking
-              </div>
-            </div>
-
-            <!-- Dynamic UPI QR Simulator -->
-            <div id="upiQrBox" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; text-align:center; margin-bottom:12px;">
-              <div style="font-size:0.78rem; color:#475569; margin-bottom:6px;">Scan with GPay, PhonePe, Paytm, or BHIM:</div>
-              <div style="background:#ffffff; display:inline-block; padding:8px; border-radius:8px; border:1px solid #cbd5e1;">
-                <svg width="110" height="110" viewBox="0 0 100 100">
-                  <rect width="100" height="100" fill="#ffffff"/>
-                  <rect x="10" y="10" width="25" height="25" fill="#0f4d2a"/>
-                  <rect x="15" y="15" width="15" height="15" fill="#ffffff"/>
-                  <rect x="18" y="18" width="9" height="9" fill="#0f4d2a"/>
-                  <rect x="65" y="10" width="25" height="25" fill="#0f4d2a"/>
-                  <rect x="70" y="15" width="15" height="15" fill="#ffffff"/>
-                  <rect x="73" y="18" width="9" height="9" fill="#0f4d2a"/>
-                  <rect x="10" y="65" width="25" height="25" fill="#0f4d2a"/>
-                  <rect x="15" y="70" width="15" height="15" fill="#ffffff"/>
-                  <rect x="18" y="73" width="9" height="9" fill="#0f4d2a"/>
-                  <rect x="45" y="15" width="10" height="20" fill="#156637"/>
-                  <rect x="40" y="45" width="20" height="10" fill="#156637"/>
-                  <rect x="45" y="65" width="10" height="20" fill="#156637"/>
-                  <rect x="65" y="45" width="20" height="40" fill="#156637"/>
-                </svg>
-              </div>
-              <div style="font-size:0.75rem; font-weight:700; color:#0f4d2a; margin-top:4px;">UPI ID: gokulfoundation@sbi</div>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-submit-action">
-            Complete Secure Donation (80G Eligible) &rarr;
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. DONATION SUCCESS & AUTO RECEIPT MODAL (PDF Module 4.5 Auto Receipts PDF) -->
-  <div class="modal-backdrop" id="receiptModal">
-    <div class="modal-box" style="max-width:500px;">
-      <div class="modal-header" style="background:#15803d;">
-        <div class="modal-title">🎉 Donation Successful!</div>
-        <button class="btn-close-modal">&times;</button>
-      </div>
-      <div class="modal-body" style="text-align:center;">
-        <div style="width:64px; height:64px; background:#dcfce7; color:#15803d; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:2rem; margin-bottom:12px;">✓</div>
-        <h3 style="color:#0f4d2a; font-size:1.3rem; margin-bottom:4px;">Thank You for Your Generosity!</h3>
-        <p style="font-size:0.82rem; color:#4b5563; margin-bottom:18px;">Your donation has been credited to Green India Gokul Foundation. An 80G tax receipt has been generated.</p>
-
-        <!-- Official Receipt Box -->
-        <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:14px; text-align:left; font-size:0.82rem; margin-bottom:18px; line-height:1.6;">
-          <div style="display:flex; justify-content:space-between; border-bottom:1px solid #e5e7eb; padding-bottom:6px; margin-bottom:6px;">
-            <span style="font-weight:700; color:#374151;">Transaction ID:</span>
-            <span id="receiptTxnId" style="font-family:monospace; font-weight:700; color:#0f4d2a;">TXN-884291</span>
-          </div>
-          <div style="display:flex; justify-content:space-between;">
-            <span>Donor Name:</span>
-            <strong id="receiptName">Dilip Kumar</strong>
-          </div>
-          <div style="display:flex; justify-content:space-between;">
-            <span>Amount Contributed:</span>
-            <strong id="receiptAmount" style="color:#15803d; font-size:1rem;">₹1,000</strong>
-          </div>
-          <div style="display:flex; justify-content:space-between;">
-            <span>Program Allocation:</span>
-            <span id="receiptProgram">Cow Welfare &amp; Fodder</span>
-          </div>
-          <div style="display:flex; justify-content:space-between;">
-            <span>Donor PAN (80G):</span>
-            <span id="receiptPan">ABCDE1234F</span>
-          </div>
-          <div style="display:flex; justify-content:space-between;">
-            <span>Date &amp; Time:</span>
-            <span id="receiptDate">Nov 24, 2026</span>
-          </div>
-          <div style="margin-top:8px; font-size:0.72rem; color:#6b7280; font-style:italic;">
-            Eligible for 50% deduction u/s 80G(5)(vi) of the Income Tax Act 1961.
-          </div>
-        </div>
-
-        <button class="btn-submit-action" onclick="showToast('Official 80G PDF Receipt downloaded to your device!', '📥'); closeModal('receiptModal');">
-          📥 Download Official 80G Tax Receipt (PDF)
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. VOLUNTEER REGISTRATION MODAL (PDF Module 4.4 Profile + ID Upload + Certificate) -->
-  <div class="modal-backdrop" id="volunteerModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="modal-title">👥 Volunteer Registration &bull; Join the Cause</div>
-        <button class="btn-close-modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size:0.82rem; color:#4b5563; margin-bottom:14px;">
-          Be the change on the ground. Register as an active volunteer to participate in weekend tree plantation drives, Gau-Seva camps, and health missions.
-        </p>
-
-        <form id="volunteerForm">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <div class="form-group">
-              <label class="form-label">Full Name *</label>
-              <input type="text" class="form-control" id="volName" placeholder="Your name" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Phone Number *</label>
-              <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
-            </div>
-          </div>
-
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <div class="form-group">
-              <label class="form-label">Email Address *</label>
-              <input type="email" class="form-control" placeholder="you@example.com" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">City / District *</label>
-              <input type="text" class="form-control" id="volCity" placeholder="e.g. Bengaluru, Mandya" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Primary Interest / Domain *</label>
-            <select class="form-control" id="volDomain">
-              <option value="Tree Plantation & Care">🌳 Environmental &amp; Tree Plantation Drives</option>
-              <option value="Cow Welfare & Goshala Seva">🐮 Cow Welfare &amp; Goshala Animal Care</option>
-              <option value="Rural Health & Medical Camps">❤️ Health, Medical &amp; Yoga Assistance</option>
-              <option value="Skill Training & Teaching">🎓 Youth Skill Training &amp; Education</option>
-              <option value="Social Media & Digital Content">📱 Digital Outreach, Photography &amp; Design</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Govt ID Proof Upload (PDF requirement 4.4):</label>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <input type="file" id="volunteerIdUpload" style="display:none;" accept="image/*,.pdf">
-              <button type="button" class="btn-event-volunteer" onclick="document.getElementById('volunteerIdUpload').click();">
-                📎 Choose File (Aadhaar / Voter ID / College ID)
-              </button>
-              <span id="uploadedFileName" style="font-size:0.75rem; color:#6b7280;">No file chosen</span>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-submit-action">
-            Complete Registration &amp; Get Volunteer ID Badge &rarr;
-          </button>
-        </form>
-
-        <!-- Dynamic Digital ID Badge Preview -->
-        <div class="id-badge-preview" id="idBadgePreview">
-          <div class="badge-header">
-            <div>
-              <div style="font-weight:800; font-size:0.85rem; color:#fef08a;">GREEN INDIA GOKUL FOUNDATION</div>
-              <div style="font-size:0.68rem; opacity:0.85;">Official Volunteer Identification Credential</div>
-            </div>
-            <span style="font-size:1.2rem;">🎖️</span>
-          </div>
-          <div class="badge-body">
-            <div class="badge-avatar">👤</div>
-            <div class="badge-info">
-              <h5 id="badgeName">Dilip Kumar</h5>
-              <p>Domain: <strong id="badgeDomain">Tree Plantation</strong></p>
-              <p>Location: <span id="badgeCity">Bengaluru</span></p>
-              <p>Badge ID: <strong id="badgeIdNum" style="color:#fef08a;">GOKUL-VOL-4821</strong></p>
-            </div>
-          </div>
-          <div style="margin-top:10px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.2); display:flex; justify-content:space-between; align-items:center; font-size:0.7rem;">
-            <span>Status: <strong>VERIFIED ACTIVE</strong></span>
-            <button onclick="showToast('Digital Volunteer ID Card saved to gallery/downloads!', '🪪');" style="background:#fef08a; color:#0f4d2a; border:none; padding:3px 8px; border-radius:4px; font-weight:700; cursor:pointer;">Save Card</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. PROGRAM DETAILS MODAL (DYNAMIC CONTENT FOR 6 PILLARS) -->
-  <div class="modal-backdrop" id="programModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="modal-title">
-          <span id="progModalIcon">🌳</span>
-          <span id="progModalTitle">Tree Plantation &amp; Environment</span>
-        </div>
-        <button class="btn-close-modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <h4 id="progModalTagline" style="color:#0f4d2a; font-size:1.05rem; margin-bottom:10px;">Restoring green cover, biodiversity, and clean air across India.</h4>
-        <p id="progModalDesc" style="font-size:0.85rem; color:#374151; line-height:1.5; margin-bottom:14px;"></p>
-
-        <div style="background:#f0fdf4; border-left:4px solid #15803d; padding:10px 14px; border-radius:4px; font-size:0.82rem; color:#166534; margin-bottom:16px;">
-          <strong>Impact Track Record:</strong><br>
-          <span id="progModalStats">150,000+ Native Trees Planted | 85% Survival Rate</span>
-        </div>
-
-        <h5 style="font-size:0.88rem; font-weight:700; margin-bottom:8px;">Key Focus Areas:</h5>
-        <ul id="progModalInitiatives" style="list-style:none; font-size:0.82rem; color:#4b5563; display:flex; flex-direction:column; gap:6px; margin-bottom:20px;">
-        </ul>
-
-        <div style="display:flex; gap:10px;">
-          <button class="btn-submit-action" onclick="closeModal('programModal'); openModal('donationModal');" style="flex:1;">
-            Sponsor this Program &rarr;
-          </button>
-          <button class="hero-btn-secondary" onclick="closeModal('programModal'); openModal('volunteerModal');" style="flex:1;">
-            Volunteer for this Cause
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. GALLERY LIGHTBOX MODAL (PDF Module 4.6) -->
-  <div class="modal-backdrop" id="lightboxModal">
-    <div class="modal-box" style="max-width:750px; background:#111827; color:#fff;">
-      <div class="modal-header" style="background:#1f2937; border-bottom:1px solid #374151;">
-        <div class="modal-title" style="color:#86efac;">📸 Gallery Lightbox View</div>
-        <button class="btn-close-modal" style="color:#fff;">&times;</button>
-      </div>
-      <div class="modal-body" style="padding:16px; text-align:center;">
-        <div style="position:relative; width:100%; height:380px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-          <img id="lightboxImg" src="assets/gallery_1.jpg" alt="Gallery Photo" style="max-width:100%; max-height:100%; object-fit:contain;">
-          <button id="lightboxPrev" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); color:#fff; border:none; width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer;">&lang;</button>
-          <button id="lightboxNext" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); color:#fff; border:none; width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer;">&rang;</button>
-        </div>
-        <p id="lightboxCaption" style="font-size:0.88rem; color:#d1fae5; margin-top:12px; font-weight:600;">
-          Tree Plantation Drive with Youth Volunteers in Village School
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6. FOUNDATION MISSION & ABOUT MODAL -->
-  <div class="modal-backdrop" id="aboutModal">
-    <div class="modal-box" style="max-width:620px;">
-      <div class="modal-header">
-        <div class="modal-title">🌱 About Green India Gokul Foundation</div>
-        <button class="btn-close-modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-          <img src="assets/about_natural_sprout.jpg" alt="Foundation Mission" style="width:72px; height:72px; border-radius:8px; object-fit:cover; border:2px solid #86efac;">
-          <div>
-            <h4 style="font-size:1.1rem; color:#0f4d2a; font-weight:800; line-height:1.2; margin-bottom:4px;">
-              Rooted in Nature &bull; Dedicated to Rural Prosperity
-            </h4>
-            <span style="font-size:0.76rem; color:#15803d; font-weight:700;">Swarna Bharathi Yoga &amp; Gokul Trust Initiative</span>
-          </div>
-        </div>
-
-        <p style="font-size:0.84rem; color:#374151; line-height:1.55; margin-bottom:14px;">
-          Green India Gokul Foundation was founded on the sacred principle that ecological preservation, animal compassion, and human well-being are inseparable. Working at the grassroots across Karnataka and rural India, our mission unites modern sustainable practices with time-honored traditional wisdom to build self-reliant rural ecosystems.
-        </p>
-
-        <h5 style="font-size:0.9rem; font-weight:800; color:#156637; margin-bottom:8px;">Our Five Core Pillars of Action:</h5>
-        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 12px; font-size:0.8rem; line-height:1.45;">
-            <strong style="color:#0f4d2a;">🐮 Kamadhenu Cow Welfare &amp; Sanctuary:</strong> Providing compassionate lifetime shelter, green fodder, and veterinary treatment to abandoned and rescued indigenous cattle, while training farmers in zero-budget natural farming and Panchagavya.
-          </div>
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 12px; font-size:0.8rem; line-height:1.45;">
-            <strong style="color:#0f4d2a;">🌳 Community Afforestation:</strong> Planting native trees (Neem, Peepal, Banyan, Jamun) across barren village tracts, river basins, and school campuses with a committed 3-year nurturing cycle.
-          </div>
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 12px; font-size:0.8rem; line-height:1.45;">
-            <strong style="color:#0f4d2a;">🧘 Yoga Awareness &amp; Rural Healthcare:</strong> Conducting daily morning pranayama and asana sessions, alongside free medical diagnostic camps, eye checkups, and wellness education in underserved rural hamlets.
-          </div>
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 12px; font-size:0.8rem; line-height:1.45;">
-            <strong style="color:#0f4d2a;">💼 Women Employment &amp; Self-Help Groups:</strong> Supporting village women with tailoring cooperatives, organic product packaging, and vocational micro-enterprises to achieve financial independence and household prosperity.
-          </div>
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 12px; font-size:0.8rem; line-height:1.45;">
-            <strong style="color:#0f4d2a;">🌿 Water Conservation &amp; Sustainable Living:</strong> De-silting traditional village lakes and promoting rooftop rainwater harvesting, composting, and zero-chemical natural lifestyles.
-          </div>
-        </div>
-
-        <div style="background:#f9fafb; padding:10px 14px; border-radius:6px; border:1px solid #e5e7eb; font-size:0.76rem; color:#6b7280; display:flex; justify-content:space-between; align-items:center;">
-          <span><strong>Tax Exemption:</strong> All donations are 50% tax-exempt under Section 80G of the Income Tax Act.</span>
-          <button class="hero-btn-primary" onclick="closeModal('aboutModal'); openModal('donationModal');" style="padding:4px 12px; font-size:0.75rem;">Support Us</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7. CONTACT US & WHATSAPP MODAL (PDF Module 4.8) -->
-  <div class="modal-backdrop" id="contactModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="modal-title">📞 Connect With Our Team</div>
-        <button class="btn-close-modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:12px; text-align:center;">
-            <div style="font-size:1.5rem; margin-bottom:4px;">📞</div>
-            <div style="font-weight:700; font-size:0.82rem; color:#0f4d2a;">Helpline Number</div>
-            <a href="tel:+919876543210" style="font-size:0.8rem; color:#15803d; text-decoration:none; font-weight:600;">+91 98765 43210</a>
-          </div>
-          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:12px; text-align:center;">
-            <div style="font-size:1.5rem; margin-bottom:4px;">💬</div>
-            <div style="font-weight:700; font-size:0.82rem; color:#0f4d2a;">WhatsApp Chat</div>
-            <a href="#" onclick="showToast('Launching WhatsApp Chat with Gokul Foundation...', '💬');" style="font-size:0.8rem; color:#059669; text-decoration:none; font-weight:600;">Instant Chat Support</a>
-          </div>
-        </div>
-
-        <form onsubmit="event.preventDefault(); showToast('Thank you! Your message has been routed to our NGO coordinator.', '✉️'); closeModal('contactModal');">
-          <div class="form-group">
-            <label class="form-label">Your Name *</label>
-            <input type="text" class="form-control" placeholder="Enter your full name" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email or Phone Number *</label>
-            <input type="text" class="form-control" placeholder="Enter email or mobile" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Inquiry Topic</label>
-            <select class="form-control">
-              <option>General Inquiry</option>
-              <option>CSR Partnership / Corporate Donation</option>
-              <option>Goshala Visit &amp; Gau-Puja Booking</option>
-              <option>Organize Tree Plantation in My Area</option>
-              <option>Volunteer Opportunities</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Message *</label>
-            <textarea class="form-control" rows="3" placeholder="How can we assist you?" required></textarea>
-          </div>
-          <button type="submit" class="btn-submit-action">Send Message to Foundation &rarr;</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- 10. MOBILE NAVIGATION DRAWER -->
-  <div id="mobileNavDrawer" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:99999; display:none;">
-    <div style="position:absolute; top:0; left:0; width:280px; height:100%; background:#fff; padding:20px; display:flex; flex-direction:column; box-shadow:var(--shadow-xl);">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e5e7eb; padding-bottom:12px; margin-bottom:16px;">
-        <div style="font-weight:800; color:#0f4d2a; font-size:1.1rem;">Gokul Foundation</div>
-        <button id="closeMobileDrawer" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-      </div>
-      <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; font-weight:600; font-size:0.95rem;">
-        <li><a href="#heroCarousel" class="mobile-drawer-link" style="color:#0f4d2a; text-decoration:none;">🏠 Home</a></li>
-        <li><a href="#" class="mobile-drawer-link" data-open-modal="aboutModal" style="color:#374151; text-decoration:none;">🌱 About Us</a></li>
-        <li><a href="#programsSection" class="mobile-drawer-link" style="color:#374151; text-decoration:none;">🌳 Programs</a></li>
-        <li><a href="#eventsSection" class="mobile-drawer-link" style="color:#374151; text-decoration:none;">📅 Events &amp; News</a></li>
-        <li><a href="#gallerySection" class="mobile-drawer-link" data-open-modal="lightboxModal" style="color:#374151; text-decoration:none;">📸 Gallery</a></li>
-        <li><a href="#" class="mobile-drawer-link" data-open-modal="volunteerModal" style="color:#374151; text-decoration:none;">👥 Join as Volunteer</a></li>
-        <li><a href="#" class="mobile-drawer-link" data-open-modal="contactModal" style="color:#374151; text-decoration:none;">📞 Contact Us</a></li>
-      </ul>
-      <div style="margin-top:auto; padding-top:16px; border-top:1px solid #e5e7eb;">
-        <button class="donate-btn-header" data-open-modal="donationModal" style="width:100%; justify-content:center; margin:0;">
-          Donate Now 💚
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 11. FLOATING AI NGO ASSISTANT CHATBOT (PDF Module 6) -->
-  <button class="chat-launcher-btn" id="chatLauncher" title="Chat with Gokul Sewa Mitra" aria-label="Open Chat">
-    💬
-  </button>
-
-  <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span style="font-size:1.2rem;">🌱</span>
-        <div>
-          <div style="font-weight:700; font-size:0.88rem;">Gokul Sewa Mitra</div>
-          <div style="font-size:0.68rem; opacity:0.85;">NGO Assistant &bull; Always Online</div>
-        </div>
-      </div>
-      <button id="closeChat" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">&times;</button>
-    </div>
-
-    <div class="chat-messages" id="chatMessages">
-      <div class="chat-msg bot">
-        Namaste! 🙏 Welcome to Green India Gokul Foundation. How may I assist you today? You can ask about donations, 80G tax receipts, goshala visits, tree plantation drives, or volunteer opportunities!
-      </div>
-    </div>
-
-    <div class="chat-quick-chips">
-      <button class="chip-btn">How to Donate?</button>
-      <button class="chip-btn">80G Tax Exemption?</button>
-      <button class="chip-btn">Visit Goshala?</button>
-      <button class="chip-btn">Volunteer?</button>
-    </div>
-
-    <div class="chat-input-row">
-      <input type="text" class="chat-input" id="chatInput" placeholder="Type your question...">
-      <button class="btn-send-chat" id="sendChatBtn" aria-label="Send Message">&#10148;</button>
-    </div>
-  </div>
-
-  <!-- Toast Notification Container -->
-  <div id="toastContainer" class="toast-container"></div>
-
-  <!-- Load JavaScript -->
-  <script src="js/app.js"></script>
+<div class="wrap" hidden><div class="quick" id="quick"></div></div>
+
+<section class="section" id="programsSection"><div class="wrap">
+  <div class="section-head"><h3 data-i18n="home.programs"></h3><a class="link-more" href="programs.html" data-i18n="btn.viewall"></a></div>
+  <div class="pillars-grid" id="pillars"></div>
+</div></section>
+
+<section class="section env-promo" hidden><div class="wrap"><div class="env-promo-card reveal">
+  <div class="ep-left"><span class="ep-kicker" data-i18n="home.env.kicker"></span><h3 data-i18n="home.env.title"></h3><p data-i18n="home.env.text"></p>
+   <div class="ep-actions"><a class="btn btn-orange" href="environment.html#pledge" data-i18n="home.env.cta"></a><a class="btn btn-ghost-light" href="environment.html" data-i18n="home.env.more"></a></div></div>
+  <div class="ep-icons" aria-hidden="true"><span>🌳</span><span>💧</span><span>🚫</span><span>♻️</span><span>🌍</span></div></div></div></section>
+
+<section class="section" id="news"><div class="wrap">
+  <div class="section-head"><h3 data-i18n="home.news"></h3></div><div class="grid g3" id="newsGrid"></div>
+</div></section>
+
+<section class="section alt" hidden><div class="wrap">
+  <div class="section-head"><h3 data-i18n="home.events"></h3><a class="link-more" href="events.html" data-i18n="btn.viewall"></a></div><div class="grid g3" id="homeEvents"></div>
+</div></section>
+
+<section class="section" hidden><div class="wrap wide">
+  <div class="section-head"><h3 data-i18n="home.gallery"></h3><a class="link-more" href="gallery.html" data-i18n="btn.viewall"></a></div>
+  <div id="galleryStrip"></div>
+</div></section>
+
+<section class="power-band"><div class="wrap wide"><div class="power-grid">
+  <div class="power-text"><h3 id="powerTitle"></h3><p id="powerText"></p><div id="impact" class="power-stats"></div></div>
+  <div class="power-media" id="powerMedia"><video id="powerVideo" controls muted playsinline preload="metadata"></video><div class="power-list" id="powerList"></div></div>
+</div></div></section>
+
+<section class="section alt" hidden><div class="wrap"><div class="section-head"><h3>Voices</h3></div><div class="grid g3" id="testi"></div></div></section>
+
+<section class="section essence" id="about"><div class="wrap"><div class="essence-head"><span id="essKicker"></span><h3 id="essTitle"></h3></div><div class="essence-grid" id="essence"></div></div></section>
+
+<section class="section"><div class="wrap"><div class="card" style="background:linear-gradient(115deg,#0f4d2a,#1ea855);color:#fff;text-align:center;padding:44px 20px">
+  <h3 style="font-family:var(--font-serif);font-size:1.9rem;margin-bottom:8px" data-i18n="home.support"></h3><p style="color:#d1fae5;margin-bottom:18px" data-i18n="home.supportText"></p>
+  <a class="btn btn-orange" href="donate.html" style="font-size:1.05rem;padding:14px 32px">💚 <span data-i18n="btn.donate"></span></a></div></div></section>
+
+</main>
+<div id="gigf-footer"></div>
+<script src="js/config.js?v=1795701001"></script>
+<script src="js/data.js?v=1795701001"></script>
+<script src="js/i18n.js?v=1795701001"></script>
+<script src="js/i18n-extra.js?v=1795701001"></script>
+<script src="js/layout.js?v=1795701001"></script>
+<script src="js/autotranslate.js?v=1795701001"></script>
+<script src="js/i18n-banner.js?v=1795701001"></script>
+<script src="js/pages.js?v=1795701001"></script>
 </body>
 </html>

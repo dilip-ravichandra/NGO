@@ -1,0 +1,13 @@
+# internal files that must never be published
+.env
+.env.*
+security.md
+SECURITY-REPORT.md
+README-ROADMAP.md
+REQUIREMENTS_FOR_CLAUDE.md
+requirements.pdf
+Awareness_programs.pdf
+dev-server.js
+CLAUDE-SECURITY-*
+client_secret*.json
+supabase/

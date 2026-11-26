@@ -1,230 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign Up — Green India Gokul Foundation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/auth.css" />
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.googleusercontent.com; media-src 'self' blob:; connect-src 'self' https://accounts.google.com/gsi/ https://hbnwugmdivvjoebevbgv.supabase.co; frame-src https://www.google.com https://accounts.google.com/gsi/; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | Green India Gokul Foundation</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Create your Green India Gokul Foundation account.">
+  <meta property="og:title" content="Sign Up | Green India Gokul Foundation">
+  <meta property="og:description" content="Create your Green India Gokul Foundation account.">
+  <meta property="og:image" content="assets/logo-emblem-512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="js/fonts.js?v=1795701001"></script>
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="css/style.css?v=1795701001">
+  <link rel="stylesheet" href="css/site.css?v=1795701001">
+  <link rel="stylesheet" href="css/motion.css?v=1795701001">
+  <link rel="stylesheet" href="css/gallery-grow.css?v=1795701001">
+  <link rel="stylesheet" href="css/pop.css?v=1795701001">
+  <link rel="stylesheet" href="css/env.css?v=1795701001">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-emblem.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/logo-emblem-64.png">
+  <link rel="apple-touch-icon" href="assets/logo-emblem-192.png">
+  <meta name="theme-color" content="#0f4d2a">
 </head>
-<body>
+<body data-page="signup">
+<a href="#main" class="skip" style="position:absolute;left:-999px">Skip to content</a>
+<div id="gigf-header"></div>
 
-  <!-- Top bar -->
-  <div class="auth-topbar">
-    <a href="index.html" class="topbar-logo">
-      <img src="assets/foundation_logo.png" alt="Logo" onerror="this.style.display='none'" />
-      <span>Green India Gokul Foundation</span>
-    </a>
-    <a href="index.html" class="back-home">← Back to Home</a>
-  </div>
+<main id="main">
+<section class="auth-stage"><div class="auth-card">
+ <img class="auth-logo" src="assets/logo-emblem.svg" alt="Green India Gokul Foundation emblem">
+ <h2 id="authTitle">Welcome back</h2><p class="sub" id="authSub"></p>
+ <div class="auth-tabs"><span class="glider"></span><button type="button" data-t="login" class="on">🔑 Login</button><button type="button" data-t="signup">✨ Sign Up</button></div>
 
-  <div class="auth-wrapper">
-    <div class="auth-card">
+ <div class="auth-pane" id="paneLogin">
+  <div class="a-msg" id="loginMsg"></div>
+  <div class="mode-pills"><button type="button" class="on" data-m="pw">🔒 Password</button><button type="button" data-m="otp">✉️ Email code</button></div>
+  <form id="loginPw" novalidate>
+   <div class="a-field"><label>Email</label><div class="a-in"><i>✉️</i><input name="email" type="email" placeholder="you@example.com" autocomplete="username"></div><span class="err">Enter a valid email</span></div>
+   <div class="a-field"><label>Password</label><div class="a-in"><i>🔒</i><input name="password" type="password" placeholder="Your password" autocomplete="current-password"><button type="button" class="eye">Show</button></div><span class="err">Password must be at least 6 characters</span></div>
+   <div class="a-row"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Remember me</label><a href="#" data-goto="forgot">Forgot password?</a></div>
+   <button class="a-btn" type="submit">Sign In →</button></form>
+  <form id="loginOtp" style="display:none" novalidate>
+   <div class="a-field"><label>Email</label><div class="a-in"><i>✉️</i><input name="mobile" type="email" placeholder="you@example.com"></div><span class="err">Enter a valid email</span></div>
+   <button class="a-ghost" type="button" id="otpSend">Email me a code</button>
+   <div id="otpStep2" style="display:none;margin-top:14px"><div class="a-field"><label>Code from your email</label><div class="a-in"><i>🔢</i><input name="otp" inputmode="numeric" maxlength="10" placeholder="••••••"></div></div><button class="a-btn" type="submit">Verify &amp; Sign In →</button></div></form>
+  <div class="a-alt">or</div>
+  <div id="googleBtns"><button type="button" class="a-ghost">🇬 Continue with Google</button></div>
+  <p class="auth-foot">New here? <a href="#" data-goto="signup" style="color:#ea580c;font-weight:700">Create a free account</a></p>
+ </div>
 
-      <!-- Brand header -->
-      <div class="auth-brand">
-        <div class="auth-icon">🌱</div>
-        <h1>Join the Movement</h1>
-        <p>Create your free Green India Gokul Foundation account</p>
-      </div>
+ <div class="auth-pane" id="paneSignup">
+  <div class="a-msg" id="signupMsg"></div>
+  <form id="signupForm" novalidate>
+   <div class="a-field"><label>I want to join as</label><div class="roles"><button type="button" class="role on" data-r="donor"><b>💚</b>Donor</button><button type="button" class="role" data-r="volunteer"><b>🤝</b>Volunteer</button><button type="button" class="role" data-r="member"><b>🌱</b>Member</button></div></div>
+   <div class="a-field"><label>Full name</label><div class="a-in"><i>👤</i><input name="name" placeholder="Your full name" autocomplete="name"></div><span class="err">Please enter your name</span></div>
+   <div class="a-field"><label>Email</label><div class="a-in"><i>✉️</i><input name="email" type="email" placeholder="you@example.com" autocomplete="email"></div><span class="err">Enter a valid email</span></div>
+   <div class="a-field"><label>Mobile number</label><div class="a-in"><i>📱</i><input name="phone" inputmode="tel" placeholder="9XXXXXXXXX" autocomplete="tel"></div><span class="err">Enter a valid 10-digit mobile</span></div>
+   <div class="a-field"><label>Password</label><div class="a-in"><i>🔒</i><input id="suPw" name="password" type="password" placeholder="Create a password" autocomplete="new-password"><button type="button" class="eye">Show</button></div><div class="pw-meter"><i></i><i></i><i></i><i></i></div><div class="pw-hint" id="pwLabel">Create a strong password</div>
+    <ul class="pw-rules" data-for="suPw"><li data-r="len">At least <b>8 characters</b></li><li data-r="upper">One <b>capital letter</b> (A–Z)</li><li data-r="num">One <b>number</b> (0–9)</li><li data-r="sym">One <b>special character</b> (! @ # $ % &amp; …)</li></ul>
+    <span class="err">Password must have at least 8 characters, one capital letter, one number and one special character</span></div>
+   <div class="a-field"><label>Confirm password</label><div class="a-in"><i>🔁</i><input name="confirm" type="password" placeholder="Repeat password" autocomplete="new-password"></div><span class="err">Passwords do not match</span></div>
+   <label style="display:flex;gap:8px;font-size:.8rem;align-items:flex-start;margin-bottom:4px"><input type="checkbox" name="terms" style="margin-top:3px"> <span>I agree to the Terms &amp; Privacy Policy</span></label><div id="termsErr" style="display:none;color:#dc2626;font-size:.74rem;margin-bottom:8px">Please accept to continue</div>
+   <button class="a-btn orange" type="submit" style="margin-top:10px">Create Account →</button></form>
+  <p class="auth-foot">Already registered? <a href="#" data-goto="login" style="color:var(--primary);font-weight:700">Sign in</a></p>
+ </div>
 
-      <!-- Alert box -->
-      <div class="auth-alert" id="authAlert"></div>
+ <div class="auth-pane" id="paneForgot">
+  <div class="a-msg" id="forgotMsg"></div>
+  <form id="forgotReq" novalidate><div class="a-field"><label>Registered email</label><div class="a-in"><i>✉️</i><input name="email" type="email" placeholder="you@example.com"></div><span class="err">Enter a valid email</span></div><button class="a-ghost" type="submit">Send reset code</button></form>
+  <form id="forgotConf" novalidate><div id="forgotStep2" style="display:none;margin-top:14px"><div class="a-field"><label>Reset code</label><div class="a-in"><i>🔢</i><input name="code" inputmode="numeric" maxlength="10"></div></div><div class="a-field"><label>New password</label><div class="a-in"><i>🔒</i><input id="fgPw" name="pw" type="password" autocomplete="new-password"></div>
+    <ul class="pw-rules" data-for="fgPw"><li data-r="len">At least <b>8 characters</b></li><li data-r="upper">One <b>capital letter</b> (A–Z)</li><li data-r="num">One <b>number</b> (0–9)</li><li data-r="sym">One <b>special character</b> (! @ # $ % &amp; …)</li></ul>
+    <span class="err">Password must have at least 8 characters, one capital letter, one number and one special character</span></div><button class="a-btn" type="submit">Update password</button></div></form>
+  <p class="auth-foot"><a href="#" data-goto="login" style="color:var(--primary);font-weight:700">← Back to sign in</a></p>
+ </div>
+ <p class="auth-foot" style="margin-top:14px">🔒 Demo mode: accounts are stored only in this browser.</p>
+</div></section>
 
-      <form id="signupForm" class="auth-form" novalidate>
-
-        <div class="form-row-two">
-          <div class="form-group">
-            <label for="firstName">First Name</label>
-            <div class="input-wrap">
-              <span class="input-icon">👤</span>
-              <input type="text" id="firstName" placeholder="Ramesh" required />
-            </div>
-            <span class="field-error" id="firstNameErr"></span>
-          </div>
-          <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <div class="input-wrap">
-              <span class="input-icon">👤</span>
-              <input type="text" id="lastName" placeholder="Kumar" required />
-            </div>
-            <span class="field-error" id="lastNameErr"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="signupEmail">Email Address</label>
-          <div class="input-wrap">
-            <span class="input-icon">✉️</span>
-            <input type="email" id="signupEmail" placeholder="you@example.com" required autocomplete="email" />
-          </div>
-          <span class="field-error" id="emailErr"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="signupPhone">Mobile Number</label>
-          <div class="input-wrap">
-            <span class="input-icon">📱</span>
-            <input type="tel" id="signupPhone" placeholder="+91 98765 43210" maxlength="15" />
-          </div>
-          <span class="field-error" id="phoneErr"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="signupRole">I want to join as</label>
-          <div class="input-wrap">
-            <span class="input-icon">🎯</span>
-            <select id="signupRole">
-              <option value="">— Select role —</option>
-              <option value="volunteer">Volunteer</option>
-              <option value="donor">Donor / Supporter</option>
-              <option value="member">General Member</option>
-              <option value="partner">Organisation Partner</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="signupPassword">Password</label>
-          <div class="input-wrap">
-            <span class="input-icon">🔒</span>
-            <input type="password" id="signupPassword" placeholder="Min. 6 characters" required autocomplete="new-password" />
-            <button type="button" class="toggle-pw" onclick="togglePw('signupPassword', this)">Show</button>
-          </div>
-          <span class="field-error" id="pwErr"></span>
-          <div class="pw-strength" id="pwStrength"></div>
-        </div>
-
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <div class="input-wrap">
-            <span class="input-icon">🔒</span>
-            <input type="password" id="confirmPassword" placeholder="Re-enter password" required autocomplete="new-password" />
-            <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)">Show</button>
-          </div>
-          <span class="field-error" id="confirmErr"></span>
-        </div>
-
-        <label class="agree-check">
-          <input type="checkbox" id="agreeTerms" />
-          I agree to the <a href="#" onclick="return false;">Terms & Conditions</a> and <a href="#" onclick="return false;">Privacy Policy</a>
-        </label>
-        <span class="field-error" id="termsErr"></span>
-
-        <button type="submit" class="btn-auth" id="signupBtn">
-          <span class="btn-text">Create Account</span>
-          <span class="btn-spinner" id="signupSpinner" style="display:none;">⏳</span>
-        </button>
-
-      </form>
-
-      <div class="auth-divider"><span>or</span></div>
-
-      <div class="auth-switch">
-        Already have an account? <a href="login.html">Sign In →</a>
-      </div>
-
-    </div>
-
-    <!-- Side panel -->
-    <div class="auth-panel">
-      <div class="panel-content">
-        <h2>Build a Better<br/>India Together.</h2>
-        <p>Your membership unlocks access to exclusive programs, events and updates from our foundation.</p>
-        <ul class="panel-list">
-          <li>🌍 Get updates on plantation drives</li>
-          <li>🐄 Participate in Goshala seva</li>
-          <li>🏥 Register for health camps</li>
-          <li>📚 Access skill-building workshops</li>
-          <li>❤️ Track your donation impact</li>
-        </ul>
-        <div class="panel-quote">"Serve Nature... Serve Society... Build a Better India..."</div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function showAlert(msg, type = 'error') {
-      const el = document.getElementById('authAlert');
-      el.textContent = msg;
-      el.className = 'auth-alert show ' + type;
-      setTimeout(() => el.classList.remove('show'), 6000);
-    }
-
-    function togglePw(id, btn) {
-      const inp = document.getElementById(id);
-      inp.type = inp.type === 'password' ? 'text' : 'password';
-      btn.textContent = inp.type === 'password' ? 'Show' : 'Hide';
-    }
-
-    // Password strength indicator
-    document.getElementById('signupPassword').addEventListener('input', function () {
-      const val = this.value;
-      const bar = document.getElementById('pwStrength');
-      let strength = 0;
-      if (val.length >= 6) strength++;
-      if (val.length >= 10) strength++;
-      if (/[A-Z]/.test(val)) strength++;
-      if (/[0-9]/.test(val)) strength++;
-      if (/[^A-Za-z0-9]/.test(val)) strength++;
-      const labels = ['', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
-      const colors = ['', '#ef4444', '#f97316', '#eab308', '#22c55e', '#16a34a'];
-      bar.textContent = val ? 'Strength: ' + (labels[strength] || 'Very Strong') : '';
-      bar.style.color = colors[strength] || '#16a34a';
-    });
-
-    document.getElementById('signupForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      let valid = true;
-
-      // Clear errors
-      ['firstNameErr','lastNameErr','emailErr','phoneErr','pwErr','confirmErr','termsErr'].forEach(id => {
-        document.getElementById(id).textContent = '';
-      });
-
-      const first   = document.getElementById('firstName').value.trim();
-      const last    = document.getElementById('lastName').value.trim();
-      const email   = document.getElementById('signupEmail').value.trim();
-      const phone   = document.getElementById('signupPhone').value.trim();
-      const pw      = document.getElementById('signupPassword').value;
-      const cpw     = document.getElementById('confirmPassword').value;
-      const agreed  = document.getElementById('agreeTerms').checked;
-
-      if (!first) { document.getElementById('firstNameErr').textContent = 'First name is required.'; valid = false; }
-      if (!last)  { document.getElementById('lastNameErr').textContent = 'Last name is required.'; valid = false; }
-      if (!email || !email.includes('@')) { document.getElementById('emailErr').textContent = 'Enter a valid email.'; valid = false; }
-      if (pw.length < 6) { document.getElementById('pwErr').textContent = 'Password must be at least 6 characters.'; valid = false; }
-      if (pw !== cpw) { document.getElementById('confirmErr').textContent = 'Passwords do not match.'; valid = false; }
-      if (!agreed) { document.getElementById('termsErr').textContent = 'Please accept the Terms & Conditions.'; valid = false; }
-      if (!valid) return;
-
-      // Check duplicate email
-      const users = JSON.parse(localStorage.getItem('gigf_users') || '[]');
-      if (users.find(u => u.email === email)) {
-        document.getElementById('emailErr').textContent = 'This email is already registered.';
-        return;
-      }
-
-      // Simulate loading
-      const btn = document.getElementById('signupBtn');
-      btn.disabled = true;
-      document.getElementById('signupSpinner').style.display = 'inline';
-      document.querySelector('#signupBtn .btn-text').textContent = 'Creating…';
-
-      setTimeout(() => {
-        users.push({ name: first + ' ' + last, email, phone, password: pw, role: document.getElementById('signupRole').value });
-        localStorage.setItem('gigf_users', JSON.stringify(users));
-        localStorage.setItem('gigf_loggedIn', JSON.stringify({ name: first + ' ' + last, email }));
-
-        btn.disabled = false;
-        document.getElementById('signupSpinner').style.display = 'none';
-        document.querySelector('#signupBtn .btn-text').textContent = 'Create Account';
-
-        showAlert('Account created successfully! Welcome, ' + first + '! Redirecting…', 'success');
-        setTimeout(() => window.location.href = 'index.html', 1800);
-      }, 1400);
-    });
-  </script>
+</main>
+<div id="gigf-footer"></div>
+<script src="js/config.js?v=1795701001"></script>
+<script src="js/data.js?v=1795701001"></script>
+<script src="js/i18n.js?v=1795701001"></script>
+<script src="js/i18n-extra.js?v=1795701001"></script>
+<script src="js/layout.js?v=1795701001"></script>
+<script src="js/autotranslate.js?v=1795701001"></script>
+<script src="js/pages.js?v=1795701001"></script>
+<script src="js/auth.js?v=1795701001"></script>
 </body>
 </html>
