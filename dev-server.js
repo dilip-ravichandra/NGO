@@ -9,7 +9,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { handleChat, handleTranslate } = require('./api/_chat-core');
-const { handleExtractEvent, handleTriage } = require('./api/_admin-ai');
+const { handleExtractEvent, handleTriage, handleExtractProgram, handleExtractVolunteer, handleExtractDonation, handleCaption, handleDraftArticle } = require('./api/_admin-ai');
 const { handleAuth } = require('./api/_auth-core');
 const { providers } = require('./api/_llm');
 const { SECURITY_HEADERS } = require('./api/_headers');
@@ -29,6 +29,11 @@ const ROUTES = {   // path -> handler + max request body (bytes)
   '/api/translate': { h: handleTranslate, max: 60000 },
   '/api/extract-event': { h: handleExtractEvent, max: 4500000 },
   '/api/triage': { h: handleTriage, max: 40000 },
+  '/api/extract-program': { h: handleExtractProgram, max: 4500000 },
+  '/api/extract-volunteer': { h: handleExtractVolunteer, max: 20000 },
+  '/api/extract-donation': { h: handleExtractDonation, max: 20000 },
+  '/api/caption-photo': { h: handleCaption, max: 1600000 },
+  '/api/draft-article': { h: handleDraftArticle, max: 30000 },
   '/api/auth': { h: handleAuth, max: 8000 }
 };
 const isLoopback = (req) => ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress) && !req.headers['x-forwarded-for'];   // a reverse proxy sets x-forwarded-for -> not "local"

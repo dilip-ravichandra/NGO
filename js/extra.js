@@ -36,7 +36,8 @@
     y = p.text(o.address, 80, y, { size: 22 }); y = p.text(o.email + ' · ' + o.phones.map((x) => x.display).join(', '), 80, y, { size: 22 });
     g.fillStyle = '#156637'; g.fillRect(80, y + 12, 1080, 5);
     y = p.text('Donation Receipt', 80, y + 50, { size: 38, bold: true }) + 10;
-    if (d.demo) y = p.text('DEMO RECEIPT - test mode. No money was charged and this is not a valid tax document.', 80, y, { size: 22, color: '#9a3412' }) + 14;
+    if (d.demo && G.present) p.text('Specimen copy. Not a tax document.', 80, 1680, { size: 18, color: '#9ca3af' });
+    if (d.demo && !G.present) y = p.text('DEMO RECEIPT - test mode. No money was charged and this is not a valid tax document.', 80, y, { size: 22, color: '#9a3412' }) + 14;
     [['Receipt No.', d.receiptNo], ['Date', new Date(d.createdAt).toLocaleDateString('en-IN')], ['Donor Name', d.donorName], ['Email / Phone', d.donorEmail + ' / ' + (d.donorPhone || '-')], ['PAN', d.donorPan || '-'], ['Programme', d.program], ['Frequency', d.frequency === 'MONTHLY' ? 'Monthly' : 'One-time'], ['Payment Method', d.method], ['Payment ID', d.paymentId], ['Amount', G.inr(d.amount)]].forEach((row) => {
       const top = y; p.text(row[0], 100, top + 14, { size: 24, bold: true, max: 300 }); const end = p.text(row[1] || '-', 440, top + 14, { size: 24, max: 700 });
       const bottom = Math.max(end, top + 62); g.strokeStyle = '#ccc'; g.strokeRect(80, top, 1080, bottom - top); y = bottom;
@@ -73,7 +74,7 @@
       <p><a class="link-more" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.location)}">🗺️ Open in Google Maps</a></p>
       ${done ? '<span class="chip gray">Completed</span>' : `<button class="btn btn-primary" data-reg="${esc(e.id)}">${G.t('btn.register')}</button>`}</article>
       <h3 style="margin:30px 0 12px">📸 Photos and videos from this event</h3>
-      ${media.length ? `<div class="detail-media">${media.map((m) => (m.type === 'VIDEO' ? `<video src="${esc(G.safeUrl(m.src, ''))}#t=0.6" controls preload="metadata" playsinline></video>` : `<img src="${esc(G.safeUrl(m.src, ''))}" alt="${esc(tr(m.title))}" loading="lazy">`)).join('')}</div>` : '<p style="color:#6b7280">No photos have been added for this event.</p>'}`;
+      ${media.length ? `<div class="detail-media">${media.map((m) => (m.type === 'VIDEO' ? `<video src="${esc(G.mediaUrl(m.src))}#t=0.6" controls preload="metadata" playsinline></video>` : `<img src="${esc(G.mediaUrl(m.src))}" alt="${esc(tr(m.title))}" loading="lazy">`)).join('')}</div>` : '<p style="color:#6b7280">No photos have been added for this event.</p>'}`;
   }
 
   /* ---------- article page: article.html?a=slug ---------- */
@@ -82,9 +83,10 @@
     const box = $('#detail'), key = new URLSearchParams(window.GIGF_SEARCH ?? location.search).get('a');
     const a = G.DB.all('articles').find((x) => (x.slug === key || x.id === key) && (x.status === 'PUBLISHED' || (x.status === 'SCHEDULED' && x.publishAt && new Date(x.publishAt) <= new Date())));
     if (!a) { box.innerHTML = '<div class="empty"><span class="e">📰</span>This article was not found. <a href="awareness.html">See all articles</a></div>'; return; }
-    const raw = a.body && !Array.isArray(a.body) && typeof a.body === 'object' ? (a.body[G.lang()] || a.body.en) : a.body, body = Array.isArray(raw) ? raw : String(raw || '').split(/\n\s*\n/);
-    document.title = tr(a.title) + ' | Green India Gokul Foundation'; describe(tr(a.summary));
-    box.innerHTML = `<article class="card card-body detail"><p style="font-size:.8rem;color:#6b7280">${G.fmtDate(a.date)} · ${esc(G.t("art." + a.category))}</p><h2>${esc(tr(a.title))}</h2>${body.map((p) => `<p>${esc(p)}</p>`).join('')}<p><a class="link-more" href="awareness.html">← ${G.t('nav.awareness')}</a></p></article>`;
+    const body = G.articleBody(a, G.lang()) || G.articleBody(a), seoTitle = tr(a.title) + ' | Green India Gokul Foundation', seoText = a.seo || tr(a.summary), cover = a.cover ? G.mediaUrl(a.cover) : '';
+    document.title = seoTitle; describe(seoText);
+    const meta = (k, v) => { const m = $(`meta[property="${k}"]`); if (m) m.setAttribute('content', v); }; meta('og:title', seoTitle); meta('og:description', String(seoText).slice(0, 160));
+    box.innerHTML = `<article class="card card-body detail"><p style="font-size:.8rem;color:#6b7280">${G.fmtDate(a.date)} · ${esc(G.t('art.' + a.category))}</p><h2>${esc(tr(a.title))}</h2>${cover && cover !== '#' ? `<img class="detail-img" src="${esc(cover)}" alt="">` : ''}<div class="art-body">${G.md(body)}</div><p><a class="link-more" href="awareness.html">← ${G.t('nav.awareness')}</a></p></article>`;
   }
 
   /* ---------- annual reports ---------- */

@@ -2,6 +2,12 @@
 window.GIGF_CONFIG = Object.assign({
   chatApi: '/api/chat',   // server-side Groq proxy. If it is not reachable the chatbot silently falls back to built-in answers.
   translateApi: '/api/translate',   // server-side Groq translator (auto-translate for Kannada / Hindi)
+  extractProgramApi: '/api/extract-program',   // admin-only: description / flyer -> programme draft
+  extractVolunteerApi: '/api/extract-volunteer',   // admin-only: spoken / typed details -> volunteer form
+  extractDonationApi: '/api/extract-donation',   // admin-only: spoken / typed offline gift -> form
+  captionApi: '/api/caption-photo',   // admin-only: suggest a caption for a gallery photo
+  draftApi: '/api/draft-article',   // admin-only: notes -> article draft
+  siteUrl: 'https://dilip-ravichandra.github.io/NGO/',   // public address, used for the sitemap
   extractApi: '/api/extract-event',   // admin-only: poster / text -> event draft
   triageApi: '/api/triage',           // admin-only: support-message triage
   authApi: '/api/auth',               // e-mail / SMS one-time codes + Google sign-in check

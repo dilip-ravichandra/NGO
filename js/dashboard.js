@@ -4,11 +4,12 @@
   G.boot(() => {
     const u = G.Auth.current();
     if (!u) { location.href = 'login.html?next=dashboard.html'; return; }
-    if (/ADMIN/.test(u.role)) { location.href = 'admin.html'; return; }
+    // an admin may look at their own donations too: show the dashboard, with a way to the admin portal
+    if (/ADMIN/.test(u.role)) { const h = document.getElementById('dashTabs'); if (h) h.insertAdjacentHTML('beforebegin', '<div class="note" style="margin-bottom:12px">You are signed in with the admin account. This page shows only your own records. <a href="admin.html"><b>Open the admin portal</b></a></div>'); }
     try { G.Donations.reconcile(); } catch (e) { }
     let tab = ((window.GIGF_HASH ?? location.hash) || '#overview').slice(1);
     const statusChip = (s) => `<span class="chip ${s === 'CAPTURED' || s === 'APPROVED' || s === 'RESOLVED' ? '' : s === 'FAILED' || s === 'REJECTED' ? 'red' : 'warn'}">${s}</span>`;
-    const roleLabel = { REGISTERED_USER: 'Registered User', VOLUNTEER: 'Volunteer', DONOR: 'Donor' }[u.role] || u.role;
+    const roleLabel = { REGISTERED_USER: 'Registered User', VOLUNTEER: 'Volunteer', DONOR: 'Donor', ADMIN: 'Admin', SUPER_ADMIN: 'Admin' }[u.role] || u.role;
 
     const views = {
       overview() {
@@ -34,10 +35,10 @@
         const v = G.Volunteers.mine();
         if (!v) return G.emptyBox('🤝', 'You are not a volunteer yet. <a href="volunteer.html">Apply now</a>.');
         const tasks = v.tasks || [];
-        return `<div class="grid g2"><div class="card card-body"><h4>Digital ID</h4><div class="id-badge" style="margin-top:10px"><div style="font-weight:800;color:#fef08a;font-size:.85rem">${G.ORG.nameCaps}</div><h3 style="margin:10px 0 2px">${esc(v.name)}</h3><div style="font-size:.82rem">${esc(v.domain)} · ${esc(v.city)}</div><div style="margin-top:8px;font-family:monospace;color:#fef08a">${v.badge}</div></div><p style="margin-top:10px">Status: ${statusChip(v.status)}</p>
+        return `<div class="grid g2"><div class="card card-body"><h4>Digital ID</h4><div class="id-badge" style="margin-top:10px"><div style="font-weight:800;color:#fef08a;font-size:.85rem">${G.ORG.nameCaps}</div><h3 style="margin:10px 0 2px">${esc(v.name)}</h3><div style="font-size:.82rem">${esc(v.domain)} · ${esc(v.city)}</div><div style="margin-top:8px;font-family:monospace;color:#fef08a">${v.badge}</div></div><p style="margin-top:10px">Status: ${statusChip(v.status)}</p>${v.duty ? `<p><b>Role:</b> ${esc(v.duty)}</p>` : ''}${v.status === 'REJECTED' && v.reason ? `<p style="color:#991b1b">Reason: ${esc(v.reason)}</p>` : ''}
           ${v.status === 'APPROVED' ? `<button class="btn btn-primary btn-sm" id="certBtn" style="margin-top:8px">🏅 Certificate</button>` : ''}</div>
         <div class="card card-body"><h4>Tasks assigned</h4>${tasks.length ? '<ul style="margin:10px 0 0 18px">' + tasks.map((k, i) => `<li style="margin-bottom:6px">${esc(k.title)} <span class="chip ${k.done ? '' : 'warn'}">${k.done ? 'Done' : 'To do'}</span> ${k.done ? '' : `<button class="btn btn-ghost btn-sm" data-done="${i}">Mark done</button>`}</li>`).join('') + '</ul>' : '<p style="color:#6b7280;margin-top:8px">No tasks yet.</p>'}
-          <h4 style="margin-top:16px">Attendance</h4>${(v.attendance || []).length ? '<ul style="margin:8px 0 0 18px">' + v.attendance.map((a) => `<li>${G.fmtDate(a.date)} — ${esc(a.note || 'Present')} (${a.hours}h)</li>`).join('') + '</ul>' : '<p style="color:#6b7280;margin-top:8px">No attendance recorded yet.</p>'}<p style="margin-top:8px"><b>Total hours:</b> ${v.hours || 0}</p></div></div>`;
+          <h4 style="margin-top:16px">Attendance</h4>${(v.attendance || []).length ? '<ul style="margin:8px 0 0 18px">' + v.attendance.map((a) => `<li>${G.fmtDate(a.date)} — ${esc(a.note || 'Present')} (${Number(a.hours) || 0}h)</li>`).join('') + '</ul>' : '<p style="color:#6b7280;margin-top:8px">No attendance recorded yet.</p>'}<p style="margin-top:8px"><b>Total hours:</b> ${v.hours || 0}</p></div></div>`;
       },
       support() {
         const mine = G.DB.all('tickets').filter((x) => (x.email || '').toLowerCase() === u.email.toLowerCase());
@@ -55,9 +56,9 @@
     document.addEventListener('click', (e) => {
       const b = e.target.closest('[data-tab],[data-go]'); if (b) { tab = b.dataset.tab || b.dataset.go; history.replaceState(null, '', '#' + tab); render(); return; }
       const rc = e.target.closest('[data-rcpt]'); if (rc) { e.preventDefault(); if (!G.Donations.openReceipt(rc.dataset.rcpt)) G.toast('Allow pop-ups to view the receipt', '⚠️'); return; }
-      const st = e.target.closest('[data-stop]'); if (st && confirm('Stop this monthly donation?')) { G.DB.update('donations', st.dataset.stop, { cancelled: true }); G.audit('MONTHLY_STOPPED', 'donation', st.dataset.stop, 'stopped by donor'); G.toast('Monthly donation stopped', '🛑'); render(); return; }
+      const st = e.target.closest('[data-stop]'); if (st && confirm('Stop this monthly donation?')) { G.DB.update('donations', st.dataset.stop, { cancelled: true }); if (G.cloud && G.DB.get('donations', st.dataset.stop).cloud) G.cloud.stopMonthly(st.dataset.stop).catch((x) => G.toast('Not saved: ' + x.message, '⚠️')); G.audit('MONTHLY_STOPPED', 'donation', st.dataset.stop, 'stopped by donor'); G.toast('Monthly donation stopped', '🛑'); render(); return; }
       const un = e.target.closest('[data-unreg]'); if (un && confirm('Cancel this registration?')) { G.DB.remove('registrations', un.dataset.unreg); render(); return; }
-      const dn = e.target.closest('[data-done]'); if (dn) { const v = G.Volunteers.mine(); v.tasks[dn.dataset.done].done = true; G.DB.update('volunteers', v.id, { tasks: v.tasks }); render(); return; }
+      const dn = e.target.closest('[data-done]'); if (dn) { const v = G.Volunteers.mine(); v.tasks[dn.dataset.done].done = true; G.DB.update('volunteers', v.id, { tasks: v.tasks }); if (v.cloud && G.cloud) G.cloud.taskDone(dn.dataset.done).catch((x) => G.toast('Not saved: ' + x.message, '⚠️')); render(); return; }
       if (e.target.id === 'certBtn') { const v = G.Volunteers.mine(); if (!G.Volunteers.downloadPDF(v)) G.toast('Allow pop-ups', '⚠️'); return; }
       const is = e.target.closest('[data-issue]');
       if (is) {

@@ -19,15 +19,23 @@
   /* ---------- shared renderers ---------- */
   function programCard(p, opts) {
     return `<article class="card lift prog-card reveal" id="${p.slug}" data-id="${p.id}">
-      <div class="img" style="background-image:url('${esc(G.safeUrl(p.img, ''))}')"><span class="ico">${p.icon}</span></div>
+      <div class="img" style="background-image:url('${esc(progPic(p.img))}')"><span class="ico">${p.icon}</span></div>
       <div class="card-body"><h4>${esc(tr(p.title))}</h4><p>${esc(tr(p.tagline))}</p>
         <div class="prog-detail">${progDetail(p)}</div>
         <button class="btn btn-ghost btn-sm" data-toggle style="margin-top:12px;align-self:flex-start">${t('btn.know')} →</button></div></article>`;
   }
+  const progPic = (u) => (/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(u || '') ? u : G.safeUrl(u, ''));
+  function progMedia(p) {
+    const photos = (p.photos || []).map(progPic).filter(Boolean), vids = (p.videos || []).map((u) => G.safeUrl(u, '')).filter(Boolean);
+    if (!photos.length && !vids.length) return '';
+    return '<div class="prog-media">' + photos.map((u) => `<img src="${esc(u)}" alt="${esc(tr(p.title))}" loading="lazy">`).join('') +
+      vids.map((u) => (/^(?!https?:).*\.mp4$/i.test(u) ? `<video src="${esc(u)}#t=0.6" controls preload="metadata" playsinline></video>` : `<a class="link-more" href="${esc(u)}" target="_blank" rel="noopener">▶ Watch video</a>`)).join('') + '</div>';
+  }
   function progDetail(p) {
     const evs = upcoming().filter((e) => e.program === p.id).slice(0, 2);
     return `<p style="color:#374151;margin-bottom:8px">${esc(tr(p.desc))}</p>
-      <ul>${p.initiatives.map((i) => `<li>${esc(tr(i))}</li>`).join('')}</ul>
+      <ul>${(p.initiatives || []).map((i) => `<li>${esc(tr(i))}</li>`).join('')}</ul>
+      ${progMedia(p)}
       ${p.impact && p.impact.length ? '<div class="impact-row">' + p.impact.map((m) => `<span><b>${esc(m.value)}</b> ${esc(m.label)}</span>`).join('') + '</div>' : ''}
       ${evs.length ? '<div style="font-size:.82rem;margin:8px 0"><b>📅 ' + t('home.events') + ':</b> ' + evs.map((e) => `<a href="events.html#${e.slug}">${esc(tr(e.title))} (${G.fmtDate(e.date, { day: 'numeric', month: 'short' })})</a>`).join(', ') + '</div>' : ''}
       <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-orange btn-sm" href="donate.html?program=${p.id}">💚 ${t('btn.donateprog')}</a><a class="btn btn-primary btn-sm" href="volunteer.html?program=${p.id}">🤝 ${t('btn.volprog')}</a></div>`;
@@ -81,11 +89,13 @@
     function show() {
       const g = items[i]; stage.innerHTML = '';
       const node = document.createElement(g.type === 'VIDEO' ? 'video' : 'img');
-      node.src = g.src; node.alt = tr(g.title);
+      node.src = G.mediaUrl(g.src); node.alt = tr(g.title);
       if (g.type === 'VIDEO') { node.controls = true; node.autoplay = true; node.playsInline = true; }
       stage.appendChild(node);
       const cat = G.DB.all('programs').find((p) => p.id === g.category);
       cap.innerHTML = `${esc(tr(g.title))}<small>${G.fmtDate(g.date)} · ${esc(cat ? tr(cat.title) : g.category === 'community' ? t('cat.community') : '')} · ${i + 1}/${items.length}</small>`;
+      const ev = g.eventId && G.DB.get('events', g.eventId);
+      if (ev) { const line = document.createElement('div'); line.className = 'lb-event'; line.textContent = '📅 ' + tr(ev.title) + (ev.location ? ' · 📍 ' + ev.location : ''); cap.appendChild(line); }
     }
     const close = () => { lb.remove(); document.body.style.overflow = ''; document.removeEventListener('keydown', key); };
     const go = (d) => { i = (i + d + items.length) % items.length; show(); };
@@ -98,7 +108,7 @@
     show(); $('.lb-x', lb).focus();
   }
   function galleryTile(g, idx) {
-    const media = g.type === 'VIDEO' ? `<video src="${esc(G.safeUrl(g.src, ''))}#t=0.6" preload="metadata" muted playsinline></video><span class="m-play">▶</span>` : `<img src="${esc(G.safeUrl(g.src, ''))}" alt="${esc(tr(g.title))}" loading="lazy">`;
+    const media = g.type === 'VIDEO' ? `<video src="${esc(G.mediaUrl(g.src))}#t=0.6" preload="metadata" muted playsinline></video><span class="m-play">▶</span>` : `<img src="${esc(G.mediaUrl(g.src))}" alt="${esc(tr(g.title))}" loading="lazy">`;
     return `<div class="m-item reveal" style="--d:${(idx % 12) * 80}ms" data-i="${idx}" tabindex="0" role="button" aria-label="${esc(tr(g.title))}">${media}<span class="chip m-badge">${g.type === 'VIDEO' ? '🎬 Video' : '📷 Photo'}</span><div class="m-cap">${esc(tr(g.title))}</div></div>`;
   }
   function bindGallery(container, items) {
@@ -138,7 +148,7 @@
     const stage = $('.ss-stage', root), media = $('.ss-media', root), bg = $('.ss-bg', root), cap = $('.ss-cap', root), cnt = $('.ss-count', root), bar = $('.ss-bar i', root), thumbs = $('.ss-thumbs', root), pbtn = $('[data-ss=play]', root);
     const catName = (g) => { const p = G.DB.all('programs').find((x) => x.id === g.category); return p ? tr(p.title) : g.category === 'community' ? t('cat.community') : ''; };
     function drawThumbs() {
-      thumbs.innerHTML = items.map((g, k) => `<button class="ss-th ${k === i ? 'on' : ''}" style="--i:${k}" data-k="${k}" aria-label="${esc(tr(g.title))}">${g.type === 'VIDEO' ? `<video src="${esc(G.safeUrl(g.src, ''))}#t=0.6" preload="metadata" muted playsinline></video><span>▶</span>` : `<img src="${esc(G.safeUrl(g.src, ''))}" alt="" loading="lazy">`}</button>`).join('');
+      thumbs.innerHTML = items.map((g, k) => `<button class="ss-th ${k === i ? 'on' : ''}" style="--i:${k}" data-k="${k}" aria-label="${esc(tr(g.title))}">${g.type === 'VIDEO' ? `<video src="${esc(G.mediaUrl(g.src))}#t=0.6" preload="metadata" muted playsinline></video><span>▶</span>` : `<img src="${esc(G.mediaUrl(g.src))}" alt="" loading="lazy">`}</button>`).join('');
     }
     function pauseVideo() { const v = media.querySelector('video'); if (v && !v.paused) v.pause(); }
     function clearTimer() { clearTimeout(timer); bar.style.transition = 'none'; bar.style.width = '0'; }
@@ -151,7 +161,7 @@
       if (!items.length) { media.innerHTML = '<div class="empty" style="color:#fff">Nothing to show for this filter.</div>'; cap.innerHTML = cnt.textContent = ''; thumbs.innerHTML = ''; bg.style.backgroundImage = ''; return; }
       i = (k + items.length) % items.length; const g = items[i];
       const el = document.createElement(g.type === 'VIDEO' ? 'video' : 'img');
-      el.className = 'ss-item ' + (grow ? 'grow' : dir < 0 ? 'from-l' : 'from-r'); el.src = g.src; el.alt = tr(g.title);
+      el.className = 'ss-item ' + (grow ? 'grow' : dir < 0 ? 'from-l' : 'from-r'); el.src = G.mediaUrl(g.src); el.alt = tr(g.title);
       if (g.type === 'VIDEO') { el.controls = true; el.playsInline = true; el.preload = 'metadata'; el.onplay = clearTimer; el.onended = () => { if (playing && inView) go(1); }; }
       else el.classList.add('kb');
       pauseVideo();
@@ -237,7 +247,8 @@
     G.observeCounts($('#impact'));
     $('#powerTitle').textContent = word(['Small actions today, a greener tomorrow', 'ಇಂದಿನ ಸಣ್ಣ ಹೆಜ್ಜೆ, ನಾಳಿನ ಹಸಿರು ಭವಿಷ್ಯ', 'आज के छोटे कदम, कल का हरा भविष्य', 'இன்றைய சிறு செயல், நாளைய பசுமை', 'నేటి చిన్న అడుగు, రేపటి పచ్చదనం', 'ഇന്നത്തെ ചെറിയ ചുവട്, നാളത്തെ പച്ചപ്പ്']);
     $('#powerText').textContent = t('home.aboutText');
-    const vids = G.DB.all('gallery').filter((g) => g.type === 'VIDEO' && G.safeUrl(g.src, '')).slice(0, 4), player = $('#powerVideo');
+    const allVids = G.sortMedia(G.DB.all('gallery')).filter((g) => g.type === 'VIDEO' && G.mediaUrl(g.src)), picked = allVids.filter((g) => g.featured);
+    const vids = (picked.length ? picked : allVids).slice(0, 4), player = $('#powerVideo');
     if (!vids.length) $('#powerMedia').hidden = true;
     else {
       const play = (i, start) => { player.src = G.safeUrl(vids[i].src, '') + '#t=0.6'; $$('#powerList button').forEach((x, k) => x.classList.toggle('on', k === i)); if (start) player.play().catch(() => { }); };
@@ -324,7 +335,7 @@
     html($('#galTypes'), [['ALL', t('f.all')], ['PHOTO', '📷 ' + t('f.photos')], ['VIDEO', '🎬 ' + t('f.videos')]].map((x, i) => `<button class="pill ${i ? '' : 'on'}" data-t="${x[0]}">${x[1]}</button>`).join(''));
     html($('#galCats'), cats.map((x, i) => `<button class="pill ${i ? '' : 'on'}" data-c="${x[0]}">${x[1]}</button>`).join(''));
     const draw = () => {
-      shown = G.DB.all('gallery').filter((g) => (type === 'ALL' || g.type === type) && (cat === 'all' || g.category === cat));
+      shown = G.sortMedia(G.DB.all('gallery')).filter((g) => (type === 'ALL' || g.type === type) && (cat === 'all' || g.category === cat));
       html($('#galGrid'), shown.map(galleryTile).join('') || emptyBox('🖼️', 'Nothing here yet for this filter.'));
       $('#galCount').textContent = shown.length + ' items';
     };
@@ -345,7 +356,7 @@
     const cats = ['all', 'environment', 'yoga', 'health', 'women', 'stories', 'schemes'], ico = { environment: '🌍', yoga: '🧘', health: '🥗', women: '👩‍🌾', stories: '🌱', schemes: '🏛️' };
     html($('#artCats'), cats.map((c, i) => `<button class="pill ${i ? '' : 'on'}" data-c="${c}">${c === 'all' ? t('f.all') : t('art.' + c)}</button>`).join(''));
     const PHOTOS = { environment: ['about_sprout_hand', 'hero_scene', 'gal1', 'about_natural_sprout'], yoga: ['hero_yoga_women'], women: ['hero_yoga_women'], stories: ['gal2'] }, used = {};
-    const cover = (a) => { const l = PHOTOS[a.category]; if (!l) return ico[a.category] || '📰'; const all = publishedArticles().filter((x) => x.category === a.category), n = all.findIndex((x) => x.id === a.id); const own = a.category === 'stories' && G.DB.all('gallery').find((g) => g.type === 'PHOTO' && g.category === 'tree'); return `<img class="cover-img" src="${own ? esc(G.safeUrl(own.src, '')) : 'assets/' + l[Math.max(0, n) % l.length] + '.jpg'}" alt="" loading="lazy">`; };
+    const cover = (a) => { const own = a.cover ? G.mediaUrl(a.cover) : ''; if (own && own !== '#') return `<img class="cover-img" src="${esc(own)}" alt="" loading="lazy">`; const l = PHOTOS[a.category]; if (!l) return ico[a.category] || '📰'; const all = publishedArticles().filter((x) => x.category === a.category), n = all.findIndex((x) => x.id === a.id); const story = a.category === 'stories' && G.DB.all('gallery').find((g) => g.type === 'PHOTO' && g.category === 'tree'); return `<img class="cover-img" src="${story ? esc(G.mediaUrl(story.src)) : 'assets/' + l[Math.max(0, n) % l.length] + '.jpg'}" alt="" loading="lazy">`; };
     const draw = () => {
       const list = publishedArticles().filter((a) => (cat === 'all' || a.category === cat) && (!term || (tr(a.title) + tr(a.summary)).toLowerCase().includes(term)));
       html($('#artGrid'), list.map((a) => `<article class="card lift art-card reveal" data-a="${a.id}" style="cursor:pointer"><div class="cover">${cover(a)}</div><div class="card-body"><span class="chip">${t('art.' + a.category)}</span><h4 style="margin:8px 0 4px;color:var(--primary-dark)">${esc(tr(a.title))}</h4><p style="font-size:.86rem;color:#4b5563;margin-bottom:8px">${esc(tr(a.summary))}</p><span class="link-more">${t('btn.readmore')} →</span></div></article>`).join('') || emptyBox('🔎', 'No articles match.'));
@@ -360,7 +371,7 @@
       $('#shareBtn', m).onclick = () => { const u = location.href; if (navigator.share) navigator.share({ title: tr(a.title), url: u }).catch(() => { }); else navigator.clipboard.writeText(u).then(() => G.toast('Link copied', '🔗')); };
     };
     $('#artGrid').onclick = (e) => { const c = e.target.closest('[data-a]'); if (c) location.href = 'article.html?a=' + encodeURIComponent((G.DB.get('articles', c.dataset.a) || {}).slug || c.dataset.a); };
-    draw(); if ((window.GIGF_HASH ?? location.hash)) read((window.GIGF_HASH ?? location.hash).slice(1));
+    draw(); { const h = (window.GIGF_HASH ?? location.hash).slice(1); if (h && G.DB.all('articles').some((x) => x.id === h || x.slug === h)) location.replace('article.html?a=' + encodeURIComponent(h)); }
   }
 
   /* =====================================================================
@@ -424,7 +435,8 @@
     function upd() { $('#dSummary').innerHTML = `<b>${G.inr(st.amount)}</b> ${st.freq === 'MONTHLY' ? 'every month' : 'one-time'} → ${esc($('#dProgram').selectedOptions[0].textContent)}`; $('#dSubmit').innerHTML = `💚 ${t('btn.donate')} ${G.inr(st.amount)}${st.freq === 'MONTHLY' ? ' / month' : ''}`; }
     $('#dProgram').onchange = upd; setAmt(1000);
     keepTyped($('#donForm'), 'donate');
-    $('#demoBanner').style.display = cfg.razorpayKey && cfg.apiBase ? 'none' : 'block';
+    $('#demoBanner').style.display = (cfg.razorpayKey && cfg.apiBase) || G.present ? 'none' : 'block';
+    if (G.present) $('#dSubmit').addEventListener('click', (e) => { $('#dOutcome').value = e.shiftKey ? 'FAILED' : e.altKey ? 'PENDING' : 'CAPTURED'; });
 
     const form = $('#donForm');
     form.addEventListener('submit', async (e) => {
@@ -445,7 +457,7 @@
       const ok = rec.status === 'CAPTURED';
       const m = G.modal({ title: ok ? '🎉 Donation successful' : rec.status === 'FAILED' ? '⚠️ Payment failed' : '⏳ Payment pending', html: ok
         ? `<div class="success"><div class="tick">✓</div><h3 style="color:var(--primary-dark);margin:10px 0 4px">Thank you, ${esc(rec.donorName)}!</h3><p style="font-size:.86rem;color:#4b5563">${G.inr(rec.amount)} to ${esc(rec.program)}${rec.frequency === 'MONTHLY' ? ' (monthly)' : ''}.</p>
-          <div style="background:#f6faf7;border-radius:10px;padding:10px;margin:14px 0;font-size:.84rem;text-align:left">Receipt no: <b>${esc(rec.receiptNo)}</b><br>Payment ID: <code>${esc(rec.paymentId)}</code>${rec.demo ? '<br><span class="chip warn">DEMO — no money charged</span>' : ''}</div>
+          <div style="background:#f6faf7;border-radius:10px;padding:10px;margin:14px 0;font-size:.84rem;text-align:left">Receipt no: <b>${esc(rec.receiptNo)}</b><br>Payment ID: <code>${esc(rec.paymentId)}</code>${rec.demo && !G.present ? '<br><span class="chip warn">DEMO — no money charged</span>' : ''}</div>
           <button class="btn btn-primary" id="rView">📄 View / Print Receipt</button> <a class="btn btn-ghost" href="dashboard.html">My donations</a></div>`
         : `<div class="success"><p style="margin-bottom:12px;font-size:.9rem">${rec.status === 'FAILED' ? 'Your payment did not go through. If money was debited it is normally refunded automatically by your bank in a few working days.' : 'Your payment is awaiting confirmation. We will update the status automatically.'}</p>
           <button class="btn btn-orange" id="rIssue">Report this to our team</button></div>` });
@@ -493,13 +505,20 @@
       if (!okType || !okSize) { fld.classList.add('bad'); fld.querySelector('.err').textContent = !okType ? 'Only JPG, PNG or PDF allowed' : 'File must be under 3 MB'; e.target.value = ''; $('#vFileName').textContent = ''; return; }
       $('#vFileName').textContent = '📎 ' + file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
     });
-    f.addEventListener('submit', (e) => {
+    f.addEventListener('submit', async (e) => {
       e.preventDefault();
       const file = $('#vFile').files[0]; $('#vFile').closest('.field').classList.toggle('bad', !file); if (!file) $('#vFile').closest('.field').querySelector('.err').textContent = 'Please upload a government ID proof';
       if (!validate(f, { name: V.req, email: V.email, phone: V.phone, city: V.req }) || !file) return G.toast('Please fix the highlighted fields.', '⚠️');
       if (G.DB.all('volunteers').some((v) => v.email.toLowerCase() === f.elements.email.value.toLowerCase())) return G.toast('This email already has an application.', 'ℹ️');
-      const v = G.Volunteers.apply({ name: f.elements.name.value, email: f.elements.email.value, phone: f.elements.phone.value, city: f.elements.city.value, domain: f.elements.domain.value, idType: f.elements.idType.value, idFile: file.name, idSize: file.size });
-      G.toast('Application submitted! Badge ' + v.badge, '🎖️'); showStatus(v);
+      const data = { name: f.elements.name.value, email: f.elements.email.value, phone: f.elements.phone.value, city: f.elements.city.value, domain: f.elements.domain.value, idType: f.elements.idType.value };
+      const btn = f.querySelector('[type=submit]'); btn.disabled = true;
+      let v = null;
+      if (G.cloud && G.cloud.signedIn()) {   // real account: the application and the ID go to the private database
+        try { v = await G.cloud.applyVolunteer(data, file); G.toast('Application sent. Badge ' + v.badge, '🎖️'); }
+        catch (err) { if (/duplicate|unique/i.test(err.message)) { btn.disabled = false; return G.toast('You have already applied.', 'ℹ️'); } G.toast('Could not send it to the Foundation, so it is saved on this device only. ' + err.message, '⚠️'); }
+      }
+      if (!v) { v = G.Volunteers.apply(Object.assign(data, { idFile: file.name, idSize: file.size })); G.toast('Application saved on this device. Badge ' + v.badge, '🎖️'); }
+      btn.disabled = false; showStatus(v);
     });
   }
 

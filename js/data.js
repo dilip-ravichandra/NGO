@@ -245,6 +245,7 @@
     update: (c, id, patch) => { const it = load()[c].find((x) => x.id === id); if (it) { Object.assign(it, patch); persist(); } return it; },
     remove: (c, id) => { const d = load(); d[c] = d[c].filter((x) => x.id !== id); persist(); },
     settings: () => load().settings,
+    reload: () => { cache = null; },   // read the stored copy again (another tab changed it)
     saveSettings: (p) => { Object.assign(load().settings, p); persist(); },
     reset: () => { cache = seed(); persist(); },
     export: () => JSON.stringify(load(), null, 2),
@@ -284,9 +285,10 @@
     async ensureDemoAdmin() {
       if (!GIGF.demoAdminAllowed || !GIGF.demoAdminAllowed() || !(window.crypto && crypto.subtle)) return;   // never create the known-password demo admin on a public/insecure site
       const users = GIGF.DB.all('users');
+      users.filter((u) => u.id === 'u_admin' && u.name === 'Demo Admin').forEach((u) => GIGF.DB.update('users', u.id, { name: 'Admin' }));
       if (!users.find((u) => u.email === GIGF.ADMIN_DEMO.email)) {
         const salt = uid('s');
-        GIGF.DB.add('users', { id: 'u_admin', name: 'Demo Admin', email: GIGF.ADMIN_DEMO.email, phone: '', role: 'SUPER_ADMIN', salt, hash: await sha(salt + GIGF.ADMIN_DEMO.password), locale: 'en' });
+        GIGF.DB.add('users', { id: 'u_admin', name: 'Admin', email: GIGF.ADMIN_DEMO.email, phone: '', role: 'SUPER_ADMIN', salt, hash: await sha(salt + GIGF.ADMIN_DEMO.password), locale: 'en' });
       }
     },
     async signup({ name, email, phone, password, role }) {
@@ -420,7 +422,7 @@
         donorName: d.name, donorEmail: d.email, donorPhone: d.phone, donorPan: (d.pan || '').toUpperCase(),
         program: d.program, amount: Number(d.amount), frequency: d.frequency, method: d.method,
         userEmail: (GIGF.Auth.current() || {}).email || d.email.toLowerCase(),
-        orderId: 'demo_order_' + uid('o'), paymentId: outcome === 'CAPTURED' ? 'demo_pay_' + uid('p') : '',
+        orderId: (GIGF.present ? 'order_' : 'demo_order_') + uid('o'), paymentId: outcome === 'CAPTURED' ? (GIGF.present ? 'pay_' : 'demo_pay_') + uid('p') : '',
         status: outcome || 'CAPTURED', receiptNo: '', demo: true
       });
       GIGF.audit('PAYMENT_ORDER_CREATED', 'donation', rec.id, `${rec.orderId} · ${GIGF.inr(rec.amount)} · ${rec.method} · ${rec.frequency}`);
@@ -500,9 +502,15 @@
   GIGF.AUTO_DEFAULTS = { autoTranslate: true, autoReplyRoutine: false, autoApproveVolunteers: false, flagStuckPayments: true, stuckMinutes: 15 };
   GIGF.auto = () => Object.assign({}, GIGF.AUTO_DEFAULTS, (GIGF.DB.settings() || {}).automation || {});
   /** the fake admin portal trusts browser storage, so it only runs on this computer unless explicitly enabled */
+  // Presenting from this computer: demo wording is hidden. Any public address keeps it, so no real visitor is misled.
+  GIGF.present = ['localhost', '127.0.0.1', '[::1]', '::1'].includes(location.hostname);
+  if (GIGF.present && document.documentElement && document.documentElement.classList) document.documentElement.classList.add('present');
   GIGF.demoAdminAllowed = () => ['localhost', '127.0.0.1', '[::1]', '::1', ''].includes(location.hostname) || !!(window.GIGF_CONFIG && window.GIGF_CONFIG.demoAdmin === true);
   /** Only these URL shapes may be put into href/src: site pages, assets, http(s), mailto/tel, in-page anchors. Blocks javascript:, data: (except via the dedicated image paths) and attribute-breaking characters. */
   GIGF.safeUrl = (u, fallback) => { u = String(u == null ? '' : u).trim(); return /^(https?:\/\/[^\s"'<>`]+|[\w./-]+\.(html|mp4|jpg|jpeg|png|webp|svg|pdf)(\?[\w=&%.~-]*)?(#[\w-]*)?|assets\/[\w./ ()%-]+|#[\w-]*|mailto:[^\s"'<>`]+|tel:[+\d ]+)$/i.test(u) ? u : (fallback == null ? '#' : fallback); };
+  /** a picture or video address that may be shown: inline uploaded pictures, or a safe address */
+  GIGF.mediaUrl = (u) => (/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(u || '') ? u : GIGF.safeUrl(u, ''));
+  GIGF.sortMedia = (list) => list.map((m, i) => [m, m.order == null ? 100000 + i : Number(m.order)]).sort((a, b) => a[1] - b[1]).map((x) => x[0]);
   GIGF.today = today;
   load();
 })();
