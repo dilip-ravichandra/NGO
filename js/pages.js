@@ -276,7 +276,7 @@
     const g = $('#progGrid');
     html(g, G.DB.all('programs').filter((p) => p.active).sort((a, b) => a.order - b.order).map(programCard).join(''));
     g.addEventListener('click', (e) => { const b = e.target.closest('[data-toggle]'); if (b) b.closest('.prog-card').classList.toggle('open'); });
-    const openHash = () => { const id = location.hash.slice(1); const c = id && document.getElementById(id); if (c && c.classList.contains('prog-card')) { c.classList.add('open'); c.scrollIntoView({ behavior: 'smooth', block: 'center' }); } };
+    const openHash = () => { const id = (window.GIGF_HASH ?? location.hash).slice(1); window.GIGF_HASH = ''; const c = id && document.getElementById(id); if (c && c.classList.contains('prog-card')) { c.classList.add('open'); c.scrollIntoView({ behavior: 'smooth', block: 'center' }); } };
     openHash(); window.addEventListener('hashchange', openHash);
   }
 
@@ -310,9 +310,9 @@
     $$('.view-switch .pill').forEach((p) => (p.onclick = () => { evView = p.dataset.v; renderEvents(); }));
     $('#evBody').addEventListener('click', (e) => { const b = e.target.closest('[data-reg-info]'); if (b) { evView = 'list'; renderEvents(); const c = document.getElementById(G.DB.get('events', b.dataset.regInfo).slug); c && c.scrollIntoView({ behavior: 'smooth', block: 'center' }); } });
     renderEvents();
-    const rg = new URLSearchParams(location.search).get('reg');
+    const rg = new URLSearchParams(window.GIGF_SEARCH ?? location.search).get('reg');
     if (rg && G.Auth.current() && G.DB.get('events', rg)) { history.replaceState(null, '', 'events.html'); setTimeout(() => { const ev = G.DB.get('events', rg), c = document.getElementById(ev.slug); c && c.scrollIntoView({ behavior: 'smooth', block: 'center' }); openRegister(rg); }, 500); }
-    if (location.hash) setTimeout(() => { const c = document.getElementById(location.hash.slice(1)); c && c.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
+    if ((window.GIGF_HASH ?? location.hash)) setTimeout(() => { const c = document.getElementById((window.GIGF_HASH ?? location.hash).slice(1)); c && c.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
   }
 
   /* =====================================================================
@@ -360,7 +360,7 @@
       $('#shareBtn', m).onclick = () => { const u = location.href; if (navigator.share) navigator.share({ title: tr(a.title), url: u }).catch(() => { }); else navigator.clipboard.writeText(u).then(() => G.toast('Link copied', '🔗')); };
     };
     $('#artGrid').onclick = (e) => { const c = e.target.closest('[data-a]'); if (c) location.href = 'article.html?a=' + encodeURIComponent((G.DB.get('articles', c.dataset.a) || {}).slug || c.dataset.a); };
-    draw(); if (location.hash) read(location.hash.slice(1));
+    draw(); if ((window.GIGF_HASH ?? location.hash)) read((window.GIGF_HASH ?? location.hash).slice(1));
   }
 
   /* =====================================================================
@@ -405,12 +405,12 @@
       if (G.Auth.current()) { try { sessionStorage.removeItem(key); } catch (x) { } return; }
       e.preventDefault(); e.stopImmediatePropagation();
       try { const d = {}; Array.from(form.elements).forEach((el) => { if (el.name && !['file', 'checkbox', 'radio', 'password'].includes(el.type) && el.name !== 'pan') d[el.name] = el.value; }); sessionStorage.setItem(key, JSON.stringify(d)); } catch (x) { }
-      G.requireLogin(kind, kind + '.html' + location.search);
+      G.requireLogin(kind, kind + '.html' + (window.GIGF_SEARCH || ''));
     }, true);
   }
 
   function initDonate() {
-    const params = new URLSearchParams(location.search), cfg = window.GIGF_CONFIG || {};
+    const params = new URLSearchParams(window.GIGF_SEARCH ?? location.search), cfg = window.GIGF_CONFIG || {};
     const st = { freq: 'ONE_TIME', amount: 1000, method: 'UPI', program: params.get('program') || 'general' };
     const progs = G.DB.all('programs').filter((p) => p.active);
     $('#dProgram').innerHTML = progs.map((p) => `<option value="${p.id}">${p.icon} ${esc(tr(p.title))}</option>`).join('') + `<option value="general">🌱 Where needed most</option>`;
@@ -438,7 +438,7 @@
         if (cfg.razorpayKey && cfg.apiBase) rec = await realCheckout(cfg, d);   // production path (REQUIREMENTS §4.5)
         else { await new Promise((r) => setTimeout(r, 900)); rec = G.Donations.create(d, $('#dOutcome').value); }
         result(rec);
-      } catch (err) { if (err.message === 'LOGIN_REQUIRED') G.requireLogin('donate', 'donate.html' + location.search); else G.toast(err.message || 'Payment could not start', '⚠️'); }
+      } catch (err) { if (err.message === 'LOGIN_REQUIRED') G.requireLogin('donate', 'donate.html' + (window.GIGF_SEARCH || '')); else G.toast(err.message || 'Payment could not start', '⚠️'); }
       btn.disabled = false; upd();
     });
     function result(rec) {
@@ -478,7 +478,7 @@
     keepTyped(f, 'volunteer');
     const progs = G.DB.all('programs');
     $('#vDomain').innerHTML = progs.map((p) => `<option value="${esc(tr(p.title))}" data-id="${p.id}">${p.icon} ${esc(tr(p.title))}</option>`).join('') + '<option>📱 Digital outreach, photography & design</option>';
-    const pre = new URLSearchParams(location.search).get('program'); const o = $(`#vDomain option[data-id="${pre}"]`); if (o) o.selected = true;
+    const pre = new URLSearchParams(window.GIGF_SEARCH ?? location.search).get('program'); const o = $(`#vDomain option[data-id="${pre}"]`); if (o) o.selected = true;
     if (u) { f.elements.name.value = u.name; f.elements.email.value = u.email; f.elements.phone.value = u.phone || ''; }
     const showStatus = (v) => {
       html($('#volStatus'), `<div class="card card-body"><h4 style="color:var(--primary-dark)">Your volunteer application</h4><p style="margin:6px 0">Status: <span class="chip ${v.status === 'APPROVED' ? '' : v.status === 'REJECTED' ? 'red' : 'warn'}">${v.status}</span></p>

@@ -44,7 +44,7 @@
 
   /* ---------------- login gate (donate / volunteer / event registration need an account) ---------------- */
   G.gateHTML = function (kind, next) {
-    const nx = encodeURIComponent(next || location.pathname.split('/').pop() + location.search);
+    const nx = encodeURIComponent(next || (window.GIGF_FILE || location.pathname.split('/').pop()) + (window.GIGF_SEARCH ?? location.search));
     return `<div class="gate" role="alertdialog" aria-labelledby="gateT"><div class="gate-ico" aria-hidden="true">🔒</div>
       <h3 id="gateT">${G.t('auth.req.' + kind + '.t')}</h3><p>${G.t('auth.req.' + kind + '.b')}</p>
       <div class="gate-actions"><a class="btn btn-primary gate-login" href="login.html?next=${nx}">🔑 ${G.t('nav.login')}</a><a class="btn btn-orange gate-signup" href="signup.html?next=${nx}">✨ ${G.t('auth.req.signup')}</a></div>
@@ -273,6 +273,7 @@
   /* ---------------- boot ---------------- */
   document.addEventListener('DOMContentLoaded', async () => {
     await G.Auth.ensureDemoAdmin();
+    if (G.cloud) await G.cloud.pull();   // shared events and news, before the page draws them
     const h = document.getElementById('gigf-header'), f = document.getElementById('gigf-footer');
     if (h) h.outerHTML = header();
     if (f) f.outerHTML = footer();
@@ -303,13 +304,14 @@
     const lo = document.getElementById('logoutLink'); if (lo) lo.addEventListener('click', (e) => { e.preventDefault(); G.Auth.logout(); location.href = 'index.html'; });
     const nf = document.getElementById('newsForm');
     if (nf) nf.addEventListener('submit', (e) => { e.preventDefault(); const em = nf.querySelector('input').value; G.DB.add('subscribers', { email: em }); nf.reset(); G.toast('Subscribed — thank you!', '💌'); });
-    document.querySelectorAll('.bottom-nav-link').forEach((a) => { if (a.getAttribute('href') === location.pathname.split('/').pop()) a.classList.add('active'); });
+    document.querySelectorAll('.bottom-nav-link').forEach((a) => { if ((a.getAttribute('data-page-file') || a.getAttribute('href')) === (window.GIGF_FILE || location.pathname.split('/').pop())) a.classList.add('active'); });
 
     // scroll-reveal animation for any .reveal element
     const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 }) : null;
     G.observeReveal = (root) => (root || document).querySelectorAll('.reveal:not(.in), .reveal-l:not(.in), .reveal-r:not(.in), .reveal-z:not(.in)').forEach((el) => (io ? io.observe(el) : el.classList.add('in')));
 
     G.applyI18n(); initChat();
+    if (G.look) G.look.apply();   // festival logo / banner / colours
     // banner text follows the language switcher immediately (stored translations in js/i18n-banner.js)
     const bt = G.BANNER && G.BANNER[G.lang()];
     if (bt && document.getElementById('heroCarousel')) {

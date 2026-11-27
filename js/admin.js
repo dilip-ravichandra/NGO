@@ -185,11 +185,70 @@
   S.settings = () => { const s = G.DB.settings(); return `<h3 style="margin-bottom:12px">Settings</h3><div class="grid g2"><form id="setForm" class="card card-body f-grid"><div class="field f-full"><label>80G registration number</label><input name="reg80G" value="${esc(s.reg80G)}"></div><div class="field f-full"><label>12A registration number</label><input name="reg12A" value="${esc(s.reg12A)}"></div><div class="field f-full"><label>Foundation PAN</label><input name="pan" value="${esc(s.pan)}"></div><div class="field f-full"><label>Homepage impact figures (one per line: <code>value | label</code>) — publish only verified numbers</label><textarea name="impact" rows="4">${esc((s.impact || []).map((m) => m.value + ' | ' + m.label).join('\n'))}</textarea></div><button class="btn btn-primary f-full">Save settings</button></form>
     <div class="card card-body"><h4>Data tools (demo)</h4><p style="font-size:.84rem;color:#4b5563;margin:8px 0">Export everything as JSON or reset the demo data in this browser.</p>${G.demoAdminAllowed() ? '<button class="btn btn-orange btn-sm" data-a="sample-add">🧪 Load sample data (10 fake people)</button> <button class="btn btn-ghost btn-sm" data-a="sample-del">Remove sample data</button><br><br>' : ''}<button class="btn btn-ghost btn-sm" data-a="rep-add">📄 Publish annual report</button><br><br><button class="btn btn-ghost" data-a="db-export">⬇ Export JSON</button> <button class="btn btn-danger" data-a="db-reset" style="margin-top:8px">Reset demo data</button><hr style="margin:16px 0;border:0;border-top:1px solid #e5e7eb"><h4>Reports</h4><div style="display:grid;gap:8px;margin-top:8px"><button class="btn btn-ghost btn-sm" data-a="don-csv-all">Donations CSV</button><button class="btn btn-ghost btn-sm" data-a="vol-csv">Volunteers CSV</button><button class="btn btn-ghost btn-sm" data-a="reg-csv">Event registrations CSV</button></div></div></div>${automationCard()}`; };
 
-  const NAV = [['dash', '📊', 'Dashboard'], ['issues', '🎫', 'Payment issues & inquiries'], ['donations', '💚', 'Donations'], ['volunteers', '🤝', 'Volunteers'], ['events', '📅', 'Events'], ['news', '📰', 'News & updates'], ['articles', '✍️', 'Articles'], ['programs', '🌳', 'Programs'], ['gallery', '🖼️', 'Gallery'], ['testimonials', '💬', 'Testimonials'], ['users', '👥', 'Users'], ['audit', '🔒', 'Audit log'], ['settings', '⚙️', 'Settings']];
+  const NAV = [['dash', '📊', 'Dashboard'], ['issues', '🎫', 'Payment issues & inquiries'], ['donations', '💚', 'Donations'], ['volunteers', '🤝', 'Volunteers'], ['events', '📅', 'Events'], ['news', '📰', 'News & updates'], ['articles', '✍️', 'Articles'], ['programs', '🌳', 'Programs'], ['gallery', '🖼️', 'Gallery'], ['look', '🎨', 'Appearance'], ['testimonials', '💬', 'Testimonials'], ['users', '👥', 'Users'], ['audit', '🔒', 'Audit log'], ['settings', '⚙️', 'Settings']];
+
+  /* ---------- Appearance: festival logo, banner, colours ---------- */
+  let draft = null;   // pictures chosen but not yet saved
+  const picked = (k) => (draft && draft[k] !== undefined ? draft[k] : (G.DB.settings().look || {})[k]) || '';
+  S.look = () => {
+    const l = Object.assign({ on: false, from: '', to: '', primary: '#156637', accent: '#ea580c', deco: '', greeting: '', title: '', subtitle: '', link: '', linkText: '', keepSlides: false }, G.DB.settings().look || {});
+    const P = G.look.PRESETS, pic = (k, label, hint) => `<div class="field f-full"><label>${label}</label><input type="file" accept="image/png,image/jpeg,image/webp" data-pic="${k}"><small style="color:#6b7280;display:block">${hint}</small>
+      <div class="look-prev" id="prev-${k}">${G.look.IMG.test(picked(k)) ? `<img src="${picked(k)}" alt=""> <button type="button" class="btn btn-ghost btn-sm" data-clear="${k}">Remove</button>` : '<span style="color:#9ca3af">Using the normal one</span>'}</div></div>`;
+    const now = G.look.active();
+    return `<h3 style="margin-bottom:6px">Appearance</h3><p style="color:#4b5563;margin-bottom:14px">Dress the website up for a festival. Set dates and it switches back by itself. <b>${now ? 'A festival look is showing today.' : 'The normal look is showing today.'}</b></p>
+    <form id="lookForm" class="card card-body f-grid" style="max-width:760px">
+      <div class="field f-full"><label>Start from a ready-made look</label><select id="lookPreset"><option value="">— choose —</option>${Object.keys(P).map((k) => `<option value="${k}">${P[k].deco} ${esc(P[k].name)}</option>`).join('')}</select></div>
+      <div class="field f-full"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="on" style="width:auto" ${l.on ? 'checked' : ''}> Turn the festival look on</label></div>
+      <div class="field"><label>Show from (optional)</label><input type="date" name="from" value="${esc(l.from)}"></div><div class="field"><label>Until (optional)</label><input type="date" name="to" value="${esc(l.to)}"></div>
+      ${pic('logo', 'Logo', 'Square picture, best as a PNG with a clear background.')}
+      ${pic('banner', 'Home banner', 'Wide picture, about 1600 × 600.')}
+      <div class="field"><label>Banner heading</label><input name="title" maxlength="80" value="${esc(l.title)}"></div><div class="field"><label>Banner line</label><input name="subtitle" maxlength="140" value="${esc(l.subtitle)}"></div>
+      <div class="field"><label>Button text</label><input name="linkText" maxlength="30" value="${esc(l.linkText)}" placeholder="Donate now"></div><div class="field"><label>Button opens</label><input name="link" maxlength="200" value="${esc(l.link)}" placeholder="donate.html"></div>
+      <div class="field f-full"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="keepSlides" style="width:auto" ${l.keepSlides ? 'checked' : ''}> Keep the usual slideshow below my banner</label></div>
+      <div class="field f-full"><label>Greeting strip (under the menu, all pages)</label><input name="greeting" maxlength="140" value="${esc(l.greeting)}"></div>
+      <div class="field"><label>Main colour</label><input type="color" name="primary" value="${esc(l.primary || '#156637')}"></div><div class="field"><label>Button colour</label><input type="color" name="accent" value="${esc(l.accent || '#ea580c')}"></div>
+      <div class="field"><label>Falling decoration (one emoji, optional)</label><input name="deco" maxlength="8" value="${esc(l.deco)}" placeholder="🪔"></div>
+      <div class="f-full" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" type="submit">Save</button><a class="btn btn-ghost" href="index.html" target="_blank" rel="noopener">Open website</a><button type="button" class="btn btn-danger" id="lookReset">Back to normal</button></div>
+    </form>`;
+  };
+  /** shrink a chosen picture; the logo stays PNG so a clear background survives */
+  function shrink(file, k) {
+    return new Promise((ok, no) => {
+      if (!/^image\/(png|jpeg|webp)$/.test(file.type)) return no(new Error('Please use a PNG, JPG or WebP picture.'));
+      const img = new Image(), u = URL.createObjectURL(file);
+      img.onload = () => { const max = k === 'logo' ? 256 : 1600, s = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        let out = k === 'logo' ? c.toDataURL('image/png') : c.toDataURL('image/jpeg', 0.8); if (k !== 'logo') for (let q = 0.65; out.length > 400000 && q > 0.3; q -= 0.15) out = c.toDataURL('image/jpeg', q);
+        URL.revokeObjectURL(u); out.length > 600000 ? no(new Error('That picture is too large. Try a smaller one.')) : ok(out); };
+      img.onerror = () => no(new Error('Could not read that picture.')); img.src = u;
+    });
+  }
+  async function saveLook(look) {
+    G.DB.saveSettings({ look }); draft = null; G.audit('LOOK_CHANGE', 'settings', '', look.on ? 'festival look on' : 'normal look');
+    const stored = (JSON.parse(localStorage.getItem('gigf_db_v2') || '{}').settings || {}).look;
+    if (JSON.stringify(stored) !== JSON.stringify(look)) return G.toast('This browser is out of space: use smaller pictures.', '⚠️');
+    if (G.cloud && G.cloud.canWrite()) { try { await G.cloud.patchPublic({ look }); G.toast('Saved for all visitors', '☁️'); } catch (e) { G.toast('Not saved to the database: ' + e.message, '⚠️'); } }
+    else G.toast('Saved on this computer only. Sign in with your real admin account to change it for everyone.', 'ℹ️');
+    render();
+  }
+  function bindLook() {
+    const f = $('#lookForm'); if (!f) return;
+    const prev = (k) => { const box = $('#prev-' + k); box.innerHTML = G.look.IMG.test(picked(k)) ? `<img src="${picked(k)}" alt=""> <button type="button" class="btn btn-ghost btn-sm" data-clear="${k}">Remove</button>` : '<span style="color:#9ca3af">Using the normal one</span>'; };
+    $('#lookPreset').onchange = (e) => { const p = G.look.PRESETS[e.target.value]; if (!p) return; f.elements.primary.value = p.primary || '#156637'; f.elements.accent.value = p.accent || '#ea580c'; f.elements.deco.value = p.deco; f.elements.greeting.value = p.greeting; f.elements.on.checked = e.target.value !== 'normal'; };
+    f.onchange = async (e) => { const k = e.target.dataset.pic; if (!k || !e.target.files[0]) return; try { draft = Object.assign({}, draft, { [k]: await shrink(e.target.files[0], k) }); prev(k); f.elements.on.checked = true; } catch (err) { G.toast(err.message, '⚠️'); } };
+    f.onclick = (e) => { const k = e.target.dataset && e.target.dataset.clear; if (!k) return; draft = Object.assign({}, draft, { [k]: '' }); prev(k); };
+    f.onsubmit = (e) => {
+      e.preventDefault(); const v = (n) => String(f.elements[n].value || '').trim();
+      if (v('from') && v('to') && v('to') < v('from')) return G.toast('The end date is before the start date.', '⚠️');
+      if (v('link') && !G.safeUrl(v('link'), '')) return G.toast('Use a page like donate.html or an https:// address for the button.', '⚠️');
+      saveLook({ on: f.elements.on.checked, from: v('from'), to: v('to'), logo: picked('logo'), banner: picked('banner'), title: v('title'), subtitle: v('subtitle'), link: v('link'), linkText: v('linkText'), keepSlides: f.elements.keepSlides.checked, greeting: v('greeting'), primary: v('primary'), accent: v('accent'), deco: v('deco') });
+    };
+    $('#lookReset').onclick = () => { if (confirm('Remove the festival look, including the uploaded logo and banner?')) saveLook({ on: false }); };
+  }
 
   function render() {
     const openCount = G.DB.all('tickets').filter((t) => t.status !== 'RESOLVED').length;
     root().innerHTML = `<div class="admin-shell"><aside class="side">${NAV.map((n) => `<button data-sec="${n[0]}" class="${n[0] === sec ? 'on' : ''}">${n[1]} ${n[2]}${n[0] === 'issues' && openCount ? `<span class="cnt">${openCount}</span>` : ''}</button>`).join('')}</aside><section class="admin-main">${(S[sec] || S.dash)()}</section></div>`;
+    bindLook();
     G.applyI18n(); wireInputs();
   }
   function wireInputs() {
@@ -429,12 +488,14 @@
       <div class="note" style="margin-top:14px"><b>DEMO mode</b> — test account: <code>${G.ADMIN_DEMO.email}</code> / <code>${G.ADMIN_DEMO.password}</code>. Real admin accounts, 2FA and IP allow-list require the backend.</div></div></div>`;
     $('#adm').onsubmit = async (e) => { e.preventDefault(); try { const u = await G.Auth.login(e.target.e.value, e.target.p.value); if (!/ADMIN/.test(u.role)) { G.Auth.logout(); throw new Error('This account is not an administrator.'); } location.reload(); } catch (err) { G.toast(err.message, '⚠️'); } };
   }
-  G.boot(() => {
-    if (!G.demoAdminAllowed()) {   // this demo portal trusts browser storage, so it must not run on a public site
-      root().innerHTML = `<div class="wrap" style="max-width:560px;padding:60px 20px"><div class="card card-body gate-card"><div class="gate-ico">🛡️</div><h3 style="font-family:var(--font-serif);color:var(--primary-dark)">Admin portal is switched off on this site</h3><p style="color:#4b5563;line-height:1.7;margin:10px 0">This is the <b>demo</b> admin panel. It keeps its data and its login inside the visitor's own browser, so anyone could open it. For safety it only runs on the computer it is developed on. The real admin site needs the secure back-end (real accounts, database, 2-factor sign-in).</p><a class="btn btn-primary" href="index.html">← Back to the website</a></div></div>`; return;
-    }
-    if (!G.Auth.isAdmin()) return loginGate();
+  G.boot(async () => {
+    // a real admin (database role + two-factor) may use the portal anywhere; the practice admin works on this computer only
+    const state = G.cloud ? await G.cloud.adminState() : 'no';
+    if (state === 'code' || state === 'password') return G.cloud.gate(root(), state);
+    // not an admin: leave at once. (The practice admin is accepted on this computer only.)
+    if (state !== 'ok' && !(G.demoAdminAllowed() && G.Auth.isAdmin())) return location.replace('index.html');
     render();
+    if (G.cloud) G.cloud.adminBanner();
     // AUTOMATION LOOP: receipts + stuck-payment tickets + (optionally) AI answers to simple questions - no clicking needed
     const tick = async () => { let changed = G.Donations.reconcile(); if (G.auto().autoReplyRoutine) changed += await runTriage(false); if (changed && ['dash', 'issues', 'donations'].includes(sec) && !document.querySelector('.modal-backdrop')) render(); };
     tick(); setInterval(tick, 30000);

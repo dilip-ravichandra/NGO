@@ -243,3 +243,18 @@ html.no-motion .reveal, html.no-motion .reveal-l, html.no-motion .reveal-r { opa
 .detail-img { max-width: 100%; max-height: 420px; border-radius: 12px; display: block; margin-bottom: 14px; }
 .detail-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; } .detail-media img, .detail-media video { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; background: #000; }
 .ev-body h4 a { color: inherit; }
+
+/* festival looks */
+.look-greeting { background: var(--accent-orange); color: #fff; text-align: center; font-weight: 700; padding: 8px 16px; }
+.look-banner { position: relative; background: #111; } .look-banner img { display: block; width: 100%; max-height: 560px; object-fit: cover; }
+.look-text { position: absolute; left: 5%; bottom: 8%; max-width: 560px; background: rgba(0, 0, 0, .55); color: #fff; padding: 18px 22px; border-radius: 14px; }
+.look-text h2 { font-family: var(--font-serif); font-size: clamp(1.4rem, 3.4vw, 2.4rem); margin-bottom: 6px; color: #fff; } .look-text p { margin-bottom: 10px; }
+@media (max-width: 600px) { .look-text { position: static; border-radius: 0; max-width: none; } }
+#heroCarousel[hidden] { display: none !important; }
+.look-deco { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 900; }
+.look-deco span { position: absolute; top: -40px; font-size: 1.4rem; opacity: .75; animation: lookfall linear infinite; }
+@keyframes lookfall { to { transform: translateY(110vh) rotate(300deg); } }
+html.no-motion .look-deco { display: none; } @media (prefers-reduced-motion: reduce) { .look-deco { display: none; } }
+.look-prev { margin-top: 8px; display: flex; gap: 10px; align-items: center; } .look-prev img { max-height: 90px; max-width: 320px; border-radius: 8px; border: 1px solid #e5e7eb; }
+
+body.look-on .donate-btn-header { background: var(--accent-orange) !important; }

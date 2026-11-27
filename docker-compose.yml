@@ -1,0 +1,15 @@
+# Run locally:  docker compose up --build     ->  http://localhost:8081
+# Keys come from k8s/secrets.env (copy k8s/secrets.env.example). The file is optional.
+services:
+  web:
+    build: .
+    image: gigf-web:1.0
+    ports:
+      - "127.0.0.1:8081:8081"   # this computer only
+    env_file:
+      - path: k8s/secrets.env
+        required: false
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped

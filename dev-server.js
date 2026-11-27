@@ -50,7 +50,11 @@ const LOCAL_NAMES = ['localhost', '127.0.0.1', '[::1]'];
 const hostName = (h) => String(h || '').toLowerCase().replace(/:\d+$/, '');
 const PUBLIC_DIRS = ['css', 'js', 'assets', 'gallery'];   // plus *.html in the root. Everything else is never served.
 
+// Behind a trusted proxy (Kubernetes ingress) set TRUST_PROXY=1: the visitor's address is the LAST x-forwarded-for entry, the one the proxy added.
+const clientIp = (req) => (process.env.TRUST_PROXY === '1' && String(req.headers['x-forwarded-for'] || '').split(',').pop().trim()) || req.socket.remoteAddress;
+
 function handle(req, res) {
+  if (req.url === '/healthz') return send(res, 200, { 'Content-Type': 'text/plain', 'Cache-Control': 'no-store' }, 'ok');   // container health check
   const localName = LOCAL_NAMES.includes(hostName(req.headers.host));
   if (LOCAL_NAMES.includes(HOST) && !localName) return send(res, 421, {}, 'Wrong host');   // blocks DNS-rebinding web pages
   let url; try { url = new URL(req.url, 'http://localhost'); } catch (e) { return send(res, 400, {}, 'Bad request'); }
@@ -66,7 +70,7 @@ function handle(req, res) {
     req.on('end', async () => {
       if (dead) return;
       let body = null; try { body = JSON.parse(raw); } catch (e) { }
-      const out = await route.h({ body, ip: req.socket.remoteAddress, origin: req.headers.origin, env: process.env, headers: req.headers, loopback: isLoopback(req) && localName });
+      const out = await route.h({ body, ip: clientIp(req), origin: req.headers.origin, env: process.env, headers: req.headers, loopback: isLoopback(req) && localName });
       send(res, out.status, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, JSON.stringify(out.json));
     });
     return;
@@ -87,3 +91,5 @@ function handle(req, res) {
 }
 const PORT = Number(process.env.PORT) || 8081;
 server.listen(PORT, HOST, () => console.log(`Green India Gokul Foundation  →  http://localhost:${PORT}\nChatbot LLM — providers: ${providers(process.env).join(' → ') || 'NONE configured: chat/translation fall back to built-in answers / English'}`));
+// stop cleanly when the container is told to
+['SIGTERM', 'SIGINT'].forEach((sig) => process.on(sig, () => { server.close(() => process.exit(0)); setTimeout(() => process.exit(0), 8000).unref(); }));

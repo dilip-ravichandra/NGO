@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gigf-web
+  labels: { app: gigf-web }
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }   # no downtime during updates
+  selector:
+    matchLabels: { app: gigf-web }
+  template:
+    metadata:
+      labels: { app: gigf-web }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: web
+          image: gigf-web:1.0          # for a cloud cluster: your registry, e.g. ghcr.io/<user>/gigf-web:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - { name: http, containerPort: 8081 }
+          env:
+            - { name: TRUST_PROXY, value: "1" }
+          envFrom:
+            - secretRef: { name: gigf-secrets, optional: true }
+          lifecycle:
+            preStop:
+              exec: { command: ["sleep", "5"] }   # let the load balancer stop sending traffic before the copy shuts down
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { cpu: 500m, memory: 256Mi }
+          readinessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }

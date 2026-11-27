@@ -12,3 +12,7 @@ CLAUDE-SECURITY-*
 client_secret*.json
 supabase/
 docs/
+Dockerfile
+.dockerignore
+docker-compose.yml
+k8s/

@@ -18,7 +18,7 @@
       $$('.auth-tabs button').forEach((b) => b.classList.toggle('on', b.dataset.t === main));
       $('#authTitle').textContent = titles[name][0]; $('#authSub').textContent = titles[name][1];
       document.title = titles[name][0] + ' | Green India Gokul Foundation';
-      if (push && name !== 'forgot') history.replaceState(null, '', main + '.html' + location.search);
+      if (push && name !== 'forgot') history.replaceState(null, '', location.pathname.replace(/[^/]*$/, '') + '#' + main + (window.GIGF_SEARCH || ''));
       const first = $('input', panes[name]); first && setTimeout(() => first.focus(), 250);
     }
     show(document.body.dataset.page === 'signup' ? 'signup' : 'login');
@@ -30,7 +30,7 @@
     $$('.eye').forEach((b) => (b.onclick = () => { const i = b.parentElement.querySelector('input'); i.type = i.type === 'password' ? 'text' : 'password'; b.textContent = i.type === 'password' ? 'Show' : 'Hide'; }));
     const email = (v) => /^\S+@\S+\.\S+$/.test(v.trim()), phone = (v) => /^[6-9]\d{9}$/.test(v.replace(/\D/g, '').slice(-10));
     const busy = (btn, on, txt) => { btn.disabled = on; if (on) { btn.dataset.t = btn.textContent; btn.innerHTML = '<span class="spinner"></span> ' + (txt || 'Please wait…'); } else btn.textContent = btn.dataset.t; };
-    const NEXT = (() => { const n = new URLSearchParams(location.search).get('next') || ''; return /^[a-z0-9_-]+\.html(\?[\w=&%.~-]*)?(#[\w-]*)?$/i.test(n) && !/^(login|signup)\.html/i.test(n) ? n : ''; })();
+    const NEXT = (() => { const n = new URLSearchParams(window.GIGF_SEARCH ?? location.search).get('next') || ''; return /^[a-z0-9_-]+\.html(\?[\w=&%.~-]*)?(#[\w-]*)?$/i.test(n) && !/^(login|signup)\.html/i.test(n) ? n : ''; })();
     let PRE_ROLE = '';
     const go = (u) => { G.toast('Welcome, ' + u.name.split(' ')[0] + '!', '🙏'); setTimeout(() => (location.href = /ADMIN/.test(u.role) ? 'admin.html' : NEXT || 'dashboard.html'), 700); };
     // tell the visitor why they are here, and pre-select a matching role

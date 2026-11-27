@@ -1,0 +1,33 @@
+# The Service is the load balancer inside the cluster: it spreads requests across the pods.
+apiVersion: v1
+kind: Service
+metadata:
+  name: gigf-web
+spec:
+  selector: { app: gigf-web }
+  ports:
+    - { name: http, port: 80, targetPort: http }
+---
+# Adds and removes pods with load (needs the metrics-server add-on).
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gigf-web
+spec:
+  scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: gigf-web }
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 70 }
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: gigf-web
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels: { app: gigf-web }

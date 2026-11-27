@@ -1,0 +1,9 @@
+**
+!*.html
+!robots.txt
+!sitemap.xml
+!dev-server.js
+!api/**
+!css/**
+!js/**
+!assets/**

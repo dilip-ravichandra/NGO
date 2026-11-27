@@ -1,0 +1,24 @@
+# Public entry with HTTPS. NOT part of kustomization.yaml: apply it once you have a domain,
+# an NGINX ingress controller and a TLS certificate (secret "gigf-tls", e.g. from cert-manager).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gigf-web
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 5m      # event poster uploads
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: [www.yourdomain.org]
+      secretName: gigf-tls
+  rules:
+    - host: www.yourdomain.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gigf-web
+                port: { name: http }

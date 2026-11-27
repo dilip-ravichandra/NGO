@@ -61,7 +61,7 @@
 
   /* ---------- event details page: event.html?e=slug ---------- */
   function initEvent() {
-    const box = $('#detail'), slug = new URLSearchParams(location.search).get('e');
+    const box = $('#detail'), slug = new URLSearchParams(window.GIGF_SEARCH ?? location.search).get('e');
     const e = G.DB.all('events').find((x) => x.slug === slug && x.status !== 'DRAFT');
     if (!e) { box.innerHTML = '<div class="empty"><span class="e">📅</span>This event was not found. <a href="events.html">See all events</a></div>'; return; }
     document.title = tr(e.title) + ' | Green India Gokul Foundation'; describe(tr(e.desc));
@@ -79,7 +79,7 @@
   /* ---------- article page: article.html?a=slug ---------- */
   function describe(text) { const m = $('meta[name=description]'); if (m) m.setAttribute('content', String(text).slice(0, 160)); }
   function initArticle() {
-    const box = $('#detail'), key = new URLSearchParams(location.search).get('a');
+    const box = $('#detail'), key = new URLSearchParams(window.GIGF_SEARCH ?? location.search).get('a');
     const a = G.DB.all('articles').find((x) => (x.slug === key || x.id === key) && (x.status === 'PUBLISHED' || (x.status === 'SCHEDULED' && x.publishAt && new Date(x.publishAt) <= new Date())));
     if (!a) { box.innerHTML = '<div class="empty"><span class="e">📰</span>This article was not found. <a href="awareness.html">See all articles</a></div>'; return; }
     const raw = a.body && !Array.isArray(a.body) && typeof a.body === 'object' ? (a.body[G.lang()] || a.body.en) : a.body, body = Array.isArray(raw) ? raw : String(raw || '').split(/\n\s*\n/);

@@ -6,7 +6,7 @@
     if (!u) { location.href = 'login.html?next=dashboard.html'; return; }
     if (/ADMIN/.test(u.role)) { location.href = 'admin.html'; return; }
     try { G.Donations.reconcile(); } catch (e) { }
-    let tab = (location.hash || '#overview').slice(1);
+    let tab = ((window.GIGF_HASH ?? location.hash) || '#overview').slice(1);
     const statusChip = (s) => `<span class="chip ${s === 'CAPTURED' || s === 'APPROVED' || s === 'RESOLVED' ? '' : s === 'FAILED' || s === 'REJECTED' ? 'red' : 'warn'}">${s}</span>`;
     const roleLabel = { REGISTERED_USER: 'Registered User', VOLUNTEER: 'Volunteer', DONOR: 'Donor' }[u.role] || u.role;
 
