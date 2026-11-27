@@ -35,6 +35,7 @@
   window.GIGF_HASH = t ? (t.split('#')[1] ? '#' + t.split('#')[1] : '') : location.hash;
 
   // tidy the address straight away
+  if (current === 'index.html' && /^#admin/.test(window.GIGF_HASH)) window.GIGF_HASH = '';
   var now = friendly(current + location.search + window.GIGF_HASH);
   if (now) history.replaceState(null, '', dir + now);
 
