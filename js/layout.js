@@ -150,7 +150,7 @@
         <p style="font-size:.8rem;margin-bottom:12px"><a href="mailto:${o.email}" style="color:#a7f3d0">✉️ ${o.email}</a></p>
         <form id="newsForm" class="footer-newsletter-input"><input type="email" required placeholder="${t('f.email')}" aria-label="${t('f.email')}"><button type="submit">${t('foot.join')}</button></form></div>
     </div>
-    <div class="footer-bottom"><div>© ${new Date().getFullYear()} ${o.name}. ${t('foot.rights')}</div><div style="font-style:italic">Crafted with Precision | Designed with Purpose | Delivered with Passion</div><button class="motion-btn" id="motionBtn" type="button" aria-pressed="true" title="Turn animations on or off">✨ <span>Animations</span> <b></b></button></div></footer>
+    <div class="footer-bottom"><div>© ${new Date().getFullYear()} ${o.name}. ${t('foot.rights')} · <a href="terms.html" style="color:inherit">Terms</a> · <a href="privacy.html" style="color:inherit">Privacy</a></div><div style="font-style:italic">Crafted with Precision | Designed with Purpose | Delivered with Passion</div><button class="motion-btn" id="motionBtn" type="button" aria-pressed="true" title="Turn animations on or off">✨ <span>Animations</span> <b></b></button></div></footer>
     <nav class="mobile-bottom-nav"><div class="bottom-nav-grid">
       <a href="index.html" class="bottom-nav-link"><span class="bottom-nav-icon">🏠</span><span>${t('nav.home')}</span></a>
       <a href="programs.html" class="bottom-nav-link"><span class="bottom-nav-icon">🌳</span><span>${t('nav.programs')}</span></a>

@@ -1731,7 +1731,7 @@ body {
   }
   .slide-goshala img {
     width: 100% !important;
-    height: 180px !important;
+    height: auto !important;   /* the whole picture: a fixed height cut off the cow's head and legs */
     margin: 0 !important;
   }
   .hero-content-overlay {

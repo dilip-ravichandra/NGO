@@ -15,6 +15,9 @@
   const getCache = (to) => caches[to] || (caches[to] = (() => { try { return JSON.parse(localStorage.getItem(KEY + to) || '{}'); } catch (e) { return {}; } })());
   let saveT; const persist = (to) => { clearTimeout(saveT); saveT = setTimeout(() => { try { localStorage.setItem(KEY + to, JSON.stringify(getCache(to))); } catch (e) { caches[to] = {}; try { localStorage.removeItem(KEY + to); } catch (_) { } } }, 400); };
   let down = false;
+  const SCRIPT = { kn: 'Kannada', hi: 'Devanagari', ta: 'Tamil', te: 'Telugu', ml: 'Malayalam' };
+  /** every letter must be Latin, the target script, or already in the English source */
+  const sane = (v, src, to) => !SCRIPT[to] || (String(v).match(new RegExp(`(?![\\p{Script=Latin}\\p{Script=${SCRIPT[to]}}])\\p{L}`, 'gu')) || []).every((c) => String(src).includes(c));
   G.autoTranslateAvailable = () => !!cfg.translateApi && !down;
 
   /** Translates `texts` into `to` ('kn' | 'hi' | 'ta' | 'te'). onEach(index, translation) fires as soon as each one is known. Resolves to the array (null entries = failed). */
@@ -22,7 +25,8 @@
     const out = texts.map(() => null);
     if (!cfg.translateApi || down) return out;
     const cache = getCache(to), need = [];
-    texts.forEach((t, i) => { if (cache[t]) { if (cache[t] !== t) { out[i] = cache[t]; onEach && onEach(i, cache[t]); } } else if (String(t).trim()) need.push(i); });
+    texts.forEach((t, i) => { if (cache[t] && !sane(cache[t], t, to)) delete cache[t];   // drop bad ones saved earlier
+      if (cache[t]) { if (cache[t] !== t) { out[i] = cache[t]; onEach && onEach(i, cache[t]); } } else if (String(t).trim()) need.push(i); });
     const chunks = []; let cur = [], chars = 0;
     need.forEach((i) => { const l = texts[i].length; if (cur.length >= 20 || (cur.length && chars + l > 3000)) { chunks.push(cur); cur = []; chars = 0; } cur.push(i); chars += l; });
     if (cur.length) chunks.push(cur);
@@ -39,7 +43,7 @@
       }
       if (down) break;
       if (!res || !Array.isArray(res.translations)) continue;
-      ch.forEach((i, k) => { const v = res.translations[k]; if (typeof v === 'string' && v.trim()) { cache[texts[i]] = v; if (v !== texts[i]) { out[i] = v; onEach && onEach(i, v); } } });   // unchanged results are cached too, so they are never asked for again
+      ch.forEach((i, k) => { const v = res.translations[k]; if (typeof v === 'string' && v.trim() && sane(v, texts[i], to)) { cache[texts[i]] = v; if (v !== texts[i]) { out[i] = v; onEach && onEach(i, v); } } });   // unchanged results are cached too, so they are never asked for again
       persist(to);
     }
     return out;
@@ -74,7 +78,7 @@
   }
   function note() {
     const fb = document.querySelector('.footer-bottom'); if (!fb || fb.querySelector('.autotr-note')) return;
-    const MSG = { kn: 'ಕೆಲವು ಪಠ್ಯವನ್ನು AI ಮೂಲಕ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅನುವಾದಿಸಲಾಗಿದೆ — ತಪ್ಪುಗಳಿರಬಹುದು.', hi: 'कुछ पाठ AI द्वारा स्वतः अनुवादित है — त्रुटियाँ हो सकती हैं।', ta: 'சில உரைகள் AI மூலம் தானாக மொழிபெயர்க்கப்பட்டவை — பிழைகள் இருக்கலாம்.', te: 'కొన్ని పాఠ్యాలు AI ద్వారా స్వయంచాలకంగా అనువదించబడ్డాయి — తప్పులు ఉండవచ్చు.' };
+    const MSG = { kn: 'ಕೆಲವು ಪಠ್ಯವನ್ನು AI ಮೂಲಕ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅನುವಾದಿಸಲಾಗಿದೆ — ತಪ್ಪುಗಳಿರಬಹುದು.', hi: 'कुछ पाठ AI द्वारा स्वतः अनुवादित है — त्रुटियाँ हो सकती हैं।', ta: 'சில உரைகள் AI மூலம் தானாக மொழிபெயர்க்கப்பட்டவை — பிழைகள் இருக்கலாம்.', te: 'కొన్ని పాఠ్యాలు AI ద్వారా స్వయంచాలకంగా అనువదించబడ్డాయి — తప్పులు ఉండవచ్చు.', ml: 'ചില ഭാഗങ്ങൾ AI സ്വയം വിവർത്തനം ചെയ്തതാണ് — പിശകുകൾ ഉണ്ടാകാം.' };
     const msg = MSG[lang] || MSG.hi;
     const el = document.createElement('div'); el.className = 'autotr-note'; el.innerHTML = '🌐 ' + msg + ' <button type="button">Show English</button>'; el.querySelector('button').onclick = () => G.setLang('en'); fb.appendChild(el);
   }

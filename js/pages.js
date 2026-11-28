@@ -15,6 +15,11 @@
   const upcoming = () => G.DB.all('events').filter((e) => e.status === 'UPCOMING').sort((a, b) => a.date.localeCompare(b.date));
   const regCount = (id) => G.DB.all('registrations').filter((r) => r.eventId === id);
   const emptyBox = (icon, msg) => `<div class="empty"><span class="e">${icon}</span>${msg}</div>`;
+  const SAMPLE_VOICES = [
+    { sample: true, name: 'Asha', role: 'volunteer', text: 'Planting saplings with the team was the best Sunday I have had in a long time. Everything was well organised and easy to join.' },
+    { sample: true, name: 'Ravi', role: 'donor', text: 'I like that I can choose the programme my gift goes to, and find my receipt again whenever I need it.' },
+    { sample: true, name: 'Lakshmi', role: 'workshop participant', text: 'The skills session gave me the confidence to start stitching from home and to join a savings group.' }
+  ];
 
   /* ---------- shared renderers ---------- */
   function programCard(p, opts) {
@@ -276,8 +281,10 @@
         ['Giving back', 'ಸಮಾಜಕ್ಕೆ ಮರಳಿ', 'समाज को लौटाना', 'சமூகத்திற்குத் திருப்பி', 'సమాజానికి తిరిగి', 'സമൂഹത്തിന് തിരികെ'],
         ['Join as a volunteer, take part in an event or support a programme.', 'ಸ್ವಯಂಸೇವಕರಾಗಿ ಸೇರಿ, ಕಾರ್ಯಕ್ರಮದಲ್ಲಿ ಭಾಗವಹಿಸಿ ಅಥವಾ ಯೋಜನೆಗೆ ಬೆಂಬಲ ನೀಡಿ.', 'स्वयंसेवक बनें, आयोजन में भाग लें या किसी कार्यक्रम का सहयोग करें।', 'தன்னார்வலராக இணையுங்கள், நிகழ்வில் பங்கேற்கவும் அல்லது திட்டத்தை ஆதரிக்கவும்.', 'వాలంటీర్‌గా చేరండి, ఈవెంట్‌లో పాల్గొనండి లేదా కార్యక్రమానికి మద్దతివ్వండి.', 'സന്നദ്ധ പ്രവർത്തകനായി ചേരൂ, പരിപാടിയിൽ പങ്കെടുക്കൂ, അല്ലെങ്കിൽ ഒരു പദ്ധതിയെ പിന്തുണയ്ക്കൂ.']]
     ].map((c) => `<article class="essence-card reveal">${c[0]}<h4>${word(c[1])}</h4><p>${word(c[2])}</p></article>`).join(''));
-    const ts = G.DB.all('testimonials');
-    html($('#testi'), ts.length ? ts.map((x) => `<blockquote class="card reveal card-body" style="font-style:italic">“${esc(x.text)}”<footer style="margin-top:8px;font-style:normal;font-weight:700;color:var(--primary-dark)">— ${esc(x.name)}${x.role ? ', ' + esc(x.role) : ''}</footer></blockquote>`).join('') : '<p style="color:#6b7280">Have you taken part in our work? <a href="contact.html">Share your experience</a>.</p>');
+    // until real ones are added in Admin, show made-up examples. The "Sample" label must stay: donors must never take them as real.
+    const real = G.DB.all('testimonials'), ts = real.length ? real : SAMPLE_VOICES;
+    html($('#testi'), ts.map((x) => `<blockquote class="card reveal card-body" style="font-style:italic">${x.sample ? '<span class="chip warn" style="font-style:normal;margin-bottom:8px">Sample testimonial</span><br>' : ''}“${esc(x.text)}”<footer style="margin-top:8px;font-style:normal;font-weight:700;color:var(--primary-dark)">— ${esc(x.name)}${x.role ? ', ' + esc(x.role) : ''}</footer></blockquote>`).join('') +
+      (real.length ? '' : '<p style="grid-column:1/-1;color:#6b7280;font-size:.82rem">These are made-up examples to show the layout. Have you taken part in our work? <a href="contact.html">Share your experience</a>.</p>'));
   }
 
   /* =====================================================================
@@ -355,7 +362,7 @@
     let cat = 'all', term = '';
     const cats = ['all', 'environment', 'yoga', 'health', 'women', 'stories', 'schemes'], ico = { environment: '🌍', yoga: '🧘', health: '🥗', women: '👩‍🌾', stories: '🌱', schemes: '🏛️' };
     html($('#artCats'), cats.map((c, i) => `<button class="pill ${i ? '' : 'on'}" data-c="${c}">${c === 'all' ? t('f.all') : t('art.' + c)}</button>`).join(''));
-    const PHOTOS = { environment: ['about_sprout_hand', 'hero_scene', 'gal1', 'about_natural_sprout'], yoga: ['hero_yoga_women'], women: ['hero_yoga_women'], stories: ['gal2'] }, used = {};
+    const PHOTOS = { environment: ['about_sprout_hand', 'hero_scene', 'gal1', 'about_natural_sprout'], yoga: ['hero_yoga_women'], women: ['women_shg'], stories: ['gal2'] }, used = {};
     const cover = (a) => { const own = a.cover ? G.mediaUrl(a.cover) : ''; if (own && own !== '#') return `<img class="cover-img" src="${esc(own)}" alt="" loading="lazy">`; const l = PHOTOS[a.category]; if (!l) return ico[a.category] || '📰'; const all = publishedArticles().filter((x) => x.category === a.category), n = all.findIndex((x) => x.id === a.id); const story = a.category === 'stories' && G.DB.all('gallery').find((g) => g.type === 'PHOTO' && g.category === 'tree'); return `<img class="cover-img" src="${story ? esc(G.mediaUrl(story.src)) : 'assets/' + l[Math.max(0, n) % l.length] + '.jpg'}" alt="" loading="lazy">`; };
     const draw = () => {
       const list = publishedArticles().filter((a) => (cat === 'all' || a.category === cat) && (!term || (tr(a.title) + tr(a.summary)).toLowerCase().includes(term)));
@@ -409,15 +416,20 @@
      DONATE
      ===================================================================== */
   /* Visitors can fill in the form first. On submit they are asked to log in; their entries are put back afterwards (this tab only, never PAN). */
-  function keepTyped(form, kind) {
+  /* `extra` returns choices that are not named form fields (amount buttons, one-time/monthly...). */
+  function keepTyped(form, kind, extra) {
     const key = 'gigf_draft_' + kind;
-    try { const d = JSON.parse(sessionStorage.getItem(key) || '{}'); Object.keys(d).forEach((n) => { const el = form.elements[n]; if (el && el.type !== 'file' && d[n]) el.value = d[n]; }); } catch (e) { }
+    let saved = {};
+    try { saved = JSON.parse(sessionStorage.getItem(key) || '{}') || {}; Object.keys(saved).forEach((n) => { const el = form.elements[n]; if (el && el.type !== 'file' && saved[n]) el.value = saved[n]; }); } catch (e) { }
+    const save = () => { try { const d = {}; Array.from(form.elements).forEach((el) => { if (el.name && !['file', 'checkbox', 'radio', 'password'].includes(el.type) && el.name !== 'pan') d[el.name] = el.value; }); if (extra) Object.assign(d, extra()); sessionStorage.setItem(key, JSON.stringify(d)); } catch (x) { } };
+    const clear = () => { try { sessionStorage.removeItem(key); } catch (x) { } };
     form.addEventListener('submit', (e) => {
-      if (G.Auth.current()) { try { sessionStorage.removeItem(key); } catch (x) { } return; }
+      if (G.Auth.current()) return clear();
       e.preventDefault(); e.stopImmediatePropagation();
-      try { const d = {}; Array.from(form.elements).forEach((el) => { if (el.name && !['file', 'checkbox', 'radio', 'password'].includes(el.type) && el.name !== 'pan') d[el.name] = el.value; }); sessionStorage.setItem(key, JSON.stringify(d)); } catch (x) { }
+      save();
       G.requireLogin(kind, kind + '.html' + (window.GIGF_SEARCH || ''));
     }, true);
+    return { saved, save, clear };
   }
 
   function initDonate() {
@@ -434,7 +446,13 @@
     $$('.pay-opt').forEach((b) => (b.onclick = () => { st.method = b.dataset.m; $$('.pay-opt').forEach((x) => x.classList.toggle('on', x === b)); }));
     function upd() { $('#dSummary').innerHTML = `<b>${G.inr(st.amount)}</b> ${st.freq === 'MONTHLY' ? 'every month' : 'one-time'} → ${esc($('#dProgram').selectedOptions[0].textContent)}`; $('#dSubmit').innerHTML = `💚 ${t('btn.donate')} ${G.inr(st.amount)}${st.freq === 'MONTHLY' ? ' / month' : ''}`; }
     $('#dProgram').onchange = upd; setAmt(1000);
-    keepTyped($('#donForm'), 'donate');
+    const draft = keepTyped($('#donForm'), 'donate', () => ({ _amount: st.amount, _program: $('#dProgram').value, _freq: st.freq, _method: st.method, _utr: ($('#upiUtr') || {}).value || '' }));
+    const was = draft.saved;
+    if (Array.from($('#dProgram').options).some((o) => o.value === was._program)) $('#dProgram').value = was._program;
+    $$('.seg button').forEach((b) => { if (b.dataset.f === was._freq) b.click(); });
+    $$('.pay-opt').forEach((b) => { if (b.dataset.m === was._method) b.click(); });
+    if (was._amount > 0) setAmt(was._amount); else upd();
+    G.donDraft = draft;   // upi.js saves and restores the UPI reference with it
     $('#demoBanner').style.display = (cfg.razorpayKey && cfg.apiBase) || G.present ? 'none' : 'block';
     if (G.present) $('#dSubmit').addEventListener('click', (e) => { $('#dOutcome').value = e.shiftKey ? 'FAILED' : e.altKey ? 'PENDING' : 'CAPTURED'; });
 

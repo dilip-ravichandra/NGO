@@ -77,7 +77,7 @@
         impact: []
       },
       {
-        id: 'skill', slug: 'women-youth-skills', icon: '💼', color: '#1e40af', img: 'assets/hero_yoga_women.jpg', active: true, order: 4,
+        id: 'skill', slug: 'women-youth-skills', icon: '💼', color: '#1e40af', img: 'assets/women_skills.jpg', active: true, order: 4,
         title: T('Women Empowerment & Skills', 'ಮಹಿಳಾ ಸಬಲೀಕರಣ ಮತ್ತು ಕೌಶಲ್ಯ', 'महिला सशक्तिकरण और कौशल'),
         tagline: T('Skills and livelihoods for women and youth.', 'ಮಹಿಳೆಯರು ಮತ್ತು ಯುವಕರಿಗೆ ಕೌಶಲ್ಯ ಮತ್ತು ಜೀವನೋಪಾಯ.', 'महिलाओं और युवाओं के लिए कौशल और आजीविका।'),
         desc: T('Vocational training, self-help-group support and market linkages so that women and young people can earn with dignity.',
@@ -218,7 +218,7 @@
     articles.unshift(...envArticles);
     GIGF.envArticles = envArticles;   // the campaign page reads its text from here, so it never depends on saved browser data
     return {
-      seedVersion: 4,
+      seedVersion: 5,
       programs, events, news, articles, gallery,
       donations: [], volunteers: [], tickets: [], registrations: [], users: [], audit: [], chats: [], subscribers: [], tasks: [], testimonials: [],
       settings: { reg80G: '', reg12A: '', pan: '', receiptSeq: 0, volSeq: 0, ticketSeq: 0, impact: [], automation: { autoTranslate: true, autoReplyRoutine: false, autoApproveVolunteers: false, flagStuckPayments: true, stuckMinutes: 15 } }
@@ -234,6 +234,7 @@
     const s = seed();
     Object.keys(s).forEach((k) => { if (k !== 'seedVersion' && cache[k] === undefined) cache[k] = s[k]; }); // forward-compat (seedVersion is handled by the migration below)
     if ((cache.seedVersion || 1) < 4) { s.articles.filter((a) => a.category === 'environment').forEach((a) => { if (!cache.articles.find((x) => x.id === a.id)) cache.articles.unshift(a); }); cache.seedVersion = 4; persist(); }
+    if (cache.seedVersion < 5) { const p = cache.programs.find((x) => x.id === 'skill'); if (p && p.img === 'assets/hero_yoga_women.jpg') p.img = 'assets/women_skills.jpg'; cache.seedVersion = 5; persist(); }
     return cache;
   }
   function persist() { try { localStorage.setItem(KEY, JSON.stringify(cache)); } catch (e) { console.warn('storage full', e); } }

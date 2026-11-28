@@ -99,6 +99,9 @@ const GLOSSARY = {   // fixed wording for the Foundation's key terms so the mach
   ta: 'plantation drive = மரம் நடும் இயக்கம்; tree plantation = மரம் நடுதல்; sapling = மரக்கன்று; volunteer = தன்னார்வலர்; donate / donation = நன்கொடை; goshala = கோசாலை; cow protection = பசு பாதுகாப்பு; awareness = விழிப்புணர்வு; events = நிகழ்வுகள். NOTE: never use "நட்டம்" (it means loss).',
   te: 'plantation drive = మొక్కలు నాటే కార్యక్రమం; tree plantation = వృక్షారోపణ; sapling = మొక్క; volunteer = స్వచ్ఛంద సేవకుడు; donate / donation = విరాళం; goshala = గోశాల; cow protection = గో సంరక్షణ; awareness = అవగాహన; events = కార్యక్రమాలు'
 };
+const TR_SCRIPT = { kn: 'Kannada', hi: 'Devanagari', ta: 'Tamil', te: 'Telugu', ml: 'Malayalam' };
+/** every letter must be Latin, the target script, or already in the English source */
+const rightScript = (v, src, to) => (v.match(new RegExp(`(?![\\p{Script=Latin}\\p{Script=${TR_SCRIPT[to]}}])\\p{L}`, 'gu')) || []).every((c) => src.includes(c));
 const trCache = new Map();   // warm-instance cache; the browser also caches in localStorage
 async function handleTranslate({ body, ip, origin, env }) {
   env = env || process.env;
@@ -120,7 +123,7 @@ Return ONLY a JSON object {"t": [...]} with exactly ${todo.length} strings in th
   let arr = null;
   try { const m = res.text.match(/\{[\s\S]*\}/); const j = JSON.parse(m ? m[0] : res.text); arr = Array.isArray(j) ? j : j.t || j.translations; } catch (e) { }
   if (!Array.isArray(arr) || arr.length !== todo.length || arr.some((x) => typeof x !== 'string' || !x.trim())) return { status: 502, json: { error: 'bad_translation' } };
-  todo.forEach((i, k) => { out[i] = arr[k].replace(/<[^>]*>/g, '').trim(); trCache.set(to + '\u0000' + texts[i], out[i]); });
+  todo.forEach((i, k) => { const v = arr[k].replace(/<[^>]*>/g, '').trim(), ok = rightScript(v, texts[i], to); out[i] = ok ? v : ''; if (ok) trCache.set(to + '\u0000' + texts[i], v); });   // '' = rejected, the page keeps English
   if (trCache.size > 4000) trCache.clear();
   return { status: 200, json: { translations: out.map((o, i) => (o == null ? texts[i] : o)), model: res.model } };
 }

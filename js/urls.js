@@ -5,7 +5,7 @@
  * The admin page is deliberately not part of this: no address leads to it.
  */
 (function () {
-  var PAGES = ['programs', 'events', 'event', 'gallery', 'awareness', 'article', 'environment', 'contact', 'volunteer', 'donate', 'login', 'signup', 'dashboard', 'reports'];
+  var PAGES = ['programs', 'events', 'event', 'gallery', 'awareness', 'article', 'environment', 'contact', 'volunteer', 'donate', 'login', 'signup', 'dashboard', 'reports', 'terms', 'privacy'];
   var ALIAS = { volunteers: 'volunteer', donations: 'donate', blog: 'awareness' };
   var file = location.pathname.split('/').pop();
   var current = file || 'index.html';
