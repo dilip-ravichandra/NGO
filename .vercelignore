@@ -17,3 +17,5 @@ Dockerfile
 docker-compose.yml
 k8s/
 presentation/
+# React version: not published by this setup yet
+web/
